@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 /**
  *
  * @author danny
+ * @param <E>
  */
 public class CircularLinkedList<E> implements List<E> {
 
@@ -31,17 +32,21 @@ public class CircularLinkedList<E> implements List<E> {
         this.tail = tail;
     }
     
+    public boolean isEmpty() {
+       return (this.size == 0);
+    }
+    
     @Override
     public boolean addFirst(E e) {
-       Node<E> nuevo = new Node(e);
+       CircularNode<E> nuevo = new CircularNode(e);
         if (isEmpty()) {
             tail = nuevo;
-            tail.setNext(nuevo);
-            tail.setPrev(nuevo);
+            tail.setNextNode(nuevo);
+            //tail.setPrevNode(nuevo);
         } else {
-            tail.getPrev().setNext(nuevo);
-            nuevo.setNext(tail);
-            nuevo.setPrev(tail.getPrev());
+            //tail.setPrevNode().setNext(nuevo);
+            nuevo.setNextNode(tail);
+            //nuevo.setPrev(tail.setPrevNode());
         }
         size++;
         return true;
@@ -49,16 +54,16 @@ public class CircularLinkedList<E> implements List<E> {
 
     @Override
     public boolean addLast(E e) {
-    Node<E> nuevo = new Node(e);
+    CircularNode<E> nuevo = new CircularNode(e);
         if (isEmpty()) {
-            nuevo.setNext(nuevo);
-            nuevo.setPrev(nuevo);
+            nuevo.setNextNode(nuevo);
+            //nuevo.setPrevNode(nuevo);
             tail = nuevo;
         }else {
-            nuevo.setPrev(tail);
-            tail.setNext(nuevo);
-            tail.getNext().setPrev(nuevo);
-            nuevo.setNext(tail.getNext());
+            //nuevo.setPrevNode(tail);
+            tail.setNextNode(nuevo);
+            //tail.setNextNode().setPrevNode(nuevo);
+            //nuevo.setNext(tail.setNextNode());
             tail = nuevo;
         }
         size++;
@@ -72,9 +77,9 @@ public class CircularLinkedList<E> implements List<E> {
     if (isEmpty()) {
             return null;
         }
-        E primero = tail.getNext().getElement();
-        tail.setNext(tail.getNext().getNext());
-        tail.getNext().getNext().setPrev(tail);
+        E primero = tail.getNextNode().getElement();
+        tail.setNextNode(tail.getNextNode().getNextNode());
+        //tail.getNextNode().getNextNode().setPrevNode(tail);
         size--;
         if (size == 1) {
             tail = null;
@@ -93,10 +98,10 @@ public class CircularLinkedList<E> implements List<E> {
             size--;
             return temp;
         }
-        Node<E> newtail = tail.getPrev();
+        CircularNode<E> newtail = tail.getPrev();
         E temp = tail.getElement();
-        newtail.setNext(tail.getNext());
-        tail.getNext().setPrev(newtail);
+        newtail.setNextNode(tail.getNextNode());
+        tail.getNextNode().setPrevNode(newtail);
         tail = newtail;
         size--;
         return temp;
@@ -127,15 +132,15 @@ public class CircularLinkedList<E> implements List<E> {
             addLast(element);
         } else {
             int pos = 0;
-            for (Node<E> e = tail.getNext(); e != tail; e = e.getNext()) {
+            for (CircularNode<E> e = tail.getNextNode(); e != tail; e = e.getNextNode()) {
                 if (pos == index) {
                     size++;
-                    Node<E> temp = e.getNext();
-                    Node<E> nuevo = new Node(element);
-                    e.getPrev().setNext(nuevo);
-                    nuevo.setNext(e);
-                    nuevo.setPrev(e.getPrev());
-                    e.setPrev(nuevo);
+                    CircularNode<E> temp = e.getNextNode();
+                    CircularNode<E> nuevo = new CircularNode(element);
+                    e.getPrevNode().setNextNode(nuevo);
+                    nuevo.setNextNode(e);
+                    nuevo.setPrevNode(e.getPrevNode());
+                    e.setPrevNode(nuevo);
                     return true;
                 }
                 pos++;
@@ -159,10 +164,10 @@ public class CircularLinkedList<E> implements List<E> {
             return removeFirst();
         }
         int pos = 0;
-        for (Node<E> e = tail.getNext(); e.getNext() != tail; e = e.getNext()) {
+        for (CircularNode<E> e = tail.getNextNode(); e.getNextNode() != tail; e = e.getNextNode()) {
             if (pos == i) {
-                e.getPrev().setNext(e.getNext());
-                e.getNext().setPrev(e.getPrev());
+                e.getPrevNode().setNextNode(e.getNextNode());
+                //e.getNextNode().setPrevNode(e.getPrevNode());
                 size--;
                 return e.getElement();
             }
