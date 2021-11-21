@@ -23,7 +23,7 @@
       </Text>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button fx:id="start" onAction="#switchToSecondary" prefHeight="37.0" prefWidth="86.0" text="COMENZAR">
+            <Button fx:id="start" onAction="#start" prefHeight="37.0" prefWidth="86.0" text="COMENZAR">
                <HBox.margin>
                   <Insets left="100.0" top="25.0" />
                </HBox.margin>
