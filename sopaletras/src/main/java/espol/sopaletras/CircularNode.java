@@ -13,10 +13,12 @@ public class CircularNode<E> {
     
     private E content;
     private CircularNode<E> nextNode;
+    private CircularNode<E> prevNode;
     
     public CircularNode (E content) {
         this.content = content;
         this.nextNode = null;
+        this.prevNode = null;
     }
 
     public E getContent() {
@@ -30,7 +32,15 @@ public class CircularNode<E> {
     public CircularNode<E> getNextNode() {
         return nextNode;
     }
-
+    
+    public CircularNode<E> getPrev() {
+        return prevNode;
+    }
+    
+    public void setPrev(CircularNode<E> p) {
+        prevNode = p;
+    }
+    
     public void setNextNode(CircularNode<E> nextNode) {
         this.nextNode = nextNode;
     }
