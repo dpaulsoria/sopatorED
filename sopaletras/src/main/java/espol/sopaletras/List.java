@@ -18,7 +18,7 @@ public interface List<E> extends Iterable<E> {
 
     public void clear();
     
-    public void add(int index, E element); // inserta element en la posición index
+    public boolean add(int index, E element); // inserta element en la posición index
 
     public E remove(int index); // remueve y retorna el elemento en la posición index
 
