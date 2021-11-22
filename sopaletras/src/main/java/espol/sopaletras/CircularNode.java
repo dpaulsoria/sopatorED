@@ -33,17 +33,17 @@ public class CircularNode<E> {
         return nextNode;
     }
     
-    public CircularNode<E> getPrev() {
+    public CircularNode<E> getPrevNode() {
         return prevNode;
     }
     
-    public void setPrev(CircularNode<E> p) {
+    public void setPrevNode(CircularNode<E> p) {
         prevNode = p;
     }
     
     public void setNextNode(CircularNode<E> nextNode) {
         this.nextNode = nextNode;
     }
-    
+   
     
 }

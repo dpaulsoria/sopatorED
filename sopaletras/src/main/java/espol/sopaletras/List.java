@@ -19,10 +19,6 @@ public interface List<E> extends Iterable<E> {
     public void clear();
     
     public boolean add(int index, E element); // inserta element en la posición index
-    
-    public E removeFirst();
-    
-    public E removeLast();
 
     public E remove(int index); // remueve y retorna el elemento en la posición index
 
