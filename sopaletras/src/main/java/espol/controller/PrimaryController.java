@@ -1,4 +1,4 @@
-package espol.sopaletras;
+package espol.controller;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

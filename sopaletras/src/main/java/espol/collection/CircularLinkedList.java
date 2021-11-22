@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package espol.sopaletras;
+package espol.collection;
 
 import java.util.Comparator;
 import java.util.Iterator;

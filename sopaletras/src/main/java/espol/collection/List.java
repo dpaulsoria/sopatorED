@@ -1,4 +1,4 @@
-package espol.sopaletras;
+package espol.collection;
 
 import java.util.Comparator;
 

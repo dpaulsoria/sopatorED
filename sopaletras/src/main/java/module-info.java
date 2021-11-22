@@ -3,5 +3,5 @@ module espol.sopaletras {
     requires javafx.fxml;
 
     opens espol.sopaletras to javafx.fxml;
-    exports espol.sopaletras;
+    exports espol.controller;
 }
