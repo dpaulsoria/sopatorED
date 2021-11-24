@@ -10,9 +10,7 @@ import collection.CircularLinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -41,6 +39,21 @@ public class Sopator {
         generar();
     }
     
+    @Override
+    public String toString() {
+        String result = "";
+        CircularLinkedList tmp;
+        for(int i = 0; i<FILAS; i++) {
+            tmp = sopa_letras.get(i);
+            for(int j = 0; j<COLUMNAS; j++) {
+                result += tmp.get(j) + " ";
+            }
+            result += "\n";
+            tmp.clear();
+        }
+        return result;
+    }
+    
     private void añadir_direcciones() {
         directions.add(0, new Pair(1, 0));
         directions.add(1, new Pair(1,-1));
@@ -55,10 +68,12 @@ public class Sopator {
     private void añadir_base_validas() {
         base_palabras = new ArrayList<>();
         String current_word;
+        String ruta = "C:\\Users\\danny\\Documents\\SOPA\\SOPATOR\\src\\" + TEMA;
         int c = 0;
-        try(BufferedReader br = new BufferedReader(new FileReader(TEMA + ".txt"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(ruta + ".txt"))) {
             while((current_word = br.readLine()) != null) {
                 base_palabras.add(c, current_word);
+                System.out.println(current_word);
                 c++;
             }
             cantidad_validas = c;

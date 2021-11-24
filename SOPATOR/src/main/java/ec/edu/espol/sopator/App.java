@@ -1,5 +1,6 @@
 package ec.edu.espol.sopator;
 
+import generator.Sopator;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -21,6 +22,9 @@ public class App extends Application {
         Scene scene = new Scene(new StackPane(label), 640, 480);
         stage.setScene(scene);
         stage.show();
+        
+        Sopator sp = new Sopator(10, 10, "ANIMALES");
+        System.out.println(sp.toString());
     }
 
     public static void main(String[] args) {
