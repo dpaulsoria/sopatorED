@@ -275,7 +275,14 @@ public class CircularLinkedList<E> implements List<E> {
 
     @Override
     public List<E> findAll(Comparator<E> cmp, E e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (cmp == null)
+           throw new IllegalArgumentException("Comparator cannot be null");
+        List<E> container = new CircularLinkedList<>();
+        for (E item : this) {
+            if(cmp.compare(item, e) == 0)
+                container.addLast(item);
+        }
+        return container;
     }
 
     @Override
