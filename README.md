@@ -2,7 +2,7 @@
 
 ## Sopa de Letras
 
-##Integrantes:
+## Integrantes:
 
 *Danny Paul Soria
 *Jorge Nicolás Carrasco
