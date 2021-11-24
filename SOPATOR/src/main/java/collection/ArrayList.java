@@ -303,7 +303,12 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public List<E> findAll(Comparator<E> cmp, E e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<E> tmp = new ArrayList<>();
+        for (int i = 0; i < effectiveSize; i++) {
+            if (cmp.compare(e, elements[i]) == 0)
+                tmp.addLast(elements[i]);
+        }
+        return tmp;
     }
     
     public boolean isPalindromo() {
