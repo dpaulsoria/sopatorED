@@ -4,5 +4,5 @@
 
 ## Integrantes:
 
-*Danny Paul Soria
-*Jorge Nicolás Carrasco
+* Danny Paul Soria
+* Jorge Nicolás Carrasco
