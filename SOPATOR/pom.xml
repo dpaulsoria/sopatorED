@@ -85,4 +85,12 @@
             </dependencies>
         </profile>
     </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>13</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
 </project>
