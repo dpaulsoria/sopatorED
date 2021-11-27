@@ -23,8 +23,8 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
         
-        Sopator sp = new Sopator(10, 10, "ANIMALES");
-        System.out.println(sp.toString());
+//        Sopator sp = new Sopator(10, 10, "ANIMALES");
+//        System.out.println(sp.toString());
     }
 
     public static void main(String[] args) {

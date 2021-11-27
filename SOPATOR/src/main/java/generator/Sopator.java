@@ -31,12 +31,14 @@ public class Sopator {
         FILAS = fila;
         COLUMNAS = columna;
         TEMA = tema;
-        
+        System.out.println("Creando sopa de letras de: " + FILAS + "x" + COLUMNAS + " con el tema de " + TEMA);
         rellenar();
+        /*
         añadir_direcciones();
         añadir_base_validas();
         
         generar();
+        */
     }
     
     @Override
@@ -49,6 +51,7 @@ public class Sopator {
                 result += tmp.get(j) + " ";
             }
             result += "\n";
+            System.out.println(result);
             tmp.clear();
         }
         return result;
@@ -142,6 +145,7 @@ public class Sopator {
             for(int j = 0; j<COLUMNAS; j++) {
                 tmp.add(j, '*');
             }
+            System.out.println(tmp.toString());
             sopa_letras.put(i, tmp);
             tmp.clear();
         }

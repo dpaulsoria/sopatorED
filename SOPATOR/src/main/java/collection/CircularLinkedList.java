@@ -269,8 +269,31 @@ public class CircularLinkedList<E> implements List<E> {
     }
 
     @Override
+    public String toString() {
+        String result = "";
+        Iterator<E> it = this.iterator();
+        while(it.hasNext()) {
+            result += it.next() + " ";
+        }
+        return result;
+    }
+
+    @Override
     public Iterator<E> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Iterator<E> it = new Iterator() {
+            CircularNode<E> cursor = tail.getNextNode();
+            @Override
+            public boolean hasNext() {
+                return cursor != null;
+            }
+            @Override
+            public E next() {
+                E content = cursor.getContent();
+                cursor = cursor.getNextNode();
+                return content;
+            }
+        };
+        return it;
     }
 
     @Override

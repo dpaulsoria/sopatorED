@@ -5,6 +5,7 @@ ec\edu\espol\sopator\SystemInfo.class
 collection\ArrayList.class
 collection\ArrayList$1.class
 generator\Pair.class
+collection\CircularLinkedList$1.class
 collection\CircularLinkedList.class
 generator\Sopator.class
 generator\tmp.class
