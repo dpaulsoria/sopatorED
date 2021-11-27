@@ -1,11 +1,16 @@
-ec\edu\espol\sopator\App.class
 collection\CircularNode.class
 collection\List.class
-ec\edu\espol\sopator\SystemInfo.class
+generator\Pair.class
+generator\Sopator.class
+ec\edu\espol\sopator\App.class
+ec\edu\espol\sopator\PrimaryController.class
 collection\ArrayList.class
 collection\ArrayList$1.class
+<<<<<<< HEAD
 generator\Pair.class
 collection\CircularLinkedList$1.class
+=======
+>>>>>>> d3102946dfd12d65a20021e75a9f2164206541dd
 collection\CircularLinkedList.class
-generator\Sopator.class
+ec\edu\espol\sopator\SecondaryController.class
 generator\tmp.class
