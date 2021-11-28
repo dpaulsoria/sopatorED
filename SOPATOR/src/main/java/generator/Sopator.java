@@ -66,6 +66,24 @@ public class Sopator {
         return sopa_letras;
     }
 
+    public void añadirFila() {
+        FILAS++;
+        CircularLinkedList<Character> filaNueva = new CircularLinkedList<>();
+        for (int i = 0; i<COLUMNAS; i++) {
+            filaNueva.addLast(getRandomChar());
+        }
+        sopa_letras.addLast(filaNueva);
+    }
+    
+    public void añadirColumna() {
+        COLUMNAS++;        
+        for (int i = 0; i<sopa_letras.size(); i++) {
+            CircularLinkedList<Character> tmp = new CircularLinkedList<>();
+            tmp = sopa_letras.get(i);
+            tmp.addLast(getRandomChar());
+        }
+    }
+    
     @Override
     public String toString() {
         String result = "";
@@ -177,7 +195,6 @@ public class Sopator {
         }
         System.out.println(toString());
         fillChar();
-        System.out.println(toString());
     }
 
     private boolean validar_insercion(tmp insert) {
@@ -197,10 +214,14 @@ public class Sopator {
         ) {
             for (int i = 0; i<len; i++) {
                 CircularLinkedList<Character> tmp = sopa_letras.get(pos_y + i * dirY);
-                return tmp.get(pos_x + i * dirX) == '*' ||
-                       tmp.get(pos_x + i * dirX) == palabra.charAt(i);
+                if (tmp.get(pos_x + i * dirX) == '*' ||
+                    tmp.get(pos_x + i * dirX) == palabra.charAt(i)) {
+                } else {
+                    return false;
+                }
                
-           } 
+           }
+            return true;
         }
         return false;
     }
@@ -212,9 +233,13 @@ public class Sopator {
         Pair direction = insert.getRANDOM_DIRECTION();
         
         CircularLinkedList<Character> tmp;
+        Character c;
         for(int i = 0; i<palabra.length(); i++) {
             tmp = sopa_letras.get(pos_y + i * direction.getY());
-            tmp.set(pos_x + i * direction.getX(), palabra.charAt(i));
+            c = tmp.get(pos_x + i * direction.getX());
+            if (c.equals('*') || c.equals(palabra.charAt(i))) {
+                tmp.set(pos_x + i * direction.getX(), palabra.charAt(i));
+            }
         }
     }
 }
