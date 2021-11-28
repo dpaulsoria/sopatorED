@@ -46,9 +46,4 @@ public class CircularNode<E> {
         this.nextNode = nextNode;
     }
     
-    @Override
-    public String toString() {
-        return "{ Content: " + content + " Next: " + nextNode.getContent()+ " Prev: " + prevNode.getContent() + "}\n";
-    }
-    
 }

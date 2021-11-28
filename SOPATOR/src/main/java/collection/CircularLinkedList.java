@@ -36,21 +36,12 @@ public class CircularLinkedList<E> implements List<E> {
         return this.tail.getNextNode();
     } 
 
-    public void setLast(CircularNode<E> tail) {
-        CircularNode<E> prevNode = this.tail.getPrevNode();
-        CircularNode<E> nextNode = this.tail.getNextNode();
-        tail.setPrevNode(prevNode);
-        prevNode.setNextNode(tail);
-        tail.setNextNode(nextNode);
-        nextNode.setPrevNode(tail);
-        this.tail = tail;        
+    public void setLast(CircularNode<E> last) {
+        tail.setContent(last.getContent());
     }
 
     public void setFirst(CircularNode<E> first) {
-        this.tail.getNextNode().getNextNode().setPrevNode(first);
-        first.setNextNode(this.tail.getNextNode().getNextNode());
-        this.tail.setNextNode(first);
-        first.setPrevNode(this.tail);
+        tail.getNextNode().setContent(first.getContent());
     }
     
     @Override
@@ -215,8 +206,6 @@ public class CircularLinkedList<E> implements List<E> {
     @Override
     public E set(int index, E element) {
         CircularNode<E> to_set = new CircularNode(element);
-        System.out.println("size: " + size);
-        System.out.println("to_set: " + to_set.getContent() + " index: " + index);
         if (index == 0) {
             setFirst(to_set);
             return element;
@@ -227,17 +216,14 @@ public class CircularLinkedList<E> implements List<E> {
             return element;
         } else {
             int pos = 0;
-            for (CircularNode<E> e = tail.getNextNode(); pos < size; e = e.getNextNode()) {
-                pos++;
+            CircularNode<E> current = tail.getNextNode();
+            while(pos < size) {
                 if (pos == index) {
-                    CircularNode<E> currentNode = e;
-
-                    currentNode.getPrevNode().setNextNode(to_set);
-                    currentNode.getNextNode().setPrevNode(to_set);
-                    to_set.setPrevNode(currentNode.getPrevNode());
-                    to_set.setNextNode(currentNode.getNextNode());                    
+                    current.setContent(element);
                     return element;
-                }
+                }     
+                pos++;
+                current = current.getNextNode();
             }
         }
         return null;
