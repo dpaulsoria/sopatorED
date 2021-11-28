@@ -9,8 +9,7 @@ import collection.ArrayList;
 import collection.CircularLinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
 
 /**
  *
@@ -25,14 +24,14 @@ public class Sopator {
     private ArrayList<String> palabras_validas;
     private int cantidad_validas = 0;
     private final ArrayList<Pair> directions = new ArrayList<>();
-    private Map<Integer, CircularLinkedList<Character>> sopa_letras = new HashMap<>();
+    private ArrayList<CircularLinkedList<Character>> sopa_letras = new ArrayList<>();
     
     public Sopator(int fila, int columna, String tema) {
         FILAS = fila;
         COLUMNAS = columna;
         TEMA = tema;
-        System.out.println("Creando sopa de letras de: " + FILAS + "x" + COLUMNAS + " con el tema de " + TEMA);
-        rellenar();
+        rellenar();        
+        System.out.println(toString());
         /*
         añadir_direcciones();
         añadir_base_validas();
@@ -44,15 +43,13 @@ public class Sopator {
     @Override
     public String toString() {
         String result = "";
-        CircularLinkedList tmp;
-        for(int i = 0; i<FILAS; i++) {
-            tmp = sopa_letras.get(i);
-            for(int j = 0; j<COLUMNAS; j++) {
+        for(int i = 0; i<sopa_letras.size(); i++) {
+            CircularLinkedList<Character> tmp = sopa_letras.get(i);
+            for(int j = 0; j<tmp.size(); j++) {
                 result += tmp.get(j) + " ";
+                
             }
             result += "\n";
-            System.out.println(result);
-            tmp.clear();
         }
         return result;
     }
@@ -134,22 +131,21 @@ public class Sopator {
                     fila.set(j, getRandomChar());
                 }
             }
-            sopa_letras.put(i, fila);
+            sopa_letras.addLast(fila);
             fila.clear();
         }
     }
     
     private void rellenar() {
-        CircularLinkedList tmp = new CircularLinkedList();
+        Character c = '*';
         for(int i = 0; i<FILAS; i++) {
+            CircularLinkedList<Character> tmp = new CircularLinkedList();
             for(int j = 0; j<COLUMNAS; j++) {
-                tmp.add(j, '*');
+                tmp.addLast(c);
             }
-            System.out.println(tmp.toString());
-            sopa_letras.put(i, tmp);
-            tmp.clear();
+            sopa_letras.addLast(tmp);
         }
-        
+        System.out.println(toString());
     }
 
     private boolean validar_insercion(tmp insert) {

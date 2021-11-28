@@ -8,6 +8,7 @@ package collection;
 /**
  *
  * @author danny
+ * @param <E>
  */
 public class CircularNode<E> {
     
@@ -22,7 +23,7 @@ public class CircularNode<E> {
     }
 
     public E getContent() {
-        return content;
+        return this.content;
     }
 
     public void setContent(E content) {
@@ -30,15 +31,15 @@ public class CircularNode<E> {
     }
 
     public CircularNode<E> getNextNode() {
-        return nextNode;
+        return this.nextNode;
     }
     
     public CircularNode<E> getPrevNode() {
-        return prevNode;
+        return this.prevNode;
     }
     
-    public void setPrevNode(CircularNode<E> p) {
-        prevNode = p;
+    public void setPrevNode(CircularNode<E> prevNode) {
+        this.prevNode = prevNode;
     }
     
     public void setNextNode(CircularNode<E> nextNode) {

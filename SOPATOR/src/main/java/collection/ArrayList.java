@@ -150,7 +150,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        if (index >= 0) {
+        if (index >= 0 && index < this.size()) {
             return (this.isEmpty() ? null:this.elements[index]);
         } else {
             return null;
