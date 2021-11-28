@@ -117,15 +117,15 @@ public class ArrayList<E> implements List<E> {
     @Override
     public boolean add(int index, E element) {
         if (index >= 0) {
-            if (this.isEmpty()) {
-                this.elements[this.effectiveSize] = element;
+            if (isEmpty()) {
+                this.elements[effectiveSize] = element;
+                effectiveSize++;
                 return true;
-            } else if (this.isFull()) {
-                this.addCapacity();
+            } else if (isFull()) {
+                addCapacity();
             }
-            this.elements[index] = element;
-            this.effectiveSize++;
-            return true;
+            elements[index] = element;
+            effectiveSize++;
         }
         return false;
     }

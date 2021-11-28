@@ -51,4 +51,8 @@ public class tmp {
         this.RANDOM_DIRECTION = rd;
     }
 
+    @Override
+    public String toString() {
+        return getRANDOM_WORD() + ", " + getRANDOM_DIRECTION() + ", " + getX() + "x" + getY();
+    }
 }

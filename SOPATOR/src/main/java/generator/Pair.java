@@ -25,4 +25,9 @@ public class Pair {
     public int getY() {
         return Y;
     }
+    
+    @Override
+    public String toString() {
+        return getX() + ", " + getY();
+    }
 }

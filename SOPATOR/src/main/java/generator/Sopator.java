@@ -32,7 +32,6 @@ public class Sopator {
         añadir_direcciones();
         añadir_base_validas();       
         generar();
-        System.out.println(toString());
     }
     
     public String getABC() {
@@ -82,14 +81,14 @@ public class Sopator {
     }
     
     private void añadir_direcciones() {
-        directions.add(0, new Pair(1, 0));
-        directions.add(1, new Pair(1,-1));
-        directions.add(2, new Pair(0, -1));
-        directions.add(3, new Pair(-1,-1));
-        directions.add(4, new Pair(-1, 0));
-        directions.add(5, new Pair(-1, 1));
-        directions.add(6, new Pair(0, 1));
-        directions.add(7, new Pair(1, 1));
+        directions.addLast(new Pair(1 , 0));
+        directions.addLast(new Pair(1 ,-1));
+        directions.addLast(new Pair(0 ,-1));
+        directions.addLast(new Pair(-1,-1));
+        directions.addLast(new Pair(-1, 0));
+        directions.addLast(new Pair(-1, 1));
+        directions.addLast(new Pair(0 , 1));
+        directions.addLast(new Pair(1 , 1));
     }
     
     private void añadir_base_validas() {
@@ -115,11 +114,6 @@ public class Sopator {
     }
     
     private String getRandomWord() {
-//        System.out.println("base palabras size: " + base_palabras.size());
-//        int r = getRandomNumber(base_palabras.size());
-//        System.out.println("random number: " + r);
-//        System.out.println("word: " + base_palabras.get(r));
-//        return base_palabras.get(r);
         return base_palabras.get(this.getRandomNumber(base_palabras.size()));
     }
     
@@ -128,34 +122,6 @@ public class Sopator {
         for(int i=0; i<num_palabras_validas; i++) {
             palabras_validas.addLast(getRandomWord());
         }
-    }
-        
-    private void generar() {
-        rellenar();
-        int num_palabras = (getRandomNumber(2)+1)*(getRandomNumber(4)+1); 
-        // +1 para evitar 0
-        System.out.println("Número Random: " + num_palabras);
-        
-        insertar_palabras_validas(num_palabras);
-        System.out.println(palabras_validas.toString());
-
-        /*
-        for(int i = 0; i<palabras_validas.size(); i++) {
-            tmp insercion = new tmp();
-            insercion.setX(getRandomNumber(COLUMNAS));
-            insercion.setY(getRandomNumber(FILAS));
-            insercion.setRANDOM_DIRECTION(
-                    directions.get(getRandomNumber(directions.size()))
-            );
-            insercion.setRANDOM_WORD(palabras_validas.get(i));
-            if (validar_insercion(insercion)) {
-                insertar_palabra(insercion);
-            } else {
-                i--;
-            }
-        }
-        fillChar();
-        */     
     }
     
     private void fillChar() {
@@ -180,18 +146,52 @@ public class Sopator {
             sopa_letras.addLast(tmp);
         }
     }
+    
+    private void generar() {
+        rellenar();
+        int num_palabras = (getRandomNumber(2)+1)*(getRandomNumber(4)+1); 
+        // +1 para evitar 0
+        System.out.println("Número Random: " + num_palabras);
+        
+        insertar_palabras_validas(num_palabras);
+        System.out.println(palabras_validas.toString());
+
+        
+        for(int i = 0; i<palabras_validas.size(); i++) {
+            tmp insercion = new tmp();
+            insercion.setX(getRandomNumber(COLUMNAS));
+            insercion.setY(getRandomNumber(FILAS));
+            
+            Pair p = directions.get(getRandomNumber(directions.size()));
+            insercion.setRANDOM_DIRECTION(p);
+            insercion.setRANDOM_WORD(palabras_validas.get(i));
+            
+            System.out.println(insercion.toString());
+            
+            if (validar_insercion(insercion)) {
+                insertar_palabra(insercion);
+            } else {
+                i--;
+            }
+        }
+        fillChar();
+          
+    }
 
     private boolean validar_insercion(tmp insert) {
         String palabra = insert.getRANDOM_WORD();
         int pos_x = insert.getX();
         int pos_y = insert.getY();
         Pair direction = insert.getRANDOM_DIRECTION();
-        
-        
-        int len = ABC.length();
+                
+        int len = palabra.length();
         int dirX = direction.getX();
         int dirY = direction.getY();
-        CircularLinkedList<Character> tmp;
+        System.out.println("len :" + len + " dirX: " + dirX + " dirY: " + dirY);
+        System.out.println("(pos_x + len * dirX) > 0 " + ((pos_x + len * dirX) > 0));
+        System.out.println("(pos_x + len * dirX) < COLUMNAS " + ((pos_x + len * dirX) < COLUMNAS));
+        System.out.println("(pos_y + len * dirY) > 0 " + ((pos_y + len * dirY) > 0));
+        System.out.println("(pos_y + len * dirY) < FILAS " + ((pos_y + len * dirY) < FILAS));
         if (
             (pos_x + len * dirX) > 0 &&
             (pos_x + len * dirX) < COLUMNAS &&
@@ -199,7 +199,7 @@ public class Sopator {
             (pos_y + len * dirY) < FILAS
         ) {
             for (int i = 0; i<len; i++) {
-                tmp = sopa_letras.get(pos_y + i * dirY);
+                CircularLinkedList<Character> tmp = sopa_letras.get(pos_y + i * dirY);
                 return tmp.get(pos_x + i * dirX) == '*' ||
                        tmp.get(pos_y + i * dirY) == palabra.charAt(i);
                
@@ -217,7 +217,9 @@ public class Sopator {
         CircularLinkedList<Character> tmp;
         for(int i = 0; i<palabra.length(); i++) {
             tmp = sopa_letras.get(pos_y + i * direction.getY());
-            tmp.add(pos_x + i * direction.getX(), palabra.charAt(i));
+            int j = pos_x + i * direction.getX();
+            System.out.println("i: " + j + " c: " + palabra.charAt(i) + " " + i);
+            tmp.set(pos_x + i * direction.getX(), palabra.charAt(i));
         }
     }
 }

@@ -37,10 +37,12 @@ public class CircularLinkedList<E> implements List<E> {
     } 
 
     public void setLast(CircularNode<E> tail) {
-        this.tail.getPrevNode().setNextNode(tail);
-        tail.setPrevNode(this.tail.getPrevNode());
-        tail.setNextNode(this.tail.getNextNode());
-        this.tail.getNextNode().setPrevNode(tail);
+        CircularNode<E> prevNode = this.tail.getPrevNode();
+        CircularNode<E> nextNode = this.tail.getNextNode();
+        tail.setPrevNode(prevNode);
+        prevNode.setNextNode(tail);
+        tail.setNextNode(nextNode);
+        nextNode.setPrevNode(tail);
         this.tail = tail;        
     }
 
@@ -151,7 +153,6 @@ public class CircularLinkedList<E> implements List<E> {
             for (CircularNode<E> e = tail.getNextNode(); e != tail; e = e.getNextNode()) {
                 if (pos == index) {
                     size++;
-                    // CircularNode<E> tmp = e.getNextNode();
                     CircularNode<E> nuevo = new CircularNode(element);
                     e.getPrevNode().setNextNode(nuevo);
                     nuevo.setNextNode(e);
@@ -214,6 +215,8 @@ public class CircularLinkedList<E> implements List<E> {
     @Override
     public E set(int index, E element) {
         CircularNode<E> to_set = new CircularNode(element);
+        System.out.println("size: " + size);
+        System.out.println("to_set: " + to_set.getContent() + " index: " + index);
         if (index == 0) {
             setFirst(to_set);
             return element;
@@ -224,17 +227,17 @@ public class CircularLinkedList<E> implements List<E> {
             return element;
         } else {
             int pos = 0;
-            for (CircularNode<E> e = tail.getNextNode(); e != tail; e = e.getNextNode()) {
+            for (CircularNode<E> e = tail.getNextNode(); pos < size; e = e.getNextNode()) {
+                pos++;
                 if (pos == index) {
-                    size++;
-                    e.getPrevNode().setNextNode(to_set);
-                    to_set.setPrevNode(e.getPrevNode());
-                    e.getNextNode().setPrevNode(to_set);
-                    to_set.setNextNode(e.getNextNode());
-                    e = null;
+                    CircularNode<E> currentNode = e;
+
+                    currentNode.getPrevNode().setNextNode(to_set);
+                    currentNode.getNextNode().setPrevNode(to_set);
+                    to_set.setPrevNode(currentNode.getPrevNode());
+                    to_set.setNextNode(currentNode.getNextNode());                    
                     return element;
                 }
-                pos++;
             }
         }
         return null;
