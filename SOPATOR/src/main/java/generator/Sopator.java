@@ -22,24 +22,51 @@ public class Sopator {
     private final String TEMA;
     private ArrayList<String> base_palabras;
     private ArrayList<String> palabras_validas;
-    private int cantidad_validas = 0;
     private final ArrayList<Pair> directions = new ArrayList<>();
     private ArrayList<CircularLinkedList<Character>> sopa_letras = new ArrayList<>();
     
     public Sopator(int fila, int columna, String tema) {
         FILAS = fila;
         COLUMNAS = columna;
-        TEMA = tema;
-        rellenar();        
-        System.out.println(toString());
-        /*
+        TEMA = tema;    
         añadir_direcciones();
-        añadir_base_validas();
-        
+        añadir_base_validas();       
         generar();
-        */
+        System.out.println(toString());
     }
     
+    public String getABC() {
+        return ABC;
+    }
+    
+    public int getCant_Validas() {
+        return palabras_validas.size();
+    }
+    
+    public int getFilas() {
+        return FILAS;
+    }
+    
+    public int getColumnas() {
+        return COLUMNAS;
+    }
+    
+    public String getTema() {
+        return TEMA;
+    }
+    
+    public ArrayList<String> getBase_Palabras() {
+        return base_palabras;
+    }
+    
+    public ArrayList<String> getPalabras_Validas() {
+        return palabras_validas;
+    }
+    
+    public ArrayList<CircularLinkedList<Character>> getSopa_Letras() {
+        return sopa_letras;
+    }
+
     @Override
     public String toString() {
         String result = "";
@@ -68,15 +95,11 @@ public class Sopator {
     private void añadir_base_validas() {
         base_palabras = new ArrayList<>();
         String current_word;
-        String ruta = "C:\\Users\\danny\\Documents\\SOPA\\SOPATOR\\src\\" + TEMA;
-        int c = 0;
+        String ruta = "src\\" + TEMA;
         try(BufferedReader br = new BufferedReader(new FileReader(ruta + ".txt"))) {
             while((current_word = br.readLine()) != null) {
-                base_palabras.add(c, current_word);
-                System.out.println(current_word);
-                c++;
+                base_palabras.addLast(current_word);
             }
-            cantidad_validas = c;
             br.close();
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -91,26 +114,34 @@ public class Sopator {
         return ABC.charAt(getRandomNumber(ABC.length()));
     }
     
-    private void insertar_palabras_validas(int num_palabras_validas) {
-        int random_pos;
-        for(int i=0; i<num_palabras_validas; i++) {
-            random_pos = getRandomNumber(num_palabras_validas);
-            palabras_validas.add(i, base_palabras.get(random_pos));
-        }
-        
+    private String getRandomWord() {
+//        System.out.println("base palabras size: " + base_palabras.size());
+//        int r = getRandomNumber(base_palabras.size());
+//        System.out.println("random number: " + r);
+//        System.out.println("word: " + base_palabras.get(r));
+//        return base_palabras.get(r);
+        return base_palabras.get(this.getRandomNumber(base_palabras.size()));
     }
     
+    private void insertar_palabras_validas(int num_palabras_validas) {
+        palabras_validas = new ArrayList<>();
+        for(int i=0; i<num_palabras_validas; i++) {
+            palabras_validas.addLast(getRandomWord());
+        }
+    }
+        
     private void generar() {
         rellenar();
-        
-        CircularLinkedList<Character> fila = new CircularLinkedList<>();
         int num_palabras = (getRandomNumber(2)+1)*(getRandomNumber(4)+1); 
         // +1 para evitar 0
+        System.out.println("Número Random: " + num_palabras);
+        
         insertar_palabras_validas(num_palabras);
+        System.out.println(palabras_validas.toString());
 
-        tmp insercion;
+        /*
         for(int i = 0; i<palabras_validas.size(); i++) {
-            insercion = new tmp();
+            tmp insercion = new tmp();
             insercion.setX(getRandomNumber(COLUMNAS));
             insercion.setY(getRandomNumber(FILAS));
             insercion.setRANDOM_DIRECTION(
@@ -123,16 +154,19 @@ public class Sopator {
                 i--;
             }
         }
-        
+        fillChar();
+        */     
+    }
+    
+    private void fillChar() {
         for(int i = 0; i<COLUMNAS; i++) {
-            fila = sopa_letras.get(i);
+            CircularLinkedList<Character> fila = sopa_letras.get(i);
             for(int j = 0; j<FILAS; j++) {
                 if (fila.get(j) == '*') {
                     fila.set(j, getRandomChar());
                 }
             }
             sopa_letras.addLast(fila);
-            fila.clear();
         }
     }
     
@@ -145,7 +179,6 @@ public class Sopator {
             }
             sopa_letras.addLast(tmp);
         }
-        System.out.println(toString());
     }
 
     private boolean validar_insercion(tmp insert) {

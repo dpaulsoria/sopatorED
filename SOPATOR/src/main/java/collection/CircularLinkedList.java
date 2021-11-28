@@ -193,7 +193,6 @@ public class CircularLinkedList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        System.out.println("Index: " + index);
         if (index >= size) {
             return null;
         } else if (index == 0) {
@@ -202,7 +201,7 @@ public class CircularLinkedList<E> implements List<E> {
             return tail.getContent();
         } else {
             int pos = 0;
-            for (CircularNode<E> e = tail.getNextNode(); e != tail; e = e.getNextNode()) {
+            for (CircularNode<E> e = tail.getNextNode(); pos < size; e = e.getNextNode()) {
                 if (index == pos) {
                     return e.getContent();
                 }
