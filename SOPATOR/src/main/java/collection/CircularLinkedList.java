@@ -196,22 +196,12 @@ public class CircularLinkedList<E> implements List<E> {
         System.out.println("Index: " + index);
         if (index >= size) {
             return null;
-        }
-        int pos = 0;
-        
-        for (CircularNode<E> e = tail.getNextNode(); e != tail; e = e.getNextNode()) {
-            if (index == pos) {
-                return e.getContent();
-            }
-            pos++;
-        }
-        
-        /*
-        if (index == 0) {
+        } else if (index == 0) {
             return tail.getNextNode().getContent();
-        } else if (index == size - 1) {
+        } else if (index == size-1) {
             return tail.getContent();
         } else {
+            int pos = 0;
             for (CircularNode<E> e = tail.getNextNode(); e != tail; e = e.getNextNode()) {
                 if (index == pos) {
                     return e.getContent();
@@ -219,7 +209,6 @@ public class CircularLinkedList<E> implements List<E> {
                 pos++;
             }
         }
-        */
         return null;
     }
 
