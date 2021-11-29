@@ -1,11 +1,9 @@
 package espol.sopator2;
 
-import collection.ArrayList;
 import generator.Sopator;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,19 +18,21 @@ public class PrimaryController implements Initializable {
     @FXML
     private TextField columnas;
     @FXML
-    private ComboBox cbox;
+    private ComboBox<String> cbox;
     @FXML
     private Button primaryButton;
+    private int f, c;
     
     private void formatosTextfield() {
-        filas.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[1-9]+"))? condicion: null ));
-        columnas.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[1-9]+"))? condicion: null ));
+        filas.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[0-9]{0,2}")) ? condicion:null));
+        columnas.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[0-9]{0,2}")) ? condicion:null));
     }
     
     private void setComboBoxRol() {
-        ArrayList<String> lista = new ArrayList<>();
-        lista.addLast("ANIMALES"); lista.addLast("COLORES");
-        cbox.setItems(FXCollections.observableArrayList(lista));
+        cbox = new ComboBox<>();
+        cbox.getItems().add("ANIMALES");
+        cbox.getItems().add("COLORES");
+        cbox.getItems().add("CIUDADES");
     }
     
     @Override
@@ -41,10 +41,21 @@ public class PrimaryController implements Initializable {
         setComboBoxRol();
     }
     
+    private boolean getData() {
+        f = Integer.valueOf(filas.getText());
+        c = Integer.valueOf(columnas.getText());
+        return !(f < 1 || c < 1);
+    }
+    
     @FXML
     private void switchToSecondary() throws IOException {
-        Sopator sp = new Sopator(10,10,"ANIMALES");
-        System.out.println(sp.toString());
+        System.out.println(cbox.getValue());
+        if (getData()) {
+            Sopator sp = new Sopator(f,c,cbox.getValue());
+            System.out.println(sp.toString());
+        } else {
+            
+        }
         App.setRoot("secondary");
     }
 }

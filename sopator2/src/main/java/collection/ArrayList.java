@@ -179,15 +179,19 @@ public class ArrayList<E> implements List<E> {
     
     @Override
     public String toString() {
-        String result = "";
-        for (int i = 0; i < this.effectiveSize; i++) {
-            if (i == this.effectiveSize-1) {
-                result += this.elements[i].toString();
-            } else {
-                result += this.elements[i].toString() + ", ";
-            }
+        Iterator<E> it = iterator();
+        if (! it.hasNext())
+            return "[]";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (;;) {
+            E e = it.next();
+            sb.append(e == this ? "(this Collection)" : e);
+            if (! it.hasNext())
+                return sb.append(']').toString();
+            sb.append(',').append(' ');
         }
-        return result;
     }
     
     // Position porque la función recibe la posición en la que quiere insertar, pero no el índice
