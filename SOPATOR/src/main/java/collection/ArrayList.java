@@ -126,6 +126,7 @@ public class ArrayList<E> implements List<E> {
             }
             elements[index] = element;
             effectiveSize++;
+            return true;
         }
         return false;
     }
@@ -169,13 +170,10 @@ public class ArrayList<E> implements List<E> {
             return null;
         } else if (this.isEmpty()) {
             this.elements[this.effectiveSize] = element;
-            this.effectiveSize++;
-            return this.elements[this.effectiveSize];
+            return element;
         }
-        E tmp = this.elements[index];
         this.elements[index] = element;
-        this.effectiveSize++;
-        return tmp;
+        return element;
     }
     
     

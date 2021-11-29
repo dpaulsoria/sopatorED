@@ -66,6 +66,16 @@ public class Sopator {
         return sopa_letras;
     }
 
+    public void desplazarFila(int fila, int des) {
+        int i = 1;
+        for(CircularLinkedList<Character> c:sopa_letras) {
+            if (i == fila) {
+                c.desplazar(des);
+            }
+            i++;
+        }
+    }
+    
     public void añadirFila() {
         FILAS++;
         CircularLinkedList<Character> filaNueva = new CircularLinkedList<>();

@@ -12,7 +12,8 @@ public class PrimaryController {
             Sopator sp = new Sopator(10, 10, "ANIMALES");
             System.out.println(sp.toString() + "\n");
             sp.añadirFila();
-            sp.añadirColumna();
+            sp.desplazarFila(2, 2);
+            //sp.añadirColumna();
             System.out.println(sp.toString());
         } catch(Exception e) {
             System.out.println(e);

@@ -48,11 +48,15 @@ public class CircularLinkedList<E> implements List<E> {
         if (n > 0) {
             Iterator<E> it = this.iterator();
             ArrayList<E> array = new ArrayList<>();
+            
+            for(int i = 0; i<this.size(); i++) {
+                array.addLast(tail.getContent());
+            }
             int i = 0;
             while(it.hasNext()) {
-                array.add(n, it.next());
+                array.set(n, it.next());
                 if (n == this.size()-1) {
-                    array.add(i, it.next());
+                    array.set(i, it.next());
                     i++;
                 } else {
                      n++;
@@ -62,6 +66,9 @@ public class CircularLinkedList<E> implements List<E> {
             for(E e:array) {
                 header.setContent(e);
                 header = header.getNextNode();
+                if (header == tail.getNextNode()) {
+                    break;
+                }
             }
             
         }
