@@ -44,6 +44,30 @@ public class CircularLinkedList<E> implements List<E> {
         tail.getNextNode().setContent(first.getContent());
     }
     
+    public void desplazar(int n) {
+        if (n > 0) {
+            Iterator<E> it = this.iterator();
+            ArrayList<E> array = new ArrayList<>();
+            int i = 0;
+            while(it.hasNext()) {
+                array.add(n, it.next());
+                if (n == this.size()-1) {
+                    array.add(i, it.next());
+                    i++;
+                } else {
+                     n++;
+                }
+            }
+            CircularNode<E> header = tail.getNextNode();
+            for(E e:array) {
+                header.setContent(e);
+                header = header.getNextNode();
+            }
+            
+        }
+    }
+    
+    
     @Override
     public boolean isEmpty() {
        return (this.size == 0);

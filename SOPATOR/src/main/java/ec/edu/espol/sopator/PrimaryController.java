@@ -10,6 +10,9 @@ public class PrimaryController {
     private void switchToSecondary() throws IOException {
         try {
             Sopator sp = new Sopator(10, 10, "ANIMALES");
+            System.out.println(sp.toString() + "\n");
+            sp.añadirFila();
+            sp.añadirColumna();
             System.out.println(sp.toString());
         } catch(Exception e) {
             System.out.println(e);
