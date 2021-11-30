@@ -6,3 +6,4 @@
 
 * Danny Paul Soria
 * Jorge Nicolás Carrasco
+* Juan Carlos Gallo Muñoz
