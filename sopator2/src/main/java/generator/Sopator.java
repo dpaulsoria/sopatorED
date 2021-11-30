@@ -31,6 +31,7 @@ public class Sopator {
         TEMA = tema;    
         añadir_direcciones();
         añadir_base_validas();       
+        System.out.println(base_palabras.toString());
         generar();
     }
     
@@ -93,6 +94,15 @@ public class Sopator {
             tmp.addLast(getRandomChar());
         }
     }
+    public void eliminarFila(int fila) {
+        sopa_letras.remove(fila-1);
+    }
+    
+    public void eliminarColumna(int columna) {
+        for (int i = 0; i<sopa_letras.size(); i++) {
+            sopa_letras.get(i).remove(columna-1);
+        }
+    }
     
     @Override
     public String toString() {
@@ -145,13 +155,23 @@ public class Sopator {
         return base_palabras.get(this.getRandomNumber(base_palabras.size()));
     }
     
+    private boolean palabraRepetida(String word) {
+        return palabras_validas.contains(word);
+    }
+    
     private void insertar_palabras_validas(int num_palabras_validas) {
         palabras_validas = new ArrayList<>();
-        String random_word;
+        String random_word; int size;
+        
         for(int i=0; i<num_palabras_validas; i++) {
             random_word = getRandomWord();
-            if (random_word.length() <= FILAS - 1 || random_word.length() <= COLUMNAS - 1) {
-                palabras_validas.addLast(getRandomWord());
+            size = random_word.length();
+            if (palabraRepetida(random_word)) {
+                i--;
+            } else {
+                if (size <= FILAS-3 || size <= COLUMNAS-3) {
+                    palabras_validas.addLast(random_word);
+                } 
             }
         }
     }
@@ -179,9 +199,24 @@ public class Sopator {
         }
     }
     
+    private int convertPar(int n) {
+        if (n%2 == 0) {
+            // Es par
+            return n;
+        } else {
+            return n+1;
+        }
+    }
+    
+    private int getNumPalabras() {
+        return (base_palabras.size() > FILAS ? 
+                convertPar(FILAS)/2:base_palabras.size()-4);
+    }
+    
     private void generar() {
-        rellenar();
-        int num_palabras = (getRandomNumber(2)+1)*(getRandomNumber(4)+1); 
+        rellenar();        
+        
+        int num_palabras = getNumPalabras(); 
         // +1 para evitar 0
         
         insertar_palabras_validas(num_palabras);
@@ -206,13 +241,13 @@ public class Sopator {
         System.out.println(toString());
         fillChar();
     }
-
+    
     private boolean validar_insercion(tmp insert) {
         String palabra = insert.getRANDOM_WORD();
         int pos_x = insert.getX();
         int pos_y = insert.getY();
-        Pair direction = insert.getRANDOM_DIRECTION();
-                
+        Pair direction = insert.getRANDOM_DIRECTION();   
+
         int len = palabra.length();
         int dirX = direction.getX();
         int dirY = direction.getY();

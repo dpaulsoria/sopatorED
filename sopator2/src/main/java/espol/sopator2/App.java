@@ -34,5 +34,14 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
+    public static FXMLLoader loadFXMLLoad(String fxml) {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        return fxmlLoader;
+    }
+    
+    public static void setRoot(FXMLLoader fxml) throws IOException {
+        scene.setRoot(fxml.load());
+    }
 
 }

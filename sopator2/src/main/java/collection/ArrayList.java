@@ -351,5 +351,15 @@ public class ArrayList<E> implements List<E> {
         return tmp;
     }
 
+    public boolean contains(String word) {
+        int times = 0;
+        for(E e:this) {
+            if (e.toString().equals(word)) {
+                times++;
+            }
+        }
+        return (times!=0);
+    }
+
 }
 

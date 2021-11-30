@@ -187,6 +187,19 @@ public class CircularLinkedList<E> implements List<E> {
         }
         return false;
     }
+    
+    private E unlink(CircularNode<E> cn) {
+        CircularNode<E> prevNode = cn.getPrevNode();
+        CircularNode<E> nextNode = cn.getNextNode();
+        if (prevNode != null) {
+            return nextNode.setPrevNode(prevNode);
+        }
+        if (nextNode != null) {
+            return prevNode.setNextNode(nextNode);
+        }
+        return cn.getContent();
+    }
+    
     @Override
     public E remove(int index) {
     if (isEmpty()) {
@@ -204,8 +217,7 @@ public class CircularLinkedList<E> implements List<E> {
         int pos = 0;
         for (CircularNode<E> e = tail.getNextNode(); e.getNextNode() != tail; e = e.getNextNode()) {
             if (pos == index) {
-                e.getPrevNode().setNextNode(e.getNextNode());
-                e.getNextNode().setPrevNode(e.getPrevNode());
+                unlink(e);
                 size--;
                 return e.getContent();
             }

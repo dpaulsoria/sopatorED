@@ -38,12 +38,14 @@ public class CircularNode<E> {
         return this.prevNode;
     }
     
-    public void setPrevNode(CircularNode<E> prevNode) {
+    public E setPrevNode(CircularNode<E> prevNode) {
         this.prevNode = prevNode;
+        return prevNode.getContent();
     }
     
-    public void setNextNode(CircularNode<E> nextNode) {
+    public E setNextNode(CircularNode<E> nextNode) {
         this.nextNode = nextNode;
+        return nextNode.getContent();
     }
     
 }
