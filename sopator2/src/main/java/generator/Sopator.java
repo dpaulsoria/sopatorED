@@ -9,7 +9,6 @@ import collection.ArrayList;
 import collection.CircularLinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Iterator;
 
 /**
  *
@@ -24,6 +23,7 @@ public class Sopator {
     private ArrayList<String> palabras_validas;
     private final ArrayList<Pair> directions = new ArrayList<>();
     private ArrayList<CircularLinkedList<Character>> sopa_letras = new ArrayList<>();
+    private ArrayList<Pair> posicionesAleatorias = new ArrayList<>();
     
     public Sopator(int fila, int columna, String tema) {
         FILAS = fila;
@@ -65,6 +65,23 @@ public class Sopator {
     
     public ArrayList<CircularLinkedList<Character>> getSopa_Letras() {
         return sopa_letras;
+    }
+    
+    public void reorganizarAleatorias() {
+        Pair posicion;
+         for(int f = 0; f<FILAS; f++) {
+            CircularLinkedList<Character> fila = sopa_letras.get(f);
+            for(int c = 0; c<COLUMNAS; c++) {
+                posicion = new Pair(f, c);
+                if (posicionesAleatorias.contains(posicion)) {
+                    fila.set(c, getRandomChar());
+                }
+            }
+        }
+    }
+    
+    public Character getLetra(int fila, int columna) {
+        return sopa_letras.get(fila).get(columna);
     }
 
     public void desplazarFila(int fila, int des) {
@@ -180,9 +197,10 @@ public class Sopator {
         Character toReplace = '*';
         for(int f = 0; f<FILAS; f++) {
             CircularLinkedList<Character> fila = sopa_letras.get(f);
-            for(int i = 0; i<COLUMNAS; i++) {
-                if (fila.get(i).equals(toReplace)) {
-                    fila.set(i, getRandomChar());
+            for(int c = 0; c<COLUMNAS; c++) {
+                if (fila.get(c).equals(toReplace)) {
+                    posicionesAleatorias.addLast(new Pair(f, c));
+                    fila.set(c, getRandomChar());
                 }
             }
         }

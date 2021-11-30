@@ -46,7 +46,7 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="tema" prefHeight="25.0" prefWidth="136.0" text="ANIMALES;COLORES;CIUDADES">
+            <TextField fx:id="tema" prefHeight="25.0" prefWidth="136.0">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>

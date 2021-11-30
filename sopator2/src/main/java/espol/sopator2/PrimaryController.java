@@ -65,10 +65,8 @@ public class PrimaryController implements Initializable {
         try {
             FXMLLoader fxml = App.loadFXMLLoad("secondary");
             App.setRoot(fxml);
-            if (sp != null && sp.getColumnas() == c && sp.getFilas() == f) {
-                SecondaryController sc = fxml.getController();
-                sc.setSopator(sp);
-            }
+            SecondaryController sc = fxml.getController();
+            sc.setSopator(sp);
         } catch (IOException e) {
             Alert a = new Alert(AlertType.ERROR, e.toString());
             a.show();
