@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -39,20 +40,26 @@
             </TextField>
          </children>
       </HBox>
-      <HBox prefHeight="40.0" prefWidth="200.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tema" wrappingWidth="38.671875">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-            <TextField fx:id="tema" prefHeight="25.0" prefWidth="136.0">
-               <HBox.margin>
-                  <Insets left="15.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-      </HBox>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tema" wrappingWidth="38.671875">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <RadioButton fx:id="animales" mnemonicParsing="false" onAction="#temaAnimales" text="Animales">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="ciudades" mnemonicParsing="false" onAction="#temaCiudades" text="Ciudades">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="colores" mnemonicParsing="false" onAction="#temaColores" text="Colores">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </RadioButton>
       <Button fx:id="primaryButton" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="30.0" prefWidth="165.0" style="-fx-background-color: #2B59B9;" text="Generar sopa" textFill="WHITE">
          <font>
             <Font size="15.0" />

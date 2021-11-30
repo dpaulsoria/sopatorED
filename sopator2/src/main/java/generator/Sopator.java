@@ -67,6 +67,11 @@ public class Sopator {
         return sopa_letras;
     }
     
+    public void reemplazarLetra(int y, int x, Character letra) {
+        CircularLinkedList<Character> fila = sopa_letras.get(y);
+        fila.set(x, letra);
+    }
+    
     public void reorganizarAleatorias() {
         Pair posicion;
          for(int f = 0; f<FILAS; f++) {

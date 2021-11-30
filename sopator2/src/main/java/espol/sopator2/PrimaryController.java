@@ -15,8 +15,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.input.MouseEvent;
 
 public class PrimaryController implements Initializable {
 
@@ -25,7 +27,11 @@ public class PrimaryController implements Initializable {
     @FXML
     private TextField columnas;
     @FXML
-    private TextField tema;
+    private RadioButton animales;
+    @FXML
+    private RadioButton ciudades;
+    @FXML
+    private RadioButton colores;
     @FXML
     private Button primaryButton;
     private int f;
@@ -38,11 +44,31 @@ public class PrimaryController implements Initializable {
     }
     
     private void setTema() {
-        if (tema.getText() == null) {
-            Alert a = new Alert(AlertType.WARNING, "Eliga un tema: \"ANIMALES\", \"CIUDADES\", \"COLORES\""); a.show();
-        } else {
-            t = tema.getText();
+        if (!someTopicIsSelected()) {
+            Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); a.show();
         }
+    }
+    
+    private boolean someTopicIsSelected() {
+        return (animales.isSelected() || ciudades.isSelected() || colores.isSelected());
+    }
+    
+    public void temaAnimales() {
+        ciudades.setSelected(false);
+        colores.setSelected(false);
+        t = "ANIMALES";
+    }
+    
+    public void temaCiudades() {
+        animales.setSelected(false);
+        colores.setSelected(false);
+        t = "CIUDADES";
+    }
+        
+    public void temaColores() {
+        ciudades.setSelected(false);
+        animales.setSelected(false);
+        t = "COLORES";
     }
     
     @Override
@@ -61,6 +87,9 @@ public class PrimaryController implements Initializable {
     private void switchToSecondary() throws IOException {
         getData();
         setTema();
+        if (t == null) {
+            Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); a.show();
+        }
         Sopator sp = new Sopator(f,c,t);
         try {
             FXMLLoader fxml = App.loadFXMLLoad("secondary");
