@@ -2,7 +2,6 @@ package espol.sopator2;
 
 //import collection.CircularLinkedList;
 import collection.CircularLinkedList;
-import collection.CircularNode;
 import generator.Sopator;
 import java.io.IOException;
 import java.net.URL;
@@ -80,6 +79,8 @@ public class PrimaryController implements Initializable {
         for (int i = 0; i<10; i++) {
             c.addLast(i);
         }
+        System.out.println(c.toString());
+        
         c.addFirst(3);
         c.addLast(3);
         c.set(3, 4);

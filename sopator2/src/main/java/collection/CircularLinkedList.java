@@ -78,10 +78,13 @@ public class CircularLinkedList<E> implements List<E> {
             tail = new_first;
             tail.setNextNode(tail);
             tail.setPrevNode(tail);
+
         } else {
-            tail.getNextNode().setPrevNode(new_first);
-            new_first.setNextNode(tail.getNextNode());
-            tail.setNextNode(new_first);
+            CircularNode<E> currentFirst = tail.getNextNode();;
+            tail.setNextNode(new_first); // Tail -> New First
+            new_first.setPrevNode(tail); // Tail <- New First
+            new_first.setNextNode(currentFirst); // New First -> Current First
+            currentFirst.setPrevNode(new_first); // Current First <- New First
         }
         size++;
         return true;
@@ -118,65 +121,43 @@ public class CircularLinkedList<E> implements List<E> {
     public E removeFirst() {
         if (isEmpty()) {
             return null;
-        }
-        E first = tail.getNextNode().getContent();
-        tail.setNextNode(tail.getNextNode().getNextNode());
-        tail.getNextNode().getNextNode().setPrevNode(tail);
-        size--;
-        if (size == 1) {
-            E tmp = tail.getContent();
+        } else if (size == 1) {
+            E tmp = tail.getNextNode().getContent();
+            tail.setContent(null);
             tail = null;
             size--;
             return tmp;
+        } else {
+            CircularNode<E> currentFirst = tail.getNextNode();
+            CircularNode<E> nextHeader = tail.getNextNode().getNextNode();
+            tail.setNextNode(nextHeader);
+            nextHeader.setPrevNode(tail);
+            size--;
+            return currentFirst.getContent();
         }
-        return first;
     }
     @Override
     public E removeLast() {
         if (isEmpty()) {
             return null;
-        }
-        if (size == 1) {
+        } else if (size == 1) {
             E tmp = tail.getContent();
+            tail.setContent(null);
             tail = null;
             size--;
             return tmp;
+        } else {
+            CircularNode<E> currentLast = tail;
+            CircularNode<E> header = tail.getNextNode();
+            CircularNode<E> prevLast = tail.getPrevNode();
+            prevLast.setNextNode(header);
+            header.setPrevNode(prevLast);
+            tail = prevLast;            
+            size--;
+            return currentLast.getContent();
         }
-        CircularNode<E> new_last = tail.getPrevNode();
-        E tmp = tail.getContent();
-        new_last.setNextNode(tail.getNextNode());
-        tail.getNextNode().setPrevNode(new_last);
-        tail = new_last;
-        size--;
-        return tmp;
     }
-    @Override
-    public E remove(int index) {
-    if (isEmpty()) {
-            return null;
-        }
-        if (index > size || index < 0) {
-            return null;
-        }
-        if (index == size - 1) {
-            return removeLast();
-        }
-        if (index == 0) {
-            return removeFirst();
-        }
-        int pos = 0;
-        for (CircularNode<E> e = tail.getNextNode(); pos<size; e = e.getNextNode()) {
-            if (pos == index) {
-                E tmp = e.getContent();
-                e.getPrevNode().setNextNode(e.getNextNode());
-                e.getNextNode().setPrevNode(e.getPrevNode());
-                size--;
-                return tmp;
-            }
-            pos++;
-        }
-        return null;
-    }
+
     @Override
     public boolean add(int index, E element) {
         if (index == 0) {
@@ -186,25 +167,46 @@ public class CircularLinkedList<E> implements List<E> {
         } else if (index == size) {
             return addLast(element);
         } else {
-            CircularNode<E> nuevo = new CircularNode(element);
-            CircularNode<E> current = getNode(index);
-            current.getPrevNode().setNextNode(nuevo);
-            nuevo.setNextNode(current);
-            nuevo.setPrevNode(current.getPrevNode());
-            current.setPrevNode(nuevo);
+            CircularNode<E> newNode = new CircularNode(element);
+            CircularNode<E> currentNode = getNode(index);
+            CircularNode<E> prevNode = getNode(index-1);
+            prevNode.setNextNode(newNode); // Prev Node -> New Node
+            newNode.setPrevNode(prevNode); // Prev Node <- New Node
+            newNode.setNextNode(currentNode); // New Node -> Current Node
+            currentNode.setPrevNode(newNode); // New Node <- Current Node
+            size++;
             return true;
-//            int pos = 0;
-//            for (CircularNode<E> e = tail.getNextNode(); pos<size; e = e.getNextNode()) {
-//                if (pos == index) {
-//                    size++;
-//                    e.getPrevNode().setNextNode(nuevo);
-//                    nuevo.setNextNode(e);
-//                    nuevo.setPrevNode(e.getPrevNode());
-//                    e.setPrevNode(nuevo);
-//                    return true;
-//                }
-//                pos++;
-//            }
+        }
+    }
+    
+    
+//    private E unlink(CircularNode<E> cn) {
+//        CircularNode<E> prevNode = cn.getPrevNode();
+//        CircularNode<E> nextNode = cn.getNextNode();
+//        if (prevNode != null) {
+//            return nextNode.setPrevNode(prevNode);
+//        }
+//        if (nextNode != null) {
+//            return prevNode.setNextNode(nextNode);
+//        }
+//        return cn.getContent();
+//    }
+    
+    @Override
+    public E remove(int index) {
+        if (isEmpty() || index > size || index < 0) {
+            return null;
+        } else if (index == size - 1) {
+            return removeLast();
+        } else if (index == 0) {
+            return removeFirst();
+        } else {
+            CircularNode<E> currentNode = getNode(index);
+            CircularNode<E> prevNode = currentNode.getPrevNode();
+            CircularNode<E> nextNode = currentNode.getNextNode();
+            prevNode.setNextNode(nextNode);
+            nextNode.setPrevNode(prevNode);
+            return currentNode.getContent();
         }
     }
 
@@ -227,6 +229,7 @@ public class CircularLinkedList<E> implements List<E> {
 //            }
 //        }
 //        return null;
+
     }
 
     @Override
@@ -235,24 +238,16 @@ public class CircularLinkedList<E> implements List<E> {
         if (index == 0) {
             setFirst(to_set);
             return element;
-        } else if (index > size || index < 0) {
+        } else if (index > size || index < 0 || element == null) {
             return null;
         } else if (index == size - 1) {
             setLast(to_set);
             return element;
         } else {
-            int pos = 0;
-            CircularNode<E> current = tail.getNextNode();
-            while(pos < size) {
-                if (pos == index) {
-                    current.setContent(element);
-                    return element;
-                }     
-                pos++;
-                current = current.getNextNode();
-            }
+            CircularNode<E> current = getNode(index);
+            current.setContent(element);
+            return element;
         }
-        return null;
     }
 
     @Override
