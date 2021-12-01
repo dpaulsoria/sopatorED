@@ -189,7 +189,7 @@ public class Sopator {
         for(int f = 0; f<FILAS; f++) {
             CircularLinkedList<Letra> fila = sopa_letras.get(f);
             for(int c = 0; c<COLUMNAS; c++) {
-                if (fila.get(c).equals(toReplace)) {
+                if (!fila.get(c).equals(toReplace)) {
                     fila.set(c, new Letra(getRandomChar()));
                 }
             }
