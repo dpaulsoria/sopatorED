@@ -32,8 +32,4 @@ public interface List<E> extends Iterable<E> {
     public E get(int index); // retorna el elemento ubicado en la posición index
 
     public E set(int index, E element); // setea el element en la posición index
-    
-    public E insertAt(E[] elements, int position);
-    
-    List<E> findAll(Comparator<E> cmp, E e);
 }

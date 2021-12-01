@@ -25,14 +25,21 @@ public class Sopator {
     private ArrayList<CircularLinkedList<Character>> sopa_letras = new ArrayList<>();
     private ArrayList<Pair> posicionesAleatorias = new ArrayList<>();
     
-    public Sopator(int fila, int columna, String tema) {
+    public Sopator(int fila, int columna, String tema, int modo) {
         FILAS = fila;
         COLUMNAS = columna;
         TEMA = tema;    
-        añadir_direcciones();
-        añadir_base_validas();       
-        System.out.println(base_palabras.toString());
-        generar();
+        añadir_base_validas(); 
+        if (modo == 1) {
+            añadir_direcciones();            
+            System.out.println(base_palabras.toString());
+            generar();
+        } else if (modo == 0) {
+            rellenar();
+            System.out.println(toString());
+            rellenarAleatoriamente();
+            System.out.println(toString());
+        }
     }
     
     public String getABC() {
@@ -221,6 +228,19 @@ public class Sopator {
         }
     }
     
+    private void rellenarAleatoriamente() {
+        Character toReplace = '*';
+        for(int f = 0; f<FILAS; f++) {
+            CircularLinkedList<Character> fila = sopa_letras.get(f);
+            for(int c = 0; c<COLUMNAS; c++) {
+                if (fila.get(c).equals(toReplace)) {
+                    Character w = getRandomChar();
+                    System.out.println("c: " + c + " rc: " + w);
+                    fila.set(c, w);
+                }
+            }
+        }
+    }
     private void rellenar() {
         Character c = '*';
         for(int i = 0; i<FILAS; i++) {

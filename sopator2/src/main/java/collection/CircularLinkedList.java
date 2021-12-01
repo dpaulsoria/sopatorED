@@ -73,43 +73,41 @@ public class CircularLinkedList<E> implements List<E> {
     
     @Override
     public boolean addFirst(E e) {
-       CircularNode<E> new_first = new CircularNode(e);
-        if (isEmpty()) {
-            tail = new_first;
-            tail.setNextNode(tail);
-            tail.setPrevNode(tail);
-
-        } else {
-            CircularNode<E> currentFirst = tail.getNextNode();;
-            tail.setNextNode(new_first); // Tail -> New First
-            new_first.setPrevNode(tail); // Tail <- New First
-            new_first.setNextNode(currentFirst); // New First -> Current First
-            currentFirst.setPrevNode(new_first); // Current First <- New First
+       if(e != null){
+            if(size() == 0) tail = new CircularNode(e);
+            else {
+                CircularNode<E> currentFirst = new CircularNode(e);
+                currentFirst.setNextNode(tail.getNextNode());
+                currentFirst.setPrevNode(tail);
+                tail.getNextNode().setPrevNode(currentFirst);
+                tail.setNextNode(currentFirst);
+            }
+            return true;
         }
-        size++;
-        return true;
+        return false;
     }
 
     @Override
     public boolean addLast(E e) {
-        CircularNode<E> new_last = new CircularNode(e);
-        if (isEmpty()) {            
-            tail = new_last;
-            tail.setNextNode(tail);
-            tail.setPrevNode(tail);
-        }else {
-            tail.getNextNode().setPrevNode(new_last);
-            new_last.setNextNode(tail.getNextNode());
-            tail.setNextNode(new_last);
-            tail = new_last;            
-        }
-        size++;
-        return true;
+        if (addFirst(e)) {
+            tail = tail.getNextNode();
+            return true;
+        } else return false;
     }
 
     @Override
     public int size() {
-    return size;
+        int c = 0; // Contador para el size
+        if (tail != null)
+            c = 1;
+        else return c;
+        
+        CircularNode<E> cursor = tail.getNextNode();
+        while(cursor != tail){
+            cursor = cursor.getNextNode();
+            c++;
+        }
+        return c;
     }
 
     @Override
@@ -119,175 +117,92 @@ public class CircularLinkedList<E> implements List<E> {
     }
     @Override
     public E removeFirst() {
-        if (isEmpty()) {
+        if(isEmpty())
             return null;
-        } else if (size == 1) {
-            E tmp = tail.getNextNode().getContent();
-            tail.setContent(null);
-            tail = null;
-            size--;
-            return tmp;
-        } else {
-            CircularNode<E> currentFirst = tail.getNextNode();
-            CircularNode<E> nextHeader = tail.getNextNode().getNextNode();
-            tail.setNextNode(nextHeader);
-            nextHeader.setPrevNode(tail);
-            size--;
-            return currentFirst.getContent();
-        }
+        
+        CircularNode<E> head = tail.getNextNode();
+        tail.setNextNode(head.getNextNode());
+        head.getNextNode().setPrevNode(tail);
+        
+        return head.getContent();
     }
     @Override
     public E removeLast() {
-        if (isEmpty()) {
+        if(isEmpty()) 
             return null;
-        } else if (size == 1) {
-            E tmp = tail.getContent();
-            tail.setContent(null);
-            tail = null;
-            size--;
-            return tmp;
-        } else {
-            CircularNode<E> currentLast = tail;
-            CircularNode<E> header = tail.getNextNode();
-            CircularNode<E> prevLast = tail.getPrevNode();
-            prevLast.setNextNode(header);
-            header.setPrevNode(prevLast);
-            tail = prevLast;            
-            size--;
-            return currentLast.getContent();
-        }
+        
+        CircularNode<E> currentLast = tail;
+        tail.getPrevNode().setNextNode(tail.getNextNode());
+        tail.getNextNode().setPrevNode(tail.getPrevNode());
+        
+        tail = tail.getPrevNode();
+        return currentLast.getContent();
     }
 
     @Override
     public boolean add(int index, E element) {
-        if (index == 0) {
-            return addFirst(element);
-        } else if (index > size || index < 0) {
+        if(element == null)
             return false;
-        } else if (index == size) {
+        if(index > size() || index < 0)
+            return false;
+        if(index == 0) 
+            return addFirst(element);
+        if(index == size()-1) 
             return addLast(element);
-        } else {
-            CircularNode<E> newNode = new CircularNode(element);
-            CircularNode<E> currentNode = getNode(index);
-            CircularNode<E> prevNode = getNode(index-1);
-            prevNode.setNextNode(newNode); // Prev Node -> New Node
-            newNode.setPrevNode(prevNode); // Prev Node <- New Node
-            newNode.setNextNode(currentNode); // New Node -> Current Node
-            currentNode.setPrevNode(newNode); // New Node <- Current Node
-            size++;
-            return true;
-        }
+        
+        CircularNode<E> new_node = new CircularNode(element);        
+        CircularNode<E> current = getNode(index);        
+        new_node.setPrevNode(current.getPrevNode());
+        current.getPrevNode().setNextNode(new_node);
+        new_node.setNextNode(current);
+        current.setPrevNode(new_node);
+        
+        return true;
     }
-    
-    
-//    private E unlink(CircularNode<E> cn) {
-//        CircularNode<E> prevNode = cn.getPrevNode();
-//        CircularNode<E> nextNode = cn.getNextNode();
-//        if (prevNode != null) {
-//            return nextNode.setPrevNode(prevNode);
-//        }
-//        if (nextNode != null) {
-//            return prevNode.setNextNode(nextNode);
-//        }
-//        return cn.getContent();
-//    }
     
     @Override
     public E remove(int index) {
-        if (isEmpty() || index > size || index < 0) {
+        if(isEmpty() || index > size() || index < -1) 
             return null;
-        } else if (index == size - 1) {
-            return removeLast();
-        } else if (index == 0) {
+        if(index == 0) 
             return removeFirst();
-        } else {
-            CircularNode<E> currentNode = getNode(index);
-            CircularNode<E> prevNode = currentNode.getPrevNode();
-            CircularNode<E> nextNode = currentNode.getNextNode();
-            prevNode.setNextNode(nextNode);
-            nextNode.setPrevNode(prevNode);
-            return currentNode.getContent();
-        }
+        if(index == size()-1) 
+            return removeLast();
+        
+        CircularNode<E> current = getNode(index);
+        current.getPrevNode().setNextNode(current.getNextNode());
+        current.getNextNode().setPrevNode(current.getPrevNode());
+        
+        return current.getContent();
     }
 
     @Override
     public E get(int index) {
         return getNode(index).getContent();
-//        if (index >= size) {
-//            return null;
-//        } else if (index == 0) {
-//            return tail.getNextNode().getContent();
-//        } else if (index == size-1) {
-//            return tail.getContent();
-//        } else {
-//            int pos = 0;
-//            for (CircularNode<E> e = tail.getNextNode(); pos < size; e = e.getNextNode()) {
-//                if (index == pos) {
-//                    return e.getContent();
-//                }
-//                pos++;
-//            }
-//        }
-//        return null;
-
     }
 
     @Override
     public E set(int index, E element) {
-        CircularNode<E> to_set = new CircularNode(element);
-        if (index == 0) {
-            setFirst(to_set);
-            return element;
-        } else if (index > size || index < 0 || element == null) {
-            return null;
-        } else if (index == size - 1) {
-            setLast(to_set);
-            return element;
-        } else {
-            CircularNode<E> current = getNode(index);
-            current.setContent(element);
-            return element;
-        }
-    }
-
-    @Override
-    public E insertAt(E[] elements, int position) {
-        if (position == 0) {
-            for(int i=elements.length-1; i>-1; i--) {
-                addFirst(elements[i]);
-            }
-            return elements[0];
-        } else if (position > size || position < 0) {
-            return null;
-        } else if (position == size - 1) {
-            for (E element : elements) {
-                addLast(element);
-            }
-            return elements[0];
-        } else {
-            int pos = 0;
-            for (CircularNode<E> e = tail.getNextNode(); e != tail; e = e.getNextNode()) {
-                if (pos == position) {
-                    for (E element : elements) {
-                        this.add(pos, element);
-                        size++;
-                    }
-                    this.add(pos+elements.length, e.getContent());
-                    return e.getContent();
-                }
-                pos++;
-            }
-        }
-        return null;
+        if(isEmpty() || index > size() || index < 0)
+            return null;        
+        CircularNode<E> current = getNode(index);
+        E tmp = current.getContent();
+        current.setContent(element);        
+        return tmp;
     }
     
     @Override
     public String toString() {
+        if (isEmpty())
+            return "";
         String result = "";
-        Iterator<E> it = this.iterator();
-        while(it.hasNext()) {
-            result += it.next() + " ";
+        CircularNode<E> head = tail.getNextNode();
+        result += head.getContent() + " ";
+        while(head != tail) {
+            head = head.getNextNode();
+            result += head.getContent().toString() + " ";
         }
+        
         return result;
     }
 
@@ -311,28 +226,6 @@ public class CircularLinkedList<E> implements List<E> {
             }
         };
         return it;
-    }
-
-    @Override
-    public List<E> findAll(Comparator<E> cmp, E e) {
-        if (cmp == null)
-           throw new IllegalArgumentException("Comparator cannot be null");
-        List<E> container = new CircularLinkedList<>();
-        for (E item : this) {
-            if(cmp.compare(item, e) == 0)
-                container.addLast(item);
-        }
-        return container;
-    }
-
-    @Override
-    public void forEach(Consumer<? super E> action) {
-        List.super.forEach(action); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Spliterator<E> spliterator() {
-        return List.super.spliterator(); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

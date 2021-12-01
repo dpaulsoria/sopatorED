@@ -77,16 +77,17 @@ public class PrimaryController implements Initializable {
         formatosTextfield();
         CircularLinkedList<Integer> c = new CircularLinkedList<>();
         for (int i = 0; i<10; i++) {
-            c.addLast(i);
+            System.out.println("i: " + i);
+            c.add(i, i);
         }
         System.out.println(c.toString());
         
-        c.addFirst(3);
-        c.addLast(3);
-        c.set(3, 4);
-        System.out.println(c.toString());
-        c.desplazarDer();
-        System.out.println(c.toString());
+//        c.addFirst(3);
+//        c.addLast(3);
+//        c.set(5, 50000);
+//        System.out.println(c.toString());
+//        c.desplazarDer();
+//        System.out.println(c.toString());
                
     }
     
@@ -103,12 +104,13 @@ public class PrimaryController implements Initializable {
         if (t == null) {
             Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); a.show();
         }
-        Sopator sp = new Sopator(f,c,t);
+//        Sopator sp = new Sopator(f,c,t,1);
+        Sopator sp2 = new Sopator(f,c,t,0);
         try {
             FXMLLoader fxml = App.loadFXMLLoad("secondary");
             App.setRoot(fxml);
             SecondaryController sc = fxml.getController();
-            sc.setSopator(sp);
+            sc.setSopator(sp2);
         } catch (IOException e) {
             Alert a = new Alert(AlertType.ERROR, e.toString());
             a.show();

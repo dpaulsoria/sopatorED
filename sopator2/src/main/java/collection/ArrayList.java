@@ -194,31 +194,6 @@ public class ArrayList<E> implements List<E> {
         }
     }
     
-    // Position porque la función recibe la posición en la que quiere insertar, pero no el índice
-    @Override
-    public E insertAt(E[] elements, int position) {
-        int c = 0;
-        if (elements == null) {
-            return null;
-        } else if (position < 0) {
-            return null;
-        } else if (this.isEmpty()) {
-            for (E e:elements) {
-                this.elements[c] = e;
-                c++;
-            }
-            return elements[elements.length-1];
-        } else if (this.isFull()) {
-            this.addCapacity();
-        }
-        for (int i = position-1; i<this.size(); i++) {
-            this.elements[i] = this.elements[i+elements.length];
-            this.elements[i] = elements[c];
-            c++;
-        }
-        return elements[elements.length-1];
-   }
-
     @Override
     public Iterator<E> iterator() {
         Iterator it = new Iterator<E>() {
@@ -239,16 +214,6 @@ public class ArrayList<E> implements List<E> {
             
         };
         return it;
-    }
-
-    @Override
-    public void forEach(Consumer<? super E> action) {
-        List.super.forEach(action); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Spliterator<E> spliterator() {
-        return List.super.spliterator(); //To change body of generated methods, choose Tools | Templates.
     }
     
     public static ArrayList<Integer> sumarNumerosGrandes(ArrayList<Integer> list1, ArrayList<Integer> list2) {
@@ -306,16 +271,6 @@ public class ArrayList<E> implements List<E> {
         }
     }
 
-    @Override
-    public List<E> findAll(Comparator<E> cmp, E e) {
-        List<E> tmp = new ArrayList<>();
-        for (int i = 0; i < effectiveSize; i++) {
-            if (cmp.compare(e, elements[i]) == 0)
-                tmp.addLast(elements[i]);
-        }
-        return tmp;
-    }
-    
     public boolean isPalindromo() {
         final int SIZE = this.size();
         int c = 0;
