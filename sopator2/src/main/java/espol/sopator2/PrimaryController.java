@@ -1,6 +1,8 @@
 package espol.sopator2;
 
 //import collection.CircularLinkedList;
+import collection.CircularLinkedList;
+import collection.CircularNode;
 import generator.Sopator;
 import java.io.IOException;
 import java.net.URL;
@@ -74,6 +76,16 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         formatosTextfield();
+        CircularLinkedList<Integer> c = new CircularLinkedList<>();
+        for (int i = 0; i<10; i++) {
+            c.addLast(i);
+        }
+        c.addFirst(3);
+        c.addLast(3);
+        c.set(3, 4);
+        System.out.println(c.toString());
+        c.desplazarDer();
+        System.out.println(c.toString());
                
     }
     

@@ -18,8 +18,8 @@ public class CircularNode<E> {
     
     public CircularNode (E content) {
         this.content = content;
-        this.nextNode = null;
-        this.prevNode = null;
+        this.nextNode = this;
+        this.prevNode = this;
     }
 
     public E getContent() {
