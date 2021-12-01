@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
    <top>
       <AnchorPane prefHeight="58.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,7 +23,6 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="life" editable="false" layoutX="70.0" layoutY="17.0" prefHeight="25.0" prefWidth="22.0" promptText="3" />
             <Label layoutX="105.0" layoutY="16.0" text="Puntos: ">
                <font>
                   <Font size="18.0" />
@@ -41,6 +40,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
+            <Label fx:id="vidas" layoutX="68.0" layoutY="22.0" />
          </children>
       </AnchorPane>
    </top>

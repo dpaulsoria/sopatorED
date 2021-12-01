@@ -55,12 +55,9 @@ public class SecondaryController {
     private HBox top;
     @FXML
     private HBox bot;
-    @FXML
     private GridPane grid;
     @FXML
     private RadioButton desplazar;
-    @FXML
-    private TextField life;
     @FXML
     private TextField points;
     @FXML
@@ -79,6 +76,8 @@ public class SecondaryController {
     private RadioButton fila;
     @FXML
     private Button giveup;
+    @FXML
+    private Label vidas;
     
     private Scene scene;
     private Sopator sopator;
@@ -89,7 +88,6 @@ public class SecondaryController {
     private final int VGAP = 10;
     private final int HGAP = 10;
     private int cambios;
-    private int vidas;
     private int puntos;
     private final int minSize = 65;
     private double minSize_letras;
@@ -99,8 +97,10 @@ public class SecondaryController {
      */
     
     public void SecondaryController(Stage stage) {
-        generarSopa();
         this.scene = new Scene(root, 600,600);
+        vidas.setText("3");
+        generarSopa();
+        
         
         
     }
