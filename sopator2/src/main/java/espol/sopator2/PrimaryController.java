@@ -74,9 +74,7 @@ public class PrimaryController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        formatosTextfield();
-        CircularLinkedList<Integer> c = new CircularLinkedList<>();
-     
+        formatosTextfield();     
     }
     
     private boolean getData() {
@@ -92,13 +90,12 @@ public class PrimaryController implements Initializable {
         if (t == null) {
             Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); a.show();
         }
-//        Sopator sp = new Sopator(f,c,t,1);
-        Sopator sp2 = new Sopator(f,c,t,0);
+        Sopator sp = new Sopator(f,c,t);
         try {
             FXMLLoader fxml = App.loadFXMLLoad("secondary");
             App.setRoot(fxml);
             SecondaryController sc = fxml.getController();
-            sc.setSopator(sp2);
+            sc.setSopator(sp);
         } catch (IOException e) {
             Alert a = new Alert(AlertType.ERROR, e.toString());
             a.show();

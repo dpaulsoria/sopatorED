@@ -15,36 +15,22 @@ import java.io.FileReader;
  * @author danny
  */
 public class Sopator {
-    private final String ABC = "ABCDEFGKIJKLMNOPQRSTUVWXYZ";
+    private String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private int FILAS;
     private int COLUMNAS;
     private final String TEMA;
     private ArrayList<String> base_palabras;
     private ArrayList<String> palabras_validas;
-    private final ArrayList<Pair> directions = new ArrayList<>();
     private ArrayList<CircularLinkedList<Character>> sopa_letras = new ArrayList<>();
-    private ArrayList<Pair> posicionesAleatorias = new ArrayList<>();
     
-    public Sopator(int fila, int columna, String tema, int modo) {
+    public Sopator(int fila, int columna, String tema) {
         FILAS = fila;
         COLUMNAS = columna;
-        TEMA = tema;    
-        añadir_base_validas(); 
-        if (modo == 1) {
-            añadir_direcciones();            
-            System.out.println(base_palabras.toString());
-            generar();
-        } else if (modo == 0) {
-            rellenar();
-            System.out.println(toString());
-            rellenarAleatoriamente();
-            System.out.println(toString());
-        }
+        TEMA = tema;
+        añadir_base_validas();
+        generar();
     }
-    
-    public String getABC() {
-        return ABC;
-    }
+
     
     public int getCant_Validas() {
         return palabras_validas.size();
@@ -79,16 +65,25 @@ public class Sopator {
         fila.set(x, letra);
     }
     
-    public void reorganizarAleatorias() {
-        Pair posicion;
-         for(int f = 0; f<FILAS; f++) {
-            CircularLinkedList<Character> fila = sopa_letras.get(f);
-            for(int c = 0; c<COLUMNAS; c++) {
-                posicion = new Pair(f, c);
-                if (posicionesAleatorias.contains(posicion)) {
-                    fila.set(c, getRandomChar());
-                }
+//    public void reorganizarAleatoriamente() {
+//        for(int f = 0; f<FILAS; f++) {
+//            CircularLinkedList<Character> fila = sopa_letras.get(f);
+//            for(int c = 0; c<COLUMNAS; c++) {
+//                fila.set(c, getRandomChar());
+//            }
+//        }
+//    }
+    private void añadir_base_validas() {
+        base_palabras = new ArrayList<>();
+        String current_word;
+        String ruta = "src\\" + TEMA;
+        try(BufferedReader br = new BufferedReader(new FileReader(ruta + ".txt"))) {
+            while((current_word = br.readLine()) != null) {
+                base_palabras.addLast(current_word);
             }
+            br.close();
+        } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
     
@@ -101,6 +96,7 @@ public class Sopator {
         for(CircularLinkedList<Character> c:sopa_letras) {
             if (i == fila) {
                 c.desplazarDer();
+                break;
             }
             i++;
         }
@@ -111,6 +107,7 @@ public class Sopator {
         for(CircularLinkedList<Character> c:sopa_letras) {
             if (i == fila) {
                 c.desplazarIzq();
+                break;
             }
             i++;
         }
@@ -128,9 +125,24 @@ public class Sopator {
     public void añadirColumna() {
         COLUMNAS++;        
         for (int i = 0; i<sopa_letras.size(); i++) {
-            CircularLinkedList<Character> tmp = new CircularLinkedList<>();
-            tmp = sopa_letras.get(i);
+            CircularLinkedList<Character> tmp = sopa_letras.get(i);
             tmp.addLast(getRandomChar());
+        }
+    }
+    public void añadirFila(int fila) {
+        FILAS++;
+        CircularLinkedList<Character> filaNueva = new CircularLinkedList<>();
+        for (int i = 0; i<COLUMNAS; i++) {
+            filaNueva.addLast(getRandomChar());
+        }
+        sopa_letras.add(fila, filaNueva);
+    }
+    
+    public void añadirColumna(int col) {
+        COLUMNAS++;        
+        for (int i = 0; i<sopa_letras.size(); i++) {
+            CircularLinkedList<Character> tmp = sopa_letras.get(i);
+            tmp.add(col, getRandomChar());
         }
     }
     public void eliminarFila(int fila) {
@@ -157,31 +169,6 @@ public class Sopator {
         return result;
     }
     
-    private void añadir_direcciones() {
-        directions.addLast(new Pair(1 , 0));
-        directions.addLast(new Pair(1 ,-1));
-        directions.addLast(new Pair(0 ,-1));
-        directions.addLast(new Pair(-1,-1));
-        directions.addLast(new Pair(-1, 0));
-        directions.addLast(new Pair(-1, 1));
-        directions.addLast(new Pair(0 , 1));
-        directions.addLast(new Pair(1 , 1));
-    }
-    
-    private void añadir_base_validas() {
-        base_palabras = new ArrayList<>();
-        String current_word;
-        String ruta = "src\\" + TEMA;
-        try(BufferedReader br = new BufferedReader(new FileReader(ruta + ".txt"))) {
-            while((current_word = br.readLine()) != null) {
-                base_palabras.addLast(current_word);
-            }
-            br.close();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-        }
-    }
-    
     private Integer getRandomNumber(int max) { // [0, max]
         return Integer.parseInt(Math.round(Math.floor(Math.random()*max)) + "");
     }
@@ -190,57 +177,19 @@ public class Sopator {
         return ABC.charAt(getRandomNumber(ABC.length()));
     }
     
-    private String getRandomWord() {
-        return base_palabras.get(this.getRandomNumber(base_palabras.size()));
-    }
-    
-    private boolean palabraRepetida(String word) {
-        return palabras_validas.contains(word);
-    }
-    
-    private void insertar_palabras_validas(int num_palabras_validas) {
-        palabras_validas = new ArrayList<>();
-        String random_word; int size;
-        
-        for(int i=0; i<num_palabras_validas; i++) {
-            random_word = getRandomWord();
-            size = random_word.length();
-            if (palabraRepetida(random_word)) {
-                i--;
-            } else {
-                if (size <= FILAS-3 || size <= COLUMNAS-3) {
-                    palabras_validas.addLast(random_word);
-                } 
-            }
-        }
-    }
-    
     private void fillChar() {
         Character toReplace = '*';
         for(int f = 0; f<FILAS; f++) {
             CircularLinkedList<Character> fila = sopa_letras.get(f);
             for(int c = 0; c<COLUMNAS; c++) {
                 if (fila.get(c).equals(toReplace)) {
-                    posicionesAleatorias.addLast(new Pair(f, c));
                     fila.set(c, getRandomChar());
                 }
             }
         }
     }
     
-    private void rellenarAleatoriamente() {
-        Character toReplace = '*';
-        for(int f = 0; f<FILAS; f++) {
-            CircularLinkedList<Character> fila = sopa_letras.get(f);
-            for(int c = 0; c<COLUMNAS; c++) {
-                if (fila.get(c).equals(toReplace)) {
-                    Character w = getRandomChar();
-                    System.out.println("c: " + c + " rc: " + w);
-                    fila.set(c, w);
-                }
-            }
-        }
-    }
+
     private void rellenar() {
         Character c = '*';
         for(int i = 0; i<FILAS; i++) {
@@ -252,92 +201,9 @@ public class Sopator {
         }
     }
     
-    private int convertPar(int n) {
-        if (n%2 == 0) {
-            // Es par
-            return n;
-        } else {
-            return n+1;
-        }
-    }
-    
-    private int getNumPalabras() {
-        return (base_palabras.size() > FILAS ? 
-                convertPar(FILAS)/2:base_palabras.size()-4);
-    }
-    
     private void generar() {
-        rellenar();        
-        
-        int num_palabras = getNumPalabras(); 
-        // +1 para evitar 0
-        
-        insertar_palabras_validas(num_palabras);
-        System.out.println(palabras_validas.toString());
-
-        
-        for(int i = 0; i<palabras_validas.size(); i++) {
-            tmp insercion = new tmp();
-            insercion.setX(getRandomNumber(COLUMNAS));
-            insercion.setY(getRandomNumber(FILAS));
-            
-            Pair p = directions.get(getRandomNumber(directions.size()));
-            insercion.setRANDOM_DIRECTION(p);
-            insercion.setRANDOM_WORD(palabras_validas.get(i));
-                        
-            if (validar_insercion(insercion)) {
-                insertar_palabra(insercion);
-            } else {
-                i--;
-            }
-        }
-        System.out.println(toString());
+        rellenar();
         fillChar();
     }
-    
-    private boolean validar_insercion(tmp insert) {
-        String palabra = insert.getRANDOM_WORD();
-        int pos_x = insert.getX();
-        int pos_y = insert.getY();
-        Pair direction = insert.getRANDOM_DIRECTION();   
 
-        int len = palabra.length();
-        int dirX = direction.getX();
-        int dirY = direction.getY();
-        if (
-            (pos_x + len * dirX) > 0 &&
-            (pos_x + len * dirX) < COLUMNAS &&
-            (pos_y + len * dirY) > 0 &&
-            (pos_y + len * dirY) < FILAS
-        ) {
-            for (int i = 0; i<len; i++) {
-                CircularLinkedList<Character> tmp = sopa_letras.get(pos_y + i * dirY);
-                if (tmp.get(pos_x + i * dirX) == '*' ||
-                    tmp.get(pos_x + i * dirX) == palabra.charAt(i)) {
-                } else {
-                    return false;
-                }
-               
-           }
-            return true;
-        }
-        return false;
-    }
-    
-    private void insertar_palabra(tmp insert) {
-        String palabra = insert.getRANDOM_WORD();
-        int pos_x = insert.getX();
-        int pos_y = insert.getY();
-        Pair direction = insert.getRANDOM_DIRECTION();
-        
-        CircularLinkedList<Character> tmp;
-        Character c;
-        for(int i = 0; i<palabra.length(); i++) {
-            tmp = sopa_letras.get(pos_y + i * direction.getY());
-            c = tmp.get(pos_x + i * direction.getX());
-            if (c.equals('*') || c.equals(palabra.charAt(i))) {
-                tmp.set(pos_x + i * direction.getX(), palabra.charAt(i));
-            }
-        }
-    }
 }

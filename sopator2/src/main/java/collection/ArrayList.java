@@ -306,6 +306,7 @@ public class ArrayList<E> implements List<E> {
         return tmp;
     }
 
+    @Override
     public boolean contains(E element) {
         int times = 0;
         for(E e:this) {
@@ -314,6 +315,21 @@ public class ArrayList<E> implements List<E> {
             }
         }
         return (times!=0);
+    }
+
+    @Override
+    public int indexOf(E element) {
+        if (element.equals(this.elements[0])) 
+            return 0;
+        if (element.equals(this.elements[effectiveSize-1]))
+            return effectiveSize-1;
+        int c = 0;
+        for(E e:elements) {
+            if (e.equals(element))
+                return c;
+            c++;
+        }
+        return -1;
     }
 
 }

@@ -76,7 +76,6 @@ public class CircularLinkedList<E> implements List<E> {
     @Override
     public boolean addLast(E e) {
         if (addFirst(e)) {
-            System.out.println("addlast");
             tail = tail.getNextNode();
             return true;
         } else return false;

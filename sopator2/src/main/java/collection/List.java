@@ -32,4 +32,8 @@ public interface List<E> extends Iterable<E> {
     public E get(int index); // retorna el elemento ubicado en la posición index
 
     public E set(int index, E element); // setea el element en la posición index
+    
+    public boolean contains(E element);
+     
+    public int indexOf(E element);
 }
