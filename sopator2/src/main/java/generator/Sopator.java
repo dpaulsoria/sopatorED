@@ -9,6 +9,7 @@ import collection.ArrayList;
 import collection.CircularLinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import util.Letra;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Sopator {
     private final String TEMA;
     private ArrayList<String> base_palabras;
     private ArrayList<String> palabras_validas;
-    private ArrayList<CircularLinkedList<Character>> sopa_letras = new ArrayList<>();
+    private ArrayList<CircularLinkedList<Letra>> sopa_letras = new ArrayList<>();
     
     public Sopator(int fila, int columna, String tema) {
         FILAS = fila;
@@ -29,6 +30,7 @@ public class Sopator {
         TEMA = tema;
         añadir_base_validas();
         generar();
+        System.out.println(toString());
     }
 
     
@@ -56,13 +58,13 @@ public class Sopator {
         return palabras_validas;
     }
     
-    public ArrayList<CircularLinkedList<Character>> getSopa_Letras() {
+    public ArrayList<CircularLinkedList<Letra>> getSopa_Letras() {
         return sopa_letras;
     }
     
     public void reemplazarLetra(int y, int x, Character letra) {
-        CircularLinkedList<Character> fila = sopa_letras.get(y);
-        fila.set(x, letra);
+        CircularLinkedList<Letra> fila = sopa_letras.get(y);
+        fila.set(x, new Letra(letra));
     }
     
 //    public void reorganizarAleatoriamente() {
@@ -73,6 +75,7 @@ public class Sopator {
 //            }
 //        }
 //    }
+    
     private void añadir_base_validas() {
         base_palabras = new ArrayList<>();
         String current_word;
@@ -87,17 +90,17 @@ public class Sopator {
         }
     }
     
-    public Character getLetra(int fila, int columna) {
+    public Letra getLetra(int fila, int columna) {
         return sopa_letras.get(fila).get(columna);
     }
     
-    public CircularLinkedList<Character> getFila(int fila) {
+    public CircularLinkedList<Letra> getFila(int fila) {
         return sopa_letras.get(fila);
     }
 
     public void desplazarFilaDer(int fila) {
         int i = 1;
-        for(CircularLinkedList<Character> c:sopa_letras) {
+        for(CircularLinkedList<Letra> c:sopa_letras) {
             if (i == fila) {
                 c.desplazarDer();
                 break;
@@ -108,7 +111,7 @@ public class Sopator {
     
     public void desplazarFilaIzq(int fila) {
         int i = 1;
-        for(CircularLinkedList<Character> c:sopa_letras) {
+        for(CircularLinkedList<Letra> c:sopa_letras) {
             if (i == fila) {
                 c.desplazarIzq();
                 break;
@@ -119,9 +122,9 @@ public class Sopator {
     
     public void añadirFila() {
         FILAS++;
-        CircularLinkedList<Character> filaNueva = new CircularLinkedList<>();
+        CircularLinkedList<Letra> filaNueva = new CircularLinkedList<>();
         for (int i = 0; i<COLUMNAS; i++) {
-            filaNueva.addLast(getRandomChar());
+            filaNueva.addLast(new Letra(getRandomChar()));
         }
         sopa_letras.addLast(filaNueva);
     }
@@ -129,15 +132,15 @@ public class Sopator {
     public void añadirColumna() {
         COLUMNAS++;        
         for (int i = 0; i<sopa_letras.size(); i++) {
-            CircularLinkedList<Character> tmp = sopa_letras.get(i);
-            tmp.addLast(getRandomChar());
+            CircularLinkedList<Letra> tmp = sopa_letras.get(i);
+            tmp.addLast(new Letra(getRandomChar()));
         }
     }
     public void añadirFila(int fila) {
         FILAS++;
-        CircularLinkedList<Character> filaNueva = new CircularLinkedList<>();
+        CircularLinkedList<Letra> filaNueva = new CircularLinkedList<>();
         for (int i = 0; i<COLUMNAS; i++) {
-            filaNueva.addLast(getRandomChar());
+            filaNueva.addLast(new Letra(getRandomChar()));
         }
         sopa_letras.add(fila, filaNueva);
     }
@@ -145,8 +148,8 @@ public class Sopator {
     public void añadirColumna(int col) {
         COLUMNAS++;        
         for (int i = 0; i<sopa_letras.size(); i++) {
-            CircularLinkedList<Character> tmp = sopa_letras.get(i);
-            tmp.add(col, getRandomChar());
+            CircularLinkedList<Letra> tmp = sopa_letras.get(i);
+            tmp.add(col, new Letra(getRandomChar()));
         }
     }
     public void eliminarFila(int fila) {
@@ -163,7 +166,7 @@ public class Sopator {
     public String toString() {
         String result = "";
         for(int i = 0; i<sopa_letras.size(); i++) {
-            CircularLinkedList<Character> tmp = sopa_letras.get(i);
+            CircularLinkedList<Letra> tmp = sopa_letras.get(i);
             for(int j = 0; j<tmp.size(); j++) {
                 result += tmp.get(j) + " ";
                 
@@ -184,10 +187,10 @@ public class Sopator {
     private void fillChar() {
         Character toReplace = '*';
         for(int f = 0; f<FILAS; f++) {
-            CircularLinkedList<Character> fila = sopa_letras.get(f);
+            CircularLinkedList<Letra> fila = sopa_letras.get(f);
             for(int c = 0; c<COLUMNAS; c++) {
                 if (fila.get(c).equals(toReplace)) {
-                    fila.set(c, getRandomChar());
+                    fila.set(c, new Letra(getRandomChar()));
                 }
             }
         }
@@ -197,9 +200,9 @@ public class Sopator {
     private void rellenar() {
         Character c = '*';
         for(int i = 0; i<FILAS; i++) {
-            CircularLinkedList<Character> tmp = new CircularLinkedList();
+            CircularLinkedList<Letra> tmp = new CircularLinkedList();
             for(int j = 0; j<COLUMNAS; j++) {
-                tmp.addLast(c);
+                tmp.addLast(new Letra(c));
             }
             sopa_letras.addLast(tmp);
         }

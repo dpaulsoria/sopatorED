@@ -34,13 +34,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import util.Letra;
 
 /**
  * FXML Controller class
  *
  * @author danny
  */
-public class SecondaryController implements Initializable {
+public class SecondaryController {
 
     @FXML
     private AnchorPane matriz;
@@ -79,6 +80,7 @@ public class SecondaryController implements Initializable {
     @FXML
     private Button giveup;
     
+    private Scene scene;
     private Sopator sopator;
     private int filas;
     private int columnas;
@@ -96,15 +98,16 @@ public class SecondaryController implements Initializable {
      * Initializes the controller class.
      */
     
-    public void initialize(URL url, ResourceBundle rb) {
-        
+    public void SecondaryController(Stage stage) {
+        generarSopa();
+        this.scene = new Scene(root, 600,600);
         
         
     }
     public void setSopator(Sopator s) {
         this.sopator = s;
         setData();
-        
+        grid = new GridPane();
         generarSopa();
         grid.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
     }
@@ -114,206 +117,25 @@ public class SecondaryController implements Initializable {
     }
     
     public void generarSopa() {
-        //Limpio la Sopa Anterior
-        matriz.getChildren().clear();
-        left.getChildren().clear();
-        right.getChildren().clear();
-        top.getChildren().clear();
-        bot.getChildren().clear();
-
-        //Creo mi gridpane que muestra mi sopa de letras
-        grid = new GridPane();
-
-        //Obtengo mi sopa de letras que lleva el control por detras del javafx
+        for (int i = 0; i<sopator.getSopa_Letras().size(); i++) {
+            CircularLinkedList<Letra> fila = sopator.getFila(i);
+            for (int j = 0; j<fila.size(); j++) {
+                
+                grid.add(new Label(fila.get(j).toString()), j, i);
+                matriz.getChildren().add(grid);
+            }            
+        }        
+        this.scene = new Scene(root, 600,600);
+        grid.setAlignment(Pos.CENTER);
+        grid.setVgap(25);
+        grid.setHgap(50);
         
-
-        //tamaños dinámicos
-        double width = 500 / columnas;
-        double height = 500 / filas;
-        double tamaño_letra = (width >= height) ? height / 2 : width / 2;
-
-        //Recorro mi sopa por fila y columna, uso for porque es esencial guardar las coordenadas (x,y) para el gridpana
-        for (int y = 0; y < sopator.getSopa_Letras().size(); y++) {
-
-            CircularLinkedList<Character> fila = sopator.getFila(y); //Obtengo mi lista que hace de fila
-
-            int n_fila = y + 1;
-
-            //creación flechas para mover filas
-            StackPane leftArrow = crearFlechaFila(height, tamaño_letra, n_fila, "⮜", true);
-            left.getChildren().add(leftArrow);
-
-            StackPane rightArrow = crearFlechaFila(height, tamaño_letra, n_fila, "⮞", false);
-            right.getChildren().add(rightArrow);
-
-            // creación casillas con letras
-            for (int x = 0; x < fila.size(); x++) {
-
-                String letra = String.valueOf(sopator.getLetra(y,x));
-
-                StackPane pane = crearCasilla(width, height, tamaño_letra, letra);
-
-                grid.add(pane, x, y); //Agrego al gridpane el contener en la posicion X,Y
-
-            }
-        }
-
-        // Creación flechas para mover Columnas
-        for (int i = 0; i < sopator.getFila(0).size(); i++) {
-
-            int n_columna = i + 1;
-
-            StackPane down_arrow = crearFlechaColumna(width, tamaño_letra, n_columna, "⮟", false);
-            bot.getChildren().add(down_arrow);
-
-            StackPane up_arrow = crearFlechaColumna(width, tamaño_letra, n_columna, "⮝", true);
-            top.getChildren().add(up_arrow);
-        }
-
-        matriz.getChildren().add(grid);
-
-    }
-    private StackPane crearCasilla(double width, double height, double tamaño_letra, String sd) {
-
-        //Extraigo el valor del objeto letra
-        //creación letras
-        StackPane pane = new StackPane();
-        pane.setPrefSize(width, height);
-        pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
-        pane.setCursor(Cursor.HAND);
-
-        Label letra = new Label(sd); //Lo contengo en un label para mostrar
-        letra.setMouseTransparent(true);
-
-        letra.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: " + tamaño_letra + "px;");
-
-        Pane fondo = new Pane();
-        fondo.setStyle("-fx-background-color: #5169FF;");
-        fondo.setMouseTransparent(true);
-        fondo.setOpacity(0.20*5);
-        pane.setDisable(true);
-        letra.setVisible(false);
-
-        pane.getChildren().add(fondo);
-        pane.getChildren().add(letra);
-        StackPane.setAlignment(letra, Pos.CENTER);
-
-//        pane.setOnMouseClicked(t -> seleccionarLetra(fondo));
-
-        pane.setOnMouseEntered(e -> mouseEnteredLetter(pane));
-        pane.setOnMouseExited(e -> mouseExitedLetter(pane));
-        pane.setOnMousePressed(e -> mouseExitedLetter(pane));
-        pane.setOnMouseReleased(e -> mouseEnteredLetter(pane));
-
-        return pane;
-
-    }
-    private StackPane crearFlechaColumna(double width, double tamaño_letra, int n_columna, String flecha, boolean up) {
-
-        StackPane pane = new StackPane();
-        pane.setPrefSize(width, 30);
-        pane.setCursor(Cursor.HAND);
-        pane.setOpacity(0);
-
-        Label arrow = new Label(flecha);
-        arrow.setStyle("-fx-font-size: " + tamaño_letra * 0.8 + "px;");
-        arrow.setMouseTransparent(true);
-
-        pane.getChildren().add(arrow);
-        StackPane.setAlignment(arrow, Pos.CENTER);
-
-        pane.setOnMouseEntered(e -> mouseEnteredArrow(pane));
-        pane.setOnMouseExited(e -> mouseExitedArrow(pane));
-
-
-        return pane;
-    }
-    private StackPane crearFlechaFila(double height, double tamaño_letra, int n_fila, String flecha, boolean left) {
-        StackPane pane = new StackPane();
-        pane.setPrefHeight(height);
-        pane.setCursor(Cursor.HAND);
-        pane.setOpacity(0);
-
-        Label arrow = new Label(flecha);
-        arrow.setStyle("-fx-font-size: " + tamaño_letra + "px;");
-        arrow.setMouseTransparent(true);
-
-        pane.getChildren().add(arrow);
-        StackPane.setAlignment(arrow, Pos.CENTER_RIGHT);
-
-        pane.setOnMouseEntered(e -> mouseEnteredArrow(pane));
-        pane.setOnMouseExited(e -> mouseExitedArrow(pane));
-
-        if (left) {
-            pane.setOnMouseClicked(e -> moveRowBackwards(n_fila));
-        } else {
-            pane.setOnMouseClicked(e -> moveRowForward(n_fila));
-        }
-
-        return pane;
-
-    }
-
-    private void mouseEnteredLetter(StackPane p) {
-
-        p.setStyle(p.getStyle() + " -fx-background-color: #BFE1FF;");
     }
     
-   private void mouseExitedLetter(StackPane p) {
-
-        p.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;"); 
-    }
-    private void mouseEnteredArrow(StackPane p) {
-        FadeTransition f = new FadeTransition(javafx.util.Duration.millis(250), p);
-        f.setFromValue(p.getOpacity());
-        f.setToValue(1);
-        f.play();
+    public Scene getScene() {
+        return scene;
     }
 
-    private void mouseExitedArrow(StackPane p) {
-        FadeTransition f = new FadeTransition(javafx.util.Duration.millis(250), p);
-        f.setFromValue(p.getOpacity());
-        f.setToValue(0);
-        f.play();
-    }
-
-    private void moveRowForward(int n_fila) {
-        sopator.getFila(n_fila).desplazarDer();
-        refrescarSopa();
-    }
-    private void moveRowBackwards(int n_fila) {
-        sopator.getFila(n_fila).desplazarIzq();
-        refrescarSopa();
-    }
-    
-    private void refrescarSopa() {
-        generarSopa();
-        grid.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
-//        letras = new ArrayList ();
-    }
-    void AbrirVentana() {
-        VBox rootNuevaVentana = new VBox();
-        Label label = new Label();
-
-        Button b = new Button("Ok");
-
-        rootNuevaVentana.getChildren().addAll(label, b);
-        rootNuevaVentana.setAlignment(Pos.CENTER);
-        rootNuevaVentana.setSpacing(20);
-        rootNuevaVentana.setPadding(new Insets(10, 15, 10, 15));
-        Stage s = new Stage();
-        Scene sce = new Scene(rootNuevaVentana);
-        b.setOnAction(t -> s.close());
-        s.setScene(sce);
-        s.setTitle("Mensaje");
-        s.show();
-
-    }
- 
-
-    
-    
-    
 //    @Override
 //    public void initialize(URL url, ResourceBundle rb) {        
 //        cambios = 2;
