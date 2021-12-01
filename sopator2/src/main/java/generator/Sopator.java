@@ -183,7 +183,6 @@ public class Sopator {
     private Character getRandomChar() { // [0, max]
         return ABC.charAt(getRandomNumber(ABC.length()));
     }
-    
 
     private void generar() {
         for(int i = 0; i<FILAS; i++) {

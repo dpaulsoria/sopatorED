@@ -87,19 +87,26 @@ public class PrimaryController implements Initializable {
     private void switchToSecondary() throws IOException {
         getData();
         setTema();
-        if (t == null) {
-            Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); a.show();
-        }
-        Sopator sp = new Sopator(f,c,t);
-        try {
-            FXMLLoader fxml = App.loadFXMLLoad("secondary");
-            App.setRoot(fxml);
-            SecondaryController sc = fxml.getController();
-            sc.setSopator(sp);
-        } catch (IOException e) {
-            Alert a = new Alert(AlertType.ERROR, e.toString());
+        f = Integer.valueOf(filas.getText());
+        c = Integer.valueOf(columnas.getText());
+        if ( !(t == null)) {
+            try {
+                Sopator sp = new Sopator(f,c,t);
+                FXMLLoader fxml = App.loadFXMLLoad("secondary");
+                App.setRoot(fxml);
+                SecondaryController sc = fxml.getController();
+                sc.setSopator(sp);
+            } catch (IOException e) {
+                Alert a = new Alert(AlertType.ERROR, e.toString());
+                a.show();
+            }
+            App.setRoot("secondary");
+        } else{
+            Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); 
             a.show();
         }
-        App.setRoot("secondary");
+        
+
+        
     }
 }

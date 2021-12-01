@@ -55,12 +55,9 @@ public class SecondaryController {
     private HBox top;
     @FXML
     private HBox bot;
-    @FXML
     private GridPane grid;
     @FXML
     private RadioButton desplazar;
-    @FXML
-    private TextField life;
     @FXML
     private TextField points;
     @FXML
@@ -79,6 +76,8 @@ public class SecondaryController {
     private RadioButton fila;
     @FXML
     private Button giveup;
+    @FXML
+    private Label vidas;
     
     private Scene scene;
     private Sopator sopator;
@@ -89,7 +88,6 @@ public class SecondaryController {
     private final int VGAP = 10;
     private final int HGAP = 10;
     private int cambios;
-    private int vidas;
     private int puntos;
     private final int minSize = 65;
     private double minSize_letras;
@@ -99,8 +97,10 @@ public class SecondaryController {
      */
     
     public void SecondaryController(Stage stage) {
-        generarSopa();
         this.scene = new Scene(root, 600,600);
+        vidas.setText("3");
+        generarSopa();
+        
         
         
     }
@@ -138,87 +138,6 @@ public class SecondaryController {
         return scene;
     }
 
-//    @Override
-//    public void initialize(URL url, ResourceBundle rb) {        
-//        cambios = 2;
-//        vidas = 3;
-//        
-//    }
-//    
-//    private void cleanBoard() {
-//        matriz.getChildren().clear();
-//        right.getChildren().clear();
-//        left.getChildren().clear();
-//        top.getChildren().clear();
-//        bot.getChildren().clear();
-//    }
-//    
-//    private void getData() {
-//        filas = sopator.getFilas();
-//        columnas = sopator.getColumnas();
-//                
-//        //tamaños dinámicos
-//        alto = 500 / filas;
-//        ancho = 500 / columnas;
-//        if (ancho < alto)
-//            minSize_letras = ancho / 2;
-//        else
-//            minSize_letras = alto / 2;
-//
-//    }
-//
-//    private boolean isSelected(StackPane p) {
-//        return true;
-//    }
-//    
-//    public void setSopator(Sopator s) {
-//        sopator = s;
-//        cleanBoard();
-//        getData();
-//        System.out.println(s.toString());
-//        grid = new GridPane();
-//
-//        
-//        for (int f = 0; f<sopator.getSopa_Letras().size(); f++) {
-//            CircularLinkedList<Character> currentFila = sopator.getFila(f);
-//            for (int c = 0; c<currentFila.size(); c++) {
-//
-//                StackPane celda = new StackPane();
-//                Pane background = new Pane();
-//                celda.setPrefSize(500,500);
-//                celda.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
-//                celda.setCursor(Cursor.HAND);
-//
-//                Label letter = new Label(String.valueOf(sopator.getLetra(f, c)));
-//                letter.setMouseTransparent(true);
-//                
-//                celda.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: 50px;");
-//
-//                background.setStyle("-fx-background-color: #5169FF;");
-//                background.setMouseTransparent(true);
-//                
-//                celda.getChildren().add(background);
-//                celda.getChildren().add(letter);
-//                StackPane.setAlignment(letter, Pos.CENTER);
-//                grid.add(celda, c, f);
-//                
-//            }
-//        }
-//        
-//        for (int i = 0; i<columnas; i++) {
-//
-////            StackPane down_arrow = crearFlechaColumna(width, tamaño_letra, n_columna, "⮟", false);
-////            bottomHBox.getChildren().add(down_arrow);
-////
-////            StackPane up_arrow = crearFlechaColumna(width, tamaño_letra, n_columna, "⮝", true);
-////            topHBox.getChildren().add(up_arrow);
-//        }
-//        
-//        matriz.getChildren().add(grid);
-//            
-//            
-//
-//    }
 
   
     
