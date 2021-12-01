@@ -184,33 +184,14 @@ public class Sopator {
         return ABC.charAt(getRandomNumber(ABC.length()));
     }
     
-    private void fillChar() {
-        Character toReplace = '*';
-        for(int f = 0; f<FILAS; f++) {
-            CircularLinkedList<Letra> fila = sopa_letras.get(f);
-            for(int c = 0; c<COLUMNAS; c++) {
-                if (fila.get(c).equals(toReplace)) {
-                    fila.set(c, new Letra(getRandomChar()));
-                }
-            }
-        }
-    }
-    
 
-    private void rellenar() {
-        Character c = '*';
+    private void generar() {
         for(int i = 0; i<FILAS; i++) {
             CircularLinkedList<Letra> tmp = new CircularLinkedList();
             for(int j = 0; j<COLUMNAS; j++) {
-                tmp.addLast(new Letra(c));
+                tmp.addLast(new Letra(getRandomChar()));
             }
             sopa_letras.addLast(tmp);
         }
     }
-    
-    private void generar() {
-        rellenar();
-        fillChar();
-    }
-
 }

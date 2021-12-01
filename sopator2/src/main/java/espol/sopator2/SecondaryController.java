@@ -117,18 +117,20 @@ public class SecondaryController {
     }
     
     public void generarSopa() {
+        String letra;
         for (int i = 0; i<sopator.getSopa_Letras().size(); i++) {
             CircularLinkedList<Letra> fila = sopator.getFila(i);
             for (int j = 0; j<fila.size(); j++) {
-                
-                grid.add(new Label(fila.get(j).toString()), j, i);
-                matriz.getChildren().add(grid);
+                grid.add(new Label(sopator.getLetra(i,j).toString()), j, i);
             }            
-        }        
-        this.scene = new Scene(root, 600,600);
+        }    
+        grid.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
+        matriz.getChildren().add(grid);
+
+        this.scene = new Scene(root, 1000,1500);
         grid.setAlignment(Pos.CENTER);
-        grid.setVgap(25);
-        grid.setHgap(50);
+        grid.setVgap(25*4);
+        grid.setHgap(50*4);
         
     }
     

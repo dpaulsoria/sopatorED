@@ -78,7 +78,7 @@
          <center>
             <AnchorPane fx:id="matriz" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <GridPane prefHeight="430.0" prefWidth="447.0">
+                  <GridPane fx:id="grid" prefHeight="430.0" prefWidth="447.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
