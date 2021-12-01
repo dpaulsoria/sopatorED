@@ -89,11 +89,11 @@ public class Sopator {
         return sopa_letras.get(fila).get(columna);
     }
 
-    public void desplazarFila(int fila, int des) {
+    public void desplazarFila(int fila) {
         int i = 1;
         for(CircularLinkedList<Character> c:sopa_letras) {
             if (i == fila) {
-                c.desplazar(des);
+                c.desplazarDerecha();
             }
             i++;
         }
