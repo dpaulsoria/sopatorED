@@ -77,17 +77,11 @@ public class PrimaryController implements Initializable {
         formatosTextfield();
         CircularLinkedList<Integer> c = new CircularLinkedList<>();
         for (int i = 0; i<10; i++) {
-            System.out.println("i: " + i);
             c.add(i, i);
         }
+        System.out.println(c.get(0));
         System.out.println(c.toString());
-        
-//        c.addFirst(3);
-//        c.addLast(3);
-//        c.set(5, 50000);
-//        System.out.println(c.toString());
-//        c.desplazarDer();
-//        System.out.println(c.toString());
+ 
                
     }
     
