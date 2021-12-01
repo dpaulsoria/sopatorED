@@ -49,21 +49,7 @@ public class CircularLinkedList<E> implements List<E> {
     
     public void desplazarIzq() {
         tail = tail.getNextNode();
-    }
-    private CircularNode<E> getNode(int index) {
-        CircularNode<E> last = tail;
-        if (index <= size / 2) {
-            for (; index > 0; index--) {
-                last = last.getNextNode();
-            }
-        } else if (index > size / 2) {
-            index = size - index;
-            for (; index > 0; index--) {
-                last = last.getPrevNode();
-            }
-        }
-        return last;
-    }
+    }    
     
     @Override
     public boolean isEmpty() {
@@ -110,6 +96,39 @@ public class CircularLinkedList<E> implements List<E> {
         }
         return c;
     }
+    
+    public int indexOf(E e) {
+        if(e == null || isEmpty())
+            return -1;
+        
+        if(e == tail.getContent()) 
+            return size()-1;
+        
+        CircularNode<E> cursor = tail.getNextNode();
+        int index = 0;
+        while(cursor != tail){
+            if(cursor.getContent() == e) 
+                return index;
+            index++;
+            cursor = cursor.getNextNode();
+        }
+        
+        return -1;
+    }
+    
+    public boolean contains(E e){
+        if(isEmpty()) 
+            return false;
+        CircularNode<E> cursor = tail.getNextNode();
+        if(e.equals(cursor.getContent())) 
+            return true;
+        while(cursor != tail){
+            cursor = cursor.getNextNode();
+            if(e.equals(cursor.getContent())) 
+                return true;
+        }
+        return false;
+    }
 
     @Override
     public void clear() {
@@ -142,7 +161,6 @@ public class CircularLinkedList<E> implements List<E> {
 
     @Override
     public boolean add(int index, E element) {
-        System.out.println("size:" + size());
         if(element == null)
             return false;
         if(index > size() || index < 0)
@@ -153,7 +171,10 @@ public class CircularLinkedList<E> implements List<E> {
         if(index == size()-1) 
             return addLast(element);         
         CircularNode<E> new_node = new CircularNode(element);   
-        CircularNode<E> current = getNode(index); 
+        CircularNode<E> current = tail.getNextNode();
+        for(int i = 0; i<index; i++){
+            current = current.getNextNode();
+        }
         new_node.setPrevNode(current.getPrevNode());
         current.getPrevNode().setNextNode(new_node);
         new_node.setNextNode(current);
@@ -170,7 +191,10 @@ public class CircularLinkedList<E> implements List<E> {
         if(index == size()-1) 
             return removeLast();
         
-        CircularNode<E> current = getNode(index);
+        CircularNode<E> current = tail.getNextNode();
+        for(int i = 0; i<index; i++){
+            current = current.getNextNode();
+        }        
         current.getPrevNode().setNextNode(current.getNextNode());
         current.getNextNode().setPrevNode(current.getPrevNode());
         
@@ -179,14 +203,30 @@ public class CircularLinkedList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        return getNode(index).getContent();
+        if(isEmpty() || index > size()-1 || index < 0)
+            return null;
+
+        if(index == 0) 
+            return getFirst().getContent();
+        if(index == -1) 
+            return getLast().getContent();
+        
+        CircularNode<E> cursor = tail.getNextNode();
+        for(int i = 0; i<index; i++){
+            cursor = cursor.getNextNode();
+        }
+        
+        return cursor.getContent();
     }
 
     @Override
     public E set(int index, E element) {
         if(isEmpty() || index > size() || index < 0)
             return null;        
-        CircularNode<E> current = getNode(index);
+        CircularNode<E> current = tail.getNextNode();
+        for(int i = 0; i<index; i++){
+            current = current.getNextNode();
+        }
         E tmp = current.getContent();
         current.setContent(element);        
         return tmp;
@@ -194,17 +234,14 @@ public class CircularLinkedList<E> implements List<E> {
     
     @Override
     public String toString() {
-        if (isEmpty())
-            return "";
-        String result = "";
-        CircularNode<E> cursor = tail;
-        result += cursor.getContent() + " "; 
-        cursor = cursor.getNextNode();
-        while(cursor != tail) {            
-            result += cursor.getContent().toString() + " ";
-            cursor = cursor.getNextNode();
-        }
         
+        CircularNode<E> cursor = tail.getNextNode();
+        String result = cursor.getContent().toString() + " ";
+        
+        while(cursor != tail){
+            cursor = cursor.getNextNode();
+            result += cursor.getContent().toString() + " ";
+        }
         return result;
     }
 

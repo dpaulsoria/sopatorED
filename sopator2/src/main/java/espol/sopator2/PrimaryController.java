@@ -76,13 +76,7 @@ public class PrimaryController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         formatosTextfield();
         CircularLinkedList<Integer> c = new CircularLinkedList<>();
-        for (int i = 0; i<10; i++) {
-            c.add(i, i);
-        }
-        System.out.println(c.get(0));
-        System.out.println(c.toString());
- 
-               
+     
     }
     
     private boolean getData() {
