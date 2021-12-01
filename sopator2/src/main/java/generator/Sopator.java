@@ -90,6 +90,10 @@ public class Sopator {
     public Character getLetra(int fila, int columna) {
         return sopa_letras.get(fila).get(columna);
     }
+    
+    public CircularLinkedList<Character> getFila(int fila) {
+        return sopa_letras.get(fila);
+    }
 
     public void desplazarFilaDer(int fila) {
         int i = 1;
