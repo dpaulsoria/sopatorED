@@ -5,6 +5,7 @@
  */
 package espol.sopator2;
 
+import collection.ArrayList;
 import collection.CircularLinkedList;
 import generator.Sopator;
 import java.io.IOException;
@@ -97,13 +98,14 @@ public class SecondaryController {
     private Letra selec = null;
     private Character id = null;
     private String palabra="";
+    private ArrayList<Letra> seleccionadas=new ArrayList<>();
     /**
      * Initializes the controller class.
      */
     
     public void SecondaryController(Stage stage) {
         vidasT.setText(Integer.toString(vidas));
-        this.scene = new Scene(root, 600,600);
+        
         generarSopa();
         
         
@@ -122,8 +124,7 @@ public class SecondaryController {
     }
     
     public void generarSopa() {
-        Letra letra;
-        grid = new GridPane();
+
         double ancho = 400 / sopator.getFilas();
         double altura = 400 / sopator.getColumnas();
         double letraT;
@@ -137,15 +138,17 @@ public class SecondaryController {
             CircularLinkedList<Letra> fila = sopator.getFila(i);
             System.out.println(fila);
             for (int j = 0; j<fila.size(); j++) {
-                letra=fila.get(j);
+                Letra letra=new Letra(fila.get(j).getLetra(),i,j);
                 StackPane pane = crearTablero(altura,ancho,letraT, letra);
                 grid.add(pane, j, i);                
             }    
         
         }    
         grid.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
-        matriz.getChildren().add(grid);
-        this.scene = new Scene(root, 1000,1500);
+        matriz.getChildren().addAll(grid);
+        grid.getChildren().addAll(root);
+       
+        
         grid.setAlignment(Pos.CENTER);
         grid.setVgap(25*4);
         grid.setHgap(50*4);
@@ -157,7 +160,7 @@ public class SecondaryController {
         pane.setPrefSize(ancho, altura);
         pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         Label letra = new Label(String.valueOf(c)); 
-        letra.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: " + letraT + "px;");;
+        letra.setStyle("-fx-font-family: 'Cooper Black'; -fx-font-size: " + letraT + "px;");;
         pane.getChildren().add(letra);
         StackPane.setAlignment(letra, Pos.CENTER);
         
@@ -167,11 +170,20 @@ public class SecondaryController {
                 id= letraN.getLetra();
                 palabra+=id;
                 System.out.println("Letra: " + id);
-   
+                verificarLetra(pane);
+                seleccionadas.addLast(letraN);
+                
             }else{
-                id= letraN.getLetra();
-                System.out.println("Letra: " + id);
-                palabra+=id;
+                if (!(seleccionadas.contains(letraN))) {
+                    id = letraN.getLetra();
+                    verificarLetra(pane);
+                    seleccionadas.addLast(letraN);
+                    palabra += id;
+                } else {
+                    System.out.println("Ya selecciono esta letra");
+                }
+                
+                
             }
             System.out.println(palabra);
         });
@@ -185,6 +197,14 @@ public class SecondaryController {
     }
      
      
+    public void verificarLetra(Pane f){
+        Pane cuadro = new Pane();
+        cuadro.setStyle("-fx-background-color: #5169FF;");
+        cuadro.setMouseTransparent(true);
+        cuadro.setOpacity(0.20);
+        f.getChildren().add(cuadro);
+        
+    }
     public void salir() throws IOException{
         App.setRoot("primary");
     }

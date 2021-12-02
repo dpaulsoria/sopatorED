@@ -6,6 +6,7 @@
 package util;
 
 import java.util.Objects;
+import util.Palabra;
 
 /**
  *
@@ -23,6 +24,13 @@ public class Letra {
         this.letra = c; this.palabra = null;
     }
 
+    public Letra(Character letra,int fila, int col) {
+        this.letra = letra;
+        this.palabra = palabra;
+        this.fila = fila;
+        this.col = col;
+    }
+    
     public Character getLetra() {
         return letra;
     }
@@ -33,11 +41,12 @@ public class Letra {
     public int getCol() {
         return col;
     }
-
+    
     public Palabra getPalabra() {
         return palabra;
     }
-
+    
+    
     public void setLetra(Character letra) {
         this.letra = letra;
     }
