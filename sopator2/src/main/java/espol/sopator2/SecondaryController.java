@@ -125,6 +125,7 @@ public class SecondaryController {
     
     private void pierdeVida() {
         vidas = Integer.valueOf(vidasLabel.getText());
+        System.out.println(vidas);
         vidas--;
         vidasLabel.setText(vidas + "");
     }
@@ -245,7 +246,7 @@ public class SecondaryController {
                     System.out.println("index: " + i);
                     seleccionadas.remove(seleccionadas.indexOf(letraN));
                 }
-                System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+                System.out.println("Seleccionadas actualmente " + seleccionadas.toString());
             }            
             
         });
@@ -326,11 +327,15 @@ public class SecondaryController {
     private void quitarPuntos(Palabra p) {
         pierdeVida();
         this.puntos = Integer.valueOf(points.getText());
-        alerta("Sorry, perdió " + puntos + " puntos");
-        this.puntos -= p.getSize();
+        if(this.puntos!=0){
+            this.puntos -= p.getSize();
+        }
         this.points.setText(this.puntos + "");
         if (this.vidas==0)
             gameOver();
+        else{
+            alerta("Sorry, perdió " + puntos + " puntos");
+        }
     }
     
     private void gameOver() {
