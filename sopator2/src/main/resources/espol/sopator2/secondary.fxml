@@ -101,6 +101,6 @@
       </BorderPane>
    </center>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
    </left>
 </BorderPane>

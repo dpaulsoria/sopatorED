@@ -186,6 +186,7 @@ public class SecondaryController {
             if (sopator.confirmarPalabraEnBase(wordToCheck)) {
                 wordToCheck.setEncontrada(true);
                 encontradas.addLast(wordToCheck);
+                bloquearLetras(wordToCheck);
                 actualizarEncontradas();
                 añadirPuntos(wordToCheck);
                 seleccionadas = new CircularLinkedList();                
@@ -195,11 +196,22 @@ public class SecondaryController {
             }
         }
     }
+    private void bloquearLetras(Palabra p) {
+        for (int i = 0; i<p.getSize(); i++) {
+            p.getLetra(i).setLocked(true);
+        }
+    }
+    
     private void actualizarEncontradas() {
-        if (encontradas.size() < 1) {
+        int size = encontradas.size();
+        if (size < 1) {
             alerta("No hay palabras para mostrar");
         } else {
-            left.getChildren().add(getLabelPalabra(encontradas.get(encontradas.size()-1)));
+            Palabra p = encontradas.get(size-1);  
+            int childSize = left.getChildren().size();
+            System.out.println("ChildSize: " + childSize);
+            System.out.println("p: " + p.toString());
+            left.getChildren().add(childSize, getLabelPalabra(p));
         }
     }
     
@@ -233,8 +245,7 @@ public class SecondaryController {
                 if (!letraN.isSelected()) {
                     System.out.println("Ahora está seleccionada " + letraN);
                     pane.setStyle(pane.getStyle() + selectedStyle);
-                    letraN.setSelected(true);
-                    letraN.setLocked(true);
+                    letraN.setSelected(true);                    
                     seleccionadas.addLast(letraN);
                 } else {
                     System.out.println("Ahora NO está seleccionada " + letraN);
@@ -245,7 +256,7 @@ public class SecondaryController {
                     System.out.println("index: " + i);
                     seleccionadas.remove(seleccionadas.indexOf(letraN));
                 }
-                System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+                    System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
             }            
             
         });
