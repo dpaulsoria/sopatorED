@@ -96,6 +96,7 @@ public class SecondaryController {
     private double minSize_letras;
     private Letra selec = null;
     private Character id = null;
+    private String palabra="";
     /**
      * Initializes the controller class.
      */
@@ -125,7 +126,12 @@ public class SecondaryController {
         grid = new GridPane();
         double ancho = 400 / sopator.getFilas();
         double altura = 400 / sopator.getColumnas();
-        double letraT = (ancho >= altura) ? altura / 2 : ancho / 2;
+        double letraT;
+        if (ancho >= altura){
+            letraT=altura / 2;
+        }else{
+            letraT=ancho / 2;
+        }
             
         for (int i = 0; i<sopator.getSopa_Letras().size(); i++) {
             CircularLinkedList<Letra> fila = sopator.getFila(i);
@@ -159,8 +165,15 @@ public class SecondaryController {
             if (selec == null) {
                 selec = letraN;
                 id= letraN.getLetra();
+                palabra+=id;
                 System.out.println("Letra: " + id);
+   
+            }else{
+                id= letraN.getLetra();
+                System.out.println("Letra: " + id);
+                palabra+=id;
             }
+            System.out.println(palabra);
         });
         pane.setOnMouseEntered(e -> {
             pane.setStyle(pane.getStyle() + " -fx-background-color: #BFE1FF;");
