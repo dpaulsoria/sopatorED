@@ -164,6 +164,7 @@ public class SecondaryController {
         accionbutton.setVisible(false);
         
         numAE.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[0-9]{0,2}")) ? condicion:null));
+        
         this.sopator = s;
         generarSopa();
     
@@ -221,7 +222,10 @@ public class SecondaryController {
             a.show();
         } else {
             Palabra wordToCheck = Palabra.formarPalabra(seleccionadas);
-            if (sopator.confirmarPalabraEnBase(wordToCheck)) {
+            if (encontradas.contains(wordToCheck)) {
+                alerta("Palabra ya encontrada");
+                
+            } else if (sopator.confirmarPalabraEnBase(wordToCheck)) {
                 wordToCheck.setEncontrada(true);
                 encontradas.addLast(wordToCheck);
                 bloquearLetras(wordToCheck);
@@ -440,14 +444,25 @@ public class SecondaryController {
     
     @FXML
     public void setColumna() {
-        fila.setSelected(false);
-        comprobarRadioButton();
+        if (!col.isSelected()) {
+            numAE.setVisible(false);
+            accionbutton.setVisible(false);            
+        } else {
+            fila.setSelected(false);
+            comprobarRadioButton();
+        }
     }
     
     @FXML
     public void setFila() {
-        col.setSelected(false);
-        comprobarRadioButton();
+        if (!fila.isSelected()) {
+            numAE.setVisible(false);
+            accionbutton.setVisible(false);            
+        } else {
+            col.setSelected(false);
+            comprobarRadioButton();
+        }
+
     }
     
     public void setColumnaAdespl() {
@@ -461,7 +476,7 @@ public class SecondaryController {
     }
     
     public void comprobarRadioButton() {
-        if (col.isVisible()|| fila.isVisible()&& (agg.isSelected() || col.isSelected())) {
+        if (col.isVisible() || fila.isVisible() && (agg.isSelected() || col.isSelected())) {
             numAE.setVisible(true);
             accionbutton.setVisible(true);
         } else {
@@ -472,68 +487,107 @@ public class SecondaryController {
     
     @FXML
     public void toggleAgg(ActionEvent event){
-        del.setSelected(false);
-        agg.setStyle("-fx-background-color: #278d91");
-        del.setStyle("-fx-background-color: #30B5BA");
+        if (agg.isSelected()) {
+            del.setSelected(false);
+            agg.setStyle("-fx-background-color: #278d91");
+            del.setStyle("-fx-background-color: #30B5BA");
+            comprobarOpciones();
+            desSelected();
+        } else {
+            agg.setStyle("-fx-background-color: #30B5BA");
+            numAE.setVisible(false);
+            accionbutton.setVisible(false);
+        }
         comprobarOpciones();
-        
+        desSelected();
+    }
+    
+    private void desSelected() {
+        fila.setSelected(false);
+        col.setSelected(false);
     }
     
     @FXML
     public void accion() {
-        
-        if (agg.isSelected()) {
+        // Mostrar cambios
+        this.cambios = Integer.valueOf(changes.getText());
+        if (cambios > 0) {
             
-            if (col.isSelected()) {
-                int num = Integer.valueOf(numAE.getText());
-                // Añadir columna
-                if (validarInsercion(num, columnas)) {
-                    System.out.println("Añadir 1 columna en " +num);
-                    this.sopator.añadirColumna(num);
-                    clean();
-                    
+            System.out.println("Cambios permitidos actualmente:" + cambios);
+
+            if (agg.isSelected()) {
+
+                if (col.isSelected()) {
+                    int num = Integer.valueOf(numAE.getText());
+                    // Añadir columna
+                    if (validarInsercion(num, columnas)) {
+                        System.out.println("Añadir 1 columna en " +num);
+                        this.sopator.añadirColumna(num);
+                        clean();
+
+                    }
+
+                } else if (fila.isSelected()) {
+                    int num = Integer.valueOf(numAE.getText());
+                    // Añadir fila
+                    if (validarInsercion(num, filas)) {
+                        System.out.println("Añadir 1 fila en " +num);
+                        this.sopator.añadirFila(num);
+                        clean();
+                    }
+
                 }
-                    
-            } else if (fila.isSelected()) {
-                int num = Integer.valueOf(numAE.getText());
-                // Añadir fila
-                if (validarInsercion(num, filas)) {
-                    System.out.println("Añadir 1 fila en " +num);
-                    this.sopator.añadirFila(num);
-                    clean();
+
+
+            } else if (del.isSelected()) {
+
+                if (col.isSelected()) {
+                    int num = Integer.valueOf(numAE.getText());
+                    // Eliminar columna
+                    if (validarInsercion(num, columnas)) {
+                        System.out.println("Eliminar 1 columna en " +num);
+                        this.sopator.eliminarColumna(num);
+                        clean();
+                    }
+
+                } else if (fila.isSelected()) {
+                    int num = Integer.valueOf(numAE.getText());
+                    // Eliminar fila
+                    if (validarInsercion(num, filas)) {
+                        System.out.println("Eliminar 1 fila en " +num);
+                        this.sopator.eliminarFila(num);
+                        clean();
+                    }
+
                 }
-                
+
             }
-            
-            
-        } else if (del.isSelected()) {
-            
-            if (col.isSelected()) {
-                int num = Integer.valueOf(numAE.getText());
-                // Eliminar columna
-                if (validarInsercion(num, columnas)) {
-                    System.out.println("Eliminar 1 columna en " +num);
-                    this.sopator.eliminarColumna(num);
-                    clean();
-                }
-                    
-            } else if (fila.isSelected()) {
-                int num = Integer.valueOf(numAE.getText());
-                // Eliminar fila
-                if (validarInsercion(num, filas)) {
-                    System.out.println("Eliminar 1 fila en " +num);
-                    this.sopator.eliminarFila(num);
-                    clean();
-                }
-                
-            }
+        } else {
+            // Si los cambios son menores a 0
+            agg.setVisible(false);
+            del.setVisible(false);
+            fila.setVisible(false);
+            col.setVisible(false);
+            numAE.setVisible(false);
+            agg.setSelected(false);
+            del.setSelected(false);
+            fila.setSelected(false);
+            col.setSelected(false);
             
         }
+        // Restar cabmios
+        
+        
         
         col.setVisible(false);
         fila.setVisible(false);
         numAE.setVisible(false);
         accionbutton.setVisible(false);
+        col.setSelected(false);
+        fila.setSelected(false);
+        agg.setSelected(false);
+        del.setSelected(false);
+        
     }
     
     private boolean validarInsercion(int num, int fila_col) {
@@ -542,11 +596,19 @@ public class SecondaryController {
         
     @FXML
     public void toggleDel(ActionEvent event){
-        agg.setSelected(false);
-        del.setStyle("-fx-background-color: #278d91");
-        agg.setStyle("-fx-background-color: #30B5BA");
-        
+        if (del.isSelected()) {
+            agg.setSelected(false);
+            del.setStyle("-fx-background-color: #278d91");
+            agg.setStyle("-fx-background-color: #30B5BA");
+            comprobarOpciones();
+            desSelected();
+        } else {
+            del.setStyle("-fx-background-color: #30B5BA");
+            numAE.setVisible(false);
+            accionbutton.setVisible(false);
+        }
         comprobarOpciones();
+        desSelected();
     }
     
     
