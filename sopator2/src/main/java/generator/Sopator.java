@@ -67,14 +67,7 @@ public class Sopator {
         fila.set(x, new Letra(letra));
     }
     
-//    public void reorganizarAleatoriamente() {
-//        for(int f = 0; f<FILAS; f++) {
-//            CircularLinkedList<Character> fila = sopa_letras.get(f);
-//            for(int c = 0; c<COLUMNAS; c++) {
-//                fila.set(c, getRandomChar());
-//            }
-//        }
-//    }
+
     
     private void añadir_base_validas() {
         base_palabras = new ArrayList<>();
