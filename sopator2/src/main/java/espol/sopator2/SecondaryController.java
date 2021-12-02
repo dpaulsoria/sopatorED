@@ -231,6 +231,7 @@ public class SecondaryController {
             } else {
                 quitarPuntos(wordToCheck);
                 unSelectCeldas(seleccionadas);
+                seleccionadas.clear();
             }
         }
     }
@@ -401,6 +402,7 @@ public class SecondaryController {
             gameOver();
         else{
             alerta("Sorry, perdió " + size + " puntos");
+            
         }
     }
     
