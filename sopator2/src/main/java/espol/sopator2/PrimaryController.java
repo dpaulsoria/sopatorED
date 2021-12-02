@@ -80,7 +80,7 @@ public class PrimaryController implements Initializable {
     private boolean getData() {
         f = Integer.valueOf(filas.getText());
         c = Integer.valueOf(columnas.getText());
-        return !(f < 1 || c < 1);
+        return !(f < 6 || c < 6);
     }
      
     @FXML 
@@ -89,7 +89,7 @@ public class PrimaryController implements Initializable {
         setTema();
         f = Integer.valueOf(filas.getText());
         c = Integer.valueOf(columnas.getText());
-        if ( !(t == null)) {
+        if ( !(t == null) && getData() ){
             try {
                 Sopator sp = new Sopator(f,c,t);
                 FXMLLoader fxml = App.loadFXMLLoad("secondary");
@@ -102,9 +102,15 @@ public class PrimaryController implements Initializable {
             }
             App.setRoot("secondary");
         } else{
-            Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); 
-            a.show();
+            if(!getData()){
+                Alert a = new Alert(AlertType.WARNING, "Para mejorar la experiencia use filas y columnas mayores a 6"); 
+                a.show();
+            }else{
+                Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); 
+                a.show();
+            }
         }
+        
         
 
         
