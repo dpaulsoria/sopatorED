@@ -83,7 +83,8 @@ public class SecondaryController {
     private Button giveup;
     @FXML
     private Label vidasLabel;
-    
+    @FXML
+    private TextField numAE;
     private Sopator sopator;
     private int filas;
     private int columnas;
@@ -400,5 +401,30 @@ public class SecondaryController {
         App.setRoot("primary");
     }
 
-
+    @FXML
+    public void btnAgregar(ActionEvent event){
+        del.setVisible(false);
+        col.setVisible(true);
+        fila.setVisible(true);
+        numAE=null;
+        
+        
+    }
+        
+    @FXML
+    public void agregarColumna(ActionEvent event){
+        fila.setSelected(false);
+        if(!numAE.getText().equals(null)){
+            System.out.println(numAE.getText());
+        }
+        
+    }
+        
+    @FXML
+    public void agregarFila(ActionEvent event){
+        col.setSelected(false);
+        if(!numAE.getText().equals(null)){
+            System.out.println(numAE.getText());
+        }
+    }
 }
