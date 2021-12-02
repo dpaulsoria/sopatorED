@@ -229,22 +229,24 @@ public class SecondaryController {
         
         pane.setOnMouseClicked(e -> {
             System.out.println("Clickeo " + letraN);
-            if (!letraN.isSelected()) {
-                System.out.println("Ahora está seleccionada " + letraN);
-                pane.setStyle(pane.getStyle() + selectedStyle);
-                letraN.setSelected(true);
-                seleccionadas.addLast(letraN);
-            } else {
-                System.out.println("Ahora NO está seleccionada " + letraN);
-                pane.setStyle(UnselectedStyle); // Unselect
-                letraN.setSelected(false);
-                int i = seleccionadas.indexOf(letraN);
-                
-                System.out.println("index: " + i);
-                seleccionadas.remove(seleccionadas.indexOf(letraN));
-            }
-            
-            System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+            if (!letraN.isLocked()) {
+                if (!letraN.isSelected()) {
+                    System.out.println("Ahora está seleccionada " + letraN);
+                    pane.setStyle(pane.getStyle() + selectedStyle);
+                    letraN.setSelected(true);
+                    letraN.setLocked(true);
+                    seleccionadas.addLast(letraN);
+                } else {
+                    System.out.println("Ahora NO está seleccionada " + letraN);
+                    pane.setStyle(UnselectedStyle); // Unselect
+                    letraN.setSelected(false);
+                    int i = seleccionadas.indexOf(letraN);
+
+                    System.out.println("index: " + i);
+                    seleccionadas.remove(seleccionadas.indexOf(letraN));
+                }
+                System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+            }            
             
         });
         
