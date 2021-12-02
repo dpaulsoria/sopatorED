@@ -7,6 +7,7 @@ package espol.sopator2;
 
 import collection.CircularLinkedList;
 import generator.Sopator;
+import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.util.ResourceBundle;
@@ -55,6 +56,7 @@ public class SecondaryController {
     private HBox top;
     @FXML
     private HBox bot;
+    @FXML
     private GridPane grid;
     @FXML
     private RadioButton desplazar;
@@ -77,12 +79,13 @@ public class SecondaryController {
     @FXML
     private Button giveup;
     @FXML
-    private Label vidas;
+    private Label vidasT;
     
     private Scene scene;
     private Sopator sopator;
     private int filas;
     private int columnas;
+    private int vidas=3;
     private double alto;
     private double ancho;
     private final int VGAP = 10;
@@ -91,14 +94,15 @@ public class SecondaryController {
     private int puntos;
     private final int minSize = 65;
     private double minSize_letras;
+    
 
     /**
      * Initializes the controller class.
      */
     
     public void SecondaryController(Stage stage) {
+        vidasT.setText(Integer.toString(vidas));
         this.scene = new Scene(root, 600,600);
-        vidas.setText("3");
         generarSopa();
         
         
@@ -133,12 +137,15 @@ public class SecondaryController {
         grid.setHgap(50*4);
         
     }
+    public void salir() throws IOException{
+        App.setRoot("primary");
+    }
     
     public Scene getScene() {
         return scene;
     }
 
-
+    
   
     
 }
