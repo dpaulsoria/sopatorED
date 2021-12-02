@@ -103,10 +103,11 @@ public class SecondaryController {
     private String selectedStyle = " -fx-background-color: #39ad77;";
     private String UnselectedStyle = " -fx-background-color: #39ad77;";
     private String borderStyle = "-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;";
+    private String labelStyle = "-fx-font-size: 14px;";
     
     private CircularLinkedList<Letra> seleccionadas = new CircularLinkedList();
     private ArrayList<Pair> coordenadas = new ArrayList<>();
-    
+    private ArrayList<Palabra> encontradas = new ArrayList<>();
 
     private boolean revisarMode = false;
     @FXML
@@ -123,7 +124,9 @@ public class SecondaryController {
     }
     
     private void pierdeVida() {
+        vidas = Integer.valueOf(vidasLabel.getText());
         vidas--;
+        vidasLabel.setText(vidas + "");
     }
     
     public void setSopator(Sopator s) {
@@ -182,13 +185,36 @@ public class SecondaryController {
             Palabra wordToCheck = Palabra.formarPalabra(seleccionadas);
             if (sopator.confirmarPalabraEnBase(wordToCheck)) {
                 wordToCheck.setEncontrada(true);
+                encontradas.addLast(wordToCheck);
+                actualizarEncontradas();
                 añadirPuntos(wordToCheck);
                 seleccionadas = new CircularLinkedList();                
             } else {
                 quitarPuntos(wordToCheck);
+                unSelectCeldas(seleccionadas);
             }
         }
     }
+    private void actualizarEncontradas() {
+        if (encontradas.size() < 1) {
+            alerta("No hay palabras para mostrar");
+        } else {
+            left.getChildren().add(getLabelPalabra(encontradas.get(encontradas.size()-1)));
+        }
+    }
+    
+    private Label getLabelPalabra(Palabra p) {
+        Label l = new Label(p.toString());
+        l.setStyle(labelStyle);
+        return l;
+    }
+    private void unSelectCeldas(CircularLinkedList<Letra> lista) {
+        
+        for(Letra l:lista) {
+            Pane celdaPadre;
+        }
+    }
+    
     
     private StackPane crearTablero(double altura,double ancho,double letraT, Letra letraN) {
         Character c = letraN.getLetra();
@@ -284,17 +310,24 @@ public class SecondaryController {
         });
         return pane;
     }
-    
+    private void alerta(String mensaje) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, mensaje);
+        a.show();
+    }
     private void añadirPuntos(Palabra p) {
+        
         this.puntos = Integer.valueOf(points.getText());
+        alerta("Felicidades, ganó " + puntos + " puntos");
         this.puntos += p.getSize();
         this.points.setText(this.puntos + "");
     }
     private void quitarPuntos(Palabra p) {
+        pierdeVida();
         this.puntos = Integer.valueOf(points.getText());
+        alerta("Sorry, perdió " + puntos + " puntos");
         this.puntos -= p.getSize();
         this.points.setText(this.puntos + "");
-        if (this.puntos<0)
+        if (this.vidas==0)
             gameOver();
     }
     
