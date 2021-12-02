@@ -15,31 +15,29 @@ import util.Palabra;
 public class Letra {
     private Character letra;
     private Palabra palabra;
-    private int fila;
-    private int col;
+    private Pair ubi;
+    private boolean selected;
     public Letra(Character c, Palabra p) {
         this.letra = c; this.palabra = p;
+        this.selected = false;
     }
     public Letra(Character c) {
         this.letra = c; this.palabra = null;
+        selected = false;
     }
-
-    public Letra(Character letra,int fila, int col) {
-        this.letra = letra;
-        this.palabra = palabra;
-        this.fila = fila;
-        this.col = col;
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean s) {
+        this.selected = s;
     }
     
     public Character getLetra() {
         return letra;
     }
     
-    public int getFila() {
-        return fila;
-    }
-    public int getCol() {
-        return col;
+    public Pair getUbi() {
+        return ubi;
     }
     
     public Palabra getPalabra() {
@@ -50,11 +48,8 @@ public class Letra {
     public void setLetra(Character letra) {
         this.letra = letra;
     }
-    public void setFila(int f) {
-        this.fila = f;
-    }
-    public void setCol(int c) {
-        this.col = c;
+    public void setUbi(Pair p) {
+        ubi = p;
     }
 
     public void setPalabra(Palabra palabra) {
@@ -82,8 +77,11 @@ public class Letra {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Letra other = (Letra) obj;
-        if (!Objects.equals(this.letra, other.letra)) {
+        final Letra o = (Letra) obj;
+        if (!Objects.equals(this.letra, o.letra)) {
+            return false;
+        }
+        if (ubi.X == o.getUbi().X && ubi.Y == o.getUbi().X) {
             return false;
         }
         return true;

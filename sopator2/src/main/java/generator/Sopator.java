@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 import util.Letra;
+import util.Palabra;
 
 /**
  *
@@ -68,7 +69,19 @@ public class Sopator {
         fila.set(x, new Letra(letra));
     }
     
-
+    public boolean confirmarPalabraEnBase(Palabra p) {
+        String word = p.getWord();
+        ArrayList<String> palabras;
+        Character primeraLetra = p.getFirstChar();
+        if (base_palabras.containsKey(primeraLetra)) {
+            palabras = base_palabras.get(primeraLetra);
+            for(String s:palabras) {
+                if (word.equals(s))
+                    return true;
+            }
+        }
+        return false;
+    }
     
     private void añadir_base_validas() {
         base_palabras = new HashMap<>();

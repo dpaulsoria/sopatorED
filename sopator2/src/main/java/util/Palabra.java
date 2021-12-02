@@ -5,6 +5,7 @@
  */
 package util;
 
+import collection.CircularLinkedList;
 import java.util.Objects;
 
 /**
@@ -61,6 +62,20 @@ public class Palabra {
             return false;
         }
         return true;
+    }
+    public Character getFirstChar() {
+        return word.charAt(0);
+    }
+    
+    public static Palabra formarPalabra(CircularLinkedList<Letra> palabra) {
+        if (palabra.isEmpty()) {
+            return null;
+        }
+        String tmp = "";
+        for(Letra c:palabra) {
+            tmp += c;
+        }
+        return new Palabra(tmp);
     }
     
 }

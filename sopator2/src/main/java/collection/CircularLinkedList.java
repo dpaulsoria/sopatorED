@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
+import util.Pair;
 
 /**
  *
@@ -50,6 +51,8 @@ public class CircularLinkedList<E> implements List<E> {
     public void desplazarIzq() {
         tail = tail.getNextNode();
     }    
+    
+    
     
     @Override
     public boolean isEmpty() {
@@ -134,11 +137,18 @@ public class CircularLinkedList<E> implements List<E> {
         this.tail = null;
         this.size = 0;
     }
+    private E removethelast() throws NullPointerException {
+        E tmp = tail.getContent();
+        tail = null;
+        return tmp;
+    }
+    
     @Override
     public E removeFirst() {
         if(isEmpty())
             return null;
-        
+        if (size() == 1)
+            return removethelast();
         CircularNode<E> head = tail.getNextNode();
         tail.setNextNode(head.getNextNode());
         head.getNextNode().setPrevNode(tail);
@@ -149,7 +159,8 @@ public class CircularLinkedList<E> implements List<E> {
     public E removeLast() {
         if(isEmpty()) 
             return null;
-        
+        if (size() == 1)
+            return removethelast();
         CircularNode<E> currentLast = tail;
         tail.getPrevNode().setNextNode(tail.getNextNode());
         tail.getNextNode().setPrevNode(tail.getPrevNode());
@@ -183,6 +194,7 @@ public class CircularLinkedList<E> implements List<E> {
     
     @Override
     public E remove(int index) {
+        System.out.println("index en remove" + index);
         if(isEmpty() || index > size() || index < -1) 
             return null;
         if(index == 0) 
@@ -233,8 +245,13 @@ public class CircularLinkedList<E> implements List<E> {
     
     @Override
     public String toString() {
-        
+        String mensaje = "";
+        if (isEmpty())
+            return mensaje;        
         CircularNode<E> cursor = tail.getNextNode();
+        if (cursor.getContent().toString() == null)
+            return mensaje;
+        
         String result = cursor.getContent().toString() + " ";
         
         while(cursor != tail){

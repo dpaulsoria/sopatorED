@@ -34,6 +34,8 @@ public class PrimaryController implements Initializable {
     @FXML
     private RadioButton colores;
     @FXML
+    private RadioButton random;
+    @FXML
     private Button primaryButton;
     private int f;
     private int c;
@@ -46,30 +48,40 @@ public class PrimaryController implements Initializable {
     
     private void setTema() {
         if (!someTopicIsSelected()) {
-            Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); a.show();
+            Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\", \"RANDOM\"");
+            a.show();
         }
     }
     
     private boolean someTopicIsSelected() {
-        return (animales.isSelected() || ciudades.isSelected() || colores.isSelected());
+        return (random.isSelected() || animales.isSelected() || ciudades.isSelected() || colores.isSelected());
     }
     
     public void temaAnimales() {
         ciudades.setSelected(false);
         colores.setSelected(false);
+        random.setSelected(false);
         t = "ANIMALES";
     }
     
     public void temaCiudades() {
         animales.setSelected(false);
         colores.setSelected(false);
+        random.setSelected(false);
         t = "CIUDADES";
     }
         
     public void temaColores() {
         ciudades.setSelected(false);
         animales.setSelected(false);
+        random.setSelected(false);
         t = "COLORES";
+    }
+    public void temaRandom() {
+        ciudades.setSelected(false);
+        animales.setSelected(false);
+        colores.setSelected(false);
+        t = "RANDOM";
     }
     
     @Override
