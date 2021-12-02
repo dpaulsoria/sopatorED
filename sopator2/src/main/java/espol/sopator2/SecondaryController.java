@@ -94,8 +94,8 @@ public class SecondaryController {
     private int puntos;
     private final int minSize = 65;
     private double minSize_letras;
-    
-
+    private Letra selec = null;
+    private Character id = null;
     /**
      * Initializes the controller class.
      */
@@ -133,8 +133,9 @@ public class SecondaryController {
             for (int j = 0; j<fila.size(); j++) {
                 letra=fila.get(j);
                 StackPane pane = crearTablero(altura,ancho,letraT, letra);
-                grid.add(pane, i, j);                
-            }            
+                grid.add(pane, j, i);                
+            }    
+        
         }    
         grid.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         matriz.getChildren().add(grid);
@@ -153,6 +154,20 @@ public class SecondaryController {
         letra.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: " + letraT + "px;");;
         pane.getChildren().add(letra);
         StackPane.setAlignment(letra, Pos.CENTER);
+        
+        pane.setOnMouseClicked(e -> {
+            if (selec == null) {
+                selec = letraN;
+                id= letraN.getLetra();
+                System.out.println("Letra: " + id);
+            }
+        });
+        pane.setOnMouseEntered(e -> {
+            pane.setStyle(pane.getStyle() + " -fx-background-color: #BFE1FF;");
+        });
+        pane.setOnMouseExited(e -> {
+            pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
+        });
         return pane;
     }
      
