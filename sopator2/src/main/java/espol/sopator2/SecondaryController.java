@@ -182,7 +182,7 @@ public class SecondaryController {
                 System.out.println("Letra: " + id);
                 palabra+=id;
             }
-            if (revisarMode)
+            if (revisarMode)                
                 System.out.println(palabra);
         });
         pane.setOnMouseEntered(e -> {
