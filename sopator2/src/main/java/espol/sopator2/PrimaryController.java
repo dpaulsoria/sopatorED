@@ -92,7 +92,7 @@ public class PrimaryController implements Initializable {
     private boolean getData() {
         f = Integer.valueOf(filas.getText());
         c = Integer.valueOf(columnas.getText());
-        return !(f < 6 || c < 6);
+        return !(f < 6 || c < 6) && !(f>=20  || c>=20);
     }
      
     @FXML 
@@ -115,7 +115,7 @@ public class PrimaryController implements Initializable {
             App.setRoot("secondary");
         } else{
             if(!getData()){
-                Alert a = new Alert(AlertType.WARNING, "Para mejorar la experiencia use filas y columnas mayores a 6"); 
+                Alert a = new Alert(AlertType.WARNING, "Para mejorar la experiencia use filas y columnas mayores a 6 o menores a 20"); 
                 a.show();
             }else{
                 Alert a = new Alert(AlertType.WARNING, "Eliga un tema:\n\"ANIMALES\", \"CIUDADES\", \"COLORES\""); 
