@@ -9,6 +9,8 @@ import collection.ArrayList;
 import collection.CircularLinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 import util.Letra;
 
 /**
@@ -20,7 +22,7 @@ public class Sopator {
     private int FILAS;
     private int COLUMNAS;
     private final String TEMA;
-    private ArrayList<String> base_palabras;
+    private Map<Character, ArrayList<String>> base_palabras;
     private ArrayList<String> palabras_validas;
     private ArrayList<CircularLinkedList<Letra>> sopa_letras = new ArrayList<>();
     
@@ -30,7 +32,6 @@ public class Sopator {
         TEMA = tema;
         añadir_base_validas();
         generar();
-        System.out.println(toString());
     }
 
     
@@ -50,7 +51,7 @@ public class Sopator {
         return TEMA;
     }
     
-    public ArrayList<String> getBase_Palabras() {
+    public Map<Character, ArrayList<String>> getBase_Palabras() {
         return base_palabras;
     }
     
@@ -70,17 +71,29 @@ public class Sopator {
 
     
     private void añadir_base_validas() {
-        base_palabras = new ArrayList<>();
+        base_palabras = new HashMap<>();
         String current_word;
         String ruta = "src\\" + TEMA;
+        Character key;
+
         try(BufferedReader br = new BufferedReader(new FileReader(ruta + ".txt"))) {
             while((current_word = br.readLine()) != null) {
-                base_palabras.addLast(current_word);
+                key = current_word.charAt(0);
+                if (base_palabras.containsKey(current_word.charAt(0))) {
+                    ArrayList<String> palabras = base_palabras.get(key);
+                    palabras.addLast(current_word);
+                } else {
+                     ArrayList<String> palabras = new ArrayList<>();
+                     palabras.addLast(current_word);
+                     base_palabras.put(key, palabras);
+                }
             }
             br.close();
         } catch (Exception e) {
             System.out.println(e.toString());
         }
+        
+        System.out.println(base_palabras.toString());
     }
     
     public Letra getLetra(int fila, int columna) {
