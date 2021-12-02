@@ -148,7 +148,7 @@ public class SecondaryController {
 
         ancho = 400 / sopator.getFilas();
         alto = 400 / sopator.getColumnas();
-        
+        col.setVisible(false);
         if (ancho >= alto){
             letterSize=alto / 2;
         }else{
