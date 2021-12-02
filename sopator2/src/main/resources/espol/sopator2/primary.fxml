@@ -1,72 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="240.0" prefWidth="240.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.PrimaryController">
+
+<Pane prefHeight="416.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.PrimaryController">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sopator!">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Text>
-      <HBox prefHeight="40.0" prefWidth="200.0">
+      <ImageView fitHeight="434.0" fitWidth="697.0" layoutY="-18.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../Recursos/letras-espacio-medio_23-2147695535%20(1).jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="-18.0" prefHeight="310.0" prefWidth="641.0" spacing="20.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filas" wrappingWidth="89.869140625">
+            <Text cache="true" mouseTransparent="true" stroke="#850505" strokeType="OUTSIDE" strokeWidth="0.0" text="Sopator!" textAlignment="CENTER">
                <font>
-                  <Font size="16.0" />
+                  <Font name="Maiandra GD" size="67.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="SE_RESIZE" />
+               </cursor>
+            </Text>
+            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filas" wrappingWidth="154.869140625">
+                     <font>
+                        <Font name="Cooper Black" size="26.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="filas" prefHeight="25.0" prefWidth="104.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Columnas">
+                     <font>
+                        <Font name="Cooper Black" size="26.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="columnas" prefHeight="25.0" prefWidth="100.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <Text fill="#f50707" strokeType="OUTSIDE" strokeWidth="0.0" text="Tema" wrappingWidth="121.671875">
+               <font>
+                  <Font name="Cooper Black" size="26.0" />
                </font>
             </Text>
-            <TextField fx:id="filas" prefHeight="25.0" prefWidth="100.0" />
-         </children>
-      </HBox>
-      <HBox prefHeight="40.0" prefWidth="200.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Columnas">
+            <HBox alignment="CENTER" prefHeight="22.0" prefWidth="604.0">
+               <children>
+                  <RadioButton fx:id="animales" mnemonicParsing="false" onAction="#temaAnimales" prefHeight="22.0" prefWidth="131.0" text="Animales" textOverrun="WORD_ELLIPSIS">
+                     <font>
+                        <Font name="Cooper Black" size="16.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="ciudades" mnemonicParsing="false" onAction="#temaCiudades" prefHeight="22.0" prefWidth="119.0" text="Ciudades">
+                     <font>
+                        <Font name="Cooper Black" size="16.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="colores" mnemonicParsing="false" onAction="#temaColores" prefHeight="20.0" prefWidth="112.0" text="Colores">
+                     <font>
+                        <Font name="Cooper Black" size="16.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <Button fx:id="primaryButton" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="69.0" prefWidth="208.0" style="-fx-background-color: #2B59B9;" text="Generar sopa" textFill="#fffefe">
                <font>
-                  <Font size="16.0" />
+                  <Font name="Cooper Black" size="18.0" />
                </font>
-            </Text>
-            <TextField fx:id="columnas" prefHeight="25.0" prefWidth="100.0">
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
-            </TextField>
+            </Button>
          </children>
-      </HBox>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tema" wrappingWidth="38.671875">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Text>
-      <RadioButton fx:id="animales" mnemonicParsing="false" onAction="#temaAnimales" text="Animales">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </RadioButton>
-      <RadioButton fx:id="ciudades" mnemonicParsing="false" onAction="#temaCiudades" text="Ciudades">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </RadioButton>
-      <RadioButton fx:id="colores" mnemonicParsing="false" onAction="#temaColores" text="Colores">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </RadioButton>
-      <Button fx:id="primaryButton" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="30.0" prefWidth="165.0" style="-fx-background-color: #2B59B9;" text="Generar sopa" textFill="WHITE">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
    </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+</Pane>

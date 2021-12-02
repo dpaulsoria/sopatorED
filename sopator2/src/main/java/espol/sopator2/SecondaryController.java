@@ -121,22 +121,42 @@ public class SecondaryController {
     }
     
     public void generarSopa() {
-        String letra;
+        Letra letra;
+        grid = new GridPane();
+        double ancho = 400 / sopator.getFilas();
+        double altura = 400 / sopator.getColumnas();
+        double letraT = (ancho >= altura) ? altura / 2 : ancho / 2;
+            
         for (int i = 0; i<sopator.getSopa_Letras().size(); i++) {
             CircularLinkedList<Letra> fila = sopator.getFila(i);
+            System.out.println(fila);
             for (int j = 0; j<fila.size(); j++) {
-                grid.add(new Label(sopator.getLetra(i,j).toString()), j, i);
+                letra=fila.get(j);
+                StackPane pane = crearTablero(altura,ancho,letraT, letra);
+                grid.add(pane, i, j);                
             }            
         }    
         grid.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         matriz.getChildren().add(grid);
-
         this.scene = new Scene(root, 1000,1500);
         grid.setAlignment(Pos.CENTER);
         grid.setVgap(25*4);
         grid.setHgap(50*4);
         
     }
+     private StackPane crearTablero(double altura,double ancho,double letraT, Letra letraN) {
+        Character c = letraN.getLetra();
+        StackPane pane = new StackPane();
+        pane.setPrefSize(ancho, altura);
+        pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
+        Label letra = new Label(String.valueOf(c)); 
+        letra.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: " + letraT + "px;");;
+        pane.getChildren().add(letra);
+        StackPane.setAlignment(letra, Pos.CENTER);
+        return pane;
+    }
+     
+     
     public void salir() throws IOException{
         App.setRoot("primary");
     }
