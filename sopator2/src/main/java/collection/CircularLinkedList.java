@@ -53,7 +53,6 @@ public class CircularLinkedList<E> implements List<E> {
     }    
     
     
-    
     @Override
     public boolean isEmpty() {
        return (this.size() == 0);

@@ -26,6 +26,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -62,8 +63,6 @@ public class SecondaryController {
     private HBox bot;
     private GridPane grid;
     @FXML
-    private RadioButton desplazar;
-    @FXML
     private Label points;
     @FXML
     private Label changes;
@@ -80,11 +79,21 @@ public class SecondaryController {
     @FXML
     private RadioButton fila;
     @FXML
+    private RadioButton col1;
+    @FXML
+    private RadioButton fila1;
+    @FXML
     private Button giveup;
+    @FXML
+    private ToggleButton desplazar;
+    @FXML
+    private Button ejecutarDesplazar;
     @FXML
     private Label vidasLabel;
     @FXML
     private TextField numAE;
+    @FXML
+    private Button accionbutton;
     private Sopator sopator;
     private int filas;
     private int columnas;
@@ -110,7 +119,6 @@ public class SecondaryController {
     private ArrayList<Pair> coordenadas = new ArrayList<>();
     private ArrayList<Palabra> encontradas = new ArrayList<>();
 
-    private boolean revisarMode = false;
     @FXML
     private BorderPane root_father;
     @FXML
@@ -131,7 +139,7 @@ public class SecondaryController {
     public void clean() {
         root = new BorderPane();
         root_father.setCenter(root);
-        
+        generarSopa();
     }
     
     @FXML
@@ -144,10 +152,18 @@ public class SecondaryController {
         vidas = Integer.valueOf(vidasLabel.getText());
         System.out.println(vidas);
         vidas--;
+        points.setText(0+"");
+        puntos = 0;
         vidasLabel.setText(vidas + "");
     }
     
     public void setSopator(Sopator s) {
+        fila.setVisible(false);
+        col.setVisible(false);
+        numAE.setVisible(false);
+        accionbutton.setVisible(false);
+        
+        numAE.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[0-9]{0,2}")) ? condicion:null));
         this.sopator = s;
         generarSopa();
     
@@ -211,7 +227,7 @@ public class SecondaryController {
                 bloquearLetras(wordToCheck);
                 actualizarEncontradas();
                 añadirPuntos(wordToCheck);
-                seleccionadas = new CircularLinkedList();                
+                seleccionadas.clear();                
             } else {
                 quitarPuntos(wordToCheck);
                 unSelectCeldas(seleccionadas);
@@ -265,6 +281,8 @@ public class SecondaryController {
         
         pane.setOnMouseClicked(e -> {
             System.out.println("Clickeo " + letraN);
+            
+            
             if (!letraN.noUnselect) {
                 if (!letraN.isSelected()) {
                     System.out.println("Ahora está seleccionada " + letraN);
@@ -278,7 +296,7 @@ public class SecondaryController {
                     int i = seleccionadas.indexOf(letraN);
 
                     System.out.println("index: " + i);
-                    seleccionadas.remove(seleccionadas.indexOf(letraN));
+                    seleccionadas.remove(i);
                 }
                 System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
 
@@ -409,30 +427,132 @@ public class SecondaryController {
         App.setRoot("primary");
     }
 
-    @FXML
-    public void btnAgregar(ActionEvent event){
-        del.setVisible(false);
-        col.setVisible(true);
-        fila.setVisible(true);
-        numAE=null;
         
-        
+    private void comprobarOpciones() {
+        if (del.isSelected() || agg.isSelected()) {
+            fila.setVisible(true);
+            col.setVisible(true);
+        } else {
+            fila.setVisible(false);
+            col.setVisible(false);
+        }
     }
-        
+    
     @FXML
-    public void agregarColumna(ActionEvent event){
+    public void setColumna() {
         fila.setSelected(false);
-        if(!numAE.getText().equals(null)){
-            System.out.println(numAE.getText());
+        comprobarRadioButton();
+    }
+    
+    @FXML
+    public void setFila() {
+        col.setSelected(false);
+        comprobarRadioButton();
+    }
+    
+    public void setColumnaAdespl() {
+        fila1.setSelected(false);
+        comprobarRadioButton();
+    }
+    
+    public void setFilaAdespl() {
+        col1.setSelected(false);
+        comprobarRadioButton();
+    }
+    
+    public void comprobarRadioButton() {
+        if (col.isVisible()|| fila.isVisible()&& (agg.isSelected() || col.isSelected())) {
+            numAE.setVisible(true);
+            accionbutton.setVisible(true);
+        } else {
+            numAE.setVisible(false);
+            accionbutton.setVisible(false);
+        }
+    }
+    
+    @FXML
+    public void toggleAgg(ActionEvent event){
+        del.setSelected(false);
+        agg.setStyle("-fx-background-color: #278d91");
+        del.setStyle("-fx-background-color: #30B5BA");
+        comprobarOpciones();
+        
+    }
+    
+    @FXML
+    public void accion() {
+        
+        if (agg.isSelected()) {
+            
+            if (col.isSelected()) {
+                int num = Integer.valueOf(numAE.getText());
+                // Añadir columna
+                if (validarInsercion(num, columnas)) {
+                    System.out.println("Añadir 1 columna en " +num);
+                    this.sopator.añadirColumna(num);
+                    clean();
+                    
+                }
+                    
+            } else if (fila.isSelected()) {
+                int num = Integer.valueOf(numAE.getText());
+                // Añadir fila
+                if (validarInsercion(num, filas)) {
+                    System.out.println("Añadir 1 fila en " +num);
+                    this.sopator.añadirFila(num);
+                    clean();
+                }
+                
+            }
+            
+            
+        } else if (del.isSelected()) {
+            
+            if (col.isSelected()) {
+                int num = Integer.valueOf(numAE.getText());
+                // Eliminar columna
+                if (validarInsercion(num, columnas)) {
+                    System.out.println("Eliminar 1 columna en " +num);
+                    this.sopator.eliminarColumna(num);
+                    clean();
+                }
+                    
+            } else if (fila.isSelected()) {
+                int num = Integer.valueOf(numAE.getText());
+                // Eliminar fila
+                if (validarInsercion(num, filas)) {
+                    System.out.println("Eliminar 1 fila en " +num);
+                    this.sopator.eliminarFila(num);
+                    clean();
+                }
+                
+            }
+            
         }
         
+        col.setVisible(false);
+        fila.setVisible(false);
+        numAE.setVisible(false);
+        accionbutton.setVisible(false);
+    }
+    
+    private boolean validarInsercion(int num, int fila_col) {
+        return (num>-1 && fila_col > num);
     }
         
     @FXML
-    public void agregarFila(ActionEvent event){
-        col.setSelected(false);
-        if(!numAE.getText().equals(null)){
-            System.out.println(numAE.getText());
-        }
+    public void toggleDel(ActionEvent event){
+        agg.setSelected(false);
+        del.setStyle("-fx-background-color: #278d91");
+        agg.setStyle("-fx-background-color: #30B5BA");
+        
+        comprobarOpciones();
     }
+    
+    
+    public void desplazar() {
+        
+    }
+    
+    
 }

@@ -14,15 +14,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
    <children>
-<<<<<<< HEAD
       <ImageView fitHeight="587.0" fitWidth="748.0" pickOnBounds="true" preserveRatio="true" />
       <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="739.0">
-=======
-      <ImageView fitHeight="587.0" fitWidth="748.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-      <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="734.0">
->>>>>>> b05287eea0d0c8720902dbea3518517cde1c28ef
          <top>
             <AnchorPane prefHeight="62.0" prefWidth="644.0" BorderPane.alignment="CENTER">
                <children>
@@ -61,36 +56,52 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Button fx:id="giveup" layoutX="655.0" layoutY="17.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #d61d3f;" text="Rendirse" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </top>
          <right>
             <AnchorPane prefHeight="469.0" prefWidth="130.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="revolver" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#aleatorio" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #2B59B9;" text="Revolver" textFill="WHITE">
+                  <Button fx:id="revolver" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#aleatorio" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #2B59B9;" text="Revolver" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="giveup" layoutX="10.0" layoutY="444.0" mnemonicParsing="false" onAction="#salir" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #d61d3f;" text="Rendirse" textFill="WHITE">
+                  <RadioButton fx:id="col" layoutX="16.0" layoutY="150.0" mnemonicParsing="false" onAction="#setColumna" text="Columna" />
+                  <RadioButton fx:id="fila" layoutX="16.0" layoutY="176.0" mnemonicParsing="false" onAction="#setFila" text="Fila" />
+                  <ToggleButton fx:id="del" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" onAction="#toggleDel" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #30B5BA;" text="Eliminar" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </ToggleButton>
+                  <ToggleButton fx:id="agg" layoutX="14.0" layoutY="58.0" mnemonicParsing="false" onAction="#toggleAgg" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #30B5BA;" text="Agregar" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </ToggleButton>
+                  <TextField fx:id="numAE" alignment="TOP_RIGHT" layoutX="12.0" layoutY="205.0" prefHeight="25.0" prefWidth="100.0" />
+                  <Button fx:id="accionbutton" layoutX="7.0" layoutY="242.0" mnemonicParsing="false" onAction="#accion" prefHeight="30.0" prefWidth="117.0" style="-fx-background-color: #2B59B9;" text="Ejecutar Acción" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <RadioButton fx:id="col" layoutX="16.0" layoutY="150.0" mnemonicParsing="false" onAction="#agregarColumna" text="Columna" />
-                  <RadioButton fx:id="fila" layoutX="16.0" layoutY="176.0" mnemonicParsing="false" onAction="#agregarFila" text="Fila" />
-                  <ToggleButton fx:id="del" layoutX="14.0" layoutY="103.0" mnemonicParsing="false" style="-fx-background-color: #30B5BA;" text="Eliminar" textFill="WHITE">
+                  <Button fx:id="ejecutarDesplazar" layoutX="9.0" layoutY="429.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #30ba79;" text="Ejecutar Acción" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <RadioButton fx:id="col1" layoutX="26.0" layoutY="333.0" mnemonicParsing="false" onAction="#setColumna" text="Columna" />
+                  <RadioButton fx:id="fila1" layoutX="26.0" layoutY="359.0" mnemonicParsing="false" onAction="#setFila" text="Fila" />
+                  <ToggleButton fx:id="desplazar" layoutX="14.0" layoutY="289.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #30B5BA;" text="Desplazar" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </ToggleButton>
-                  <ToggleButton fx:id="agg" layoutX="14.0" layoutY="58.0" mnemonicParsing="false" onAction="#btnAgregar" style="-fx-background-color: #30B5BA;" text="Agregar" textFill="WHITE">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </ToggleButton>
-                  <RadioButton fx:id="desplazar" layoutX="11.0" layoutY="259.0" mnemonicParsing="false" text="Desplazar" />
-                  <TextField fx:id="numAE" alignment="TOP_RIGHT" layoutX="4.0" layoutY="219.0" prefHeight="25.0" prefWidth="121.0" />
                </children>
             </AnchorPane>
          </right>
@@ -108,12 +119,11 @@
             </BorderPane>
          </center>
          <left>
-<<<<<<< HEAD
             <VBox prefHeight="488.0" prefWidth="132.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox fx:id="bot" prefHeight="30.0" prefWidth="505.0">
+                  <HBox fx:id="bot" prefHeight="22.0" prefWidth="110.0">
                      <children>
-                        <StackPane prefHeight="43.0" prefWidth="158.0">
+                        <StackPane prefHeight="20.0" prefWidth="121.0">
                            <children>
                               <Label text="Cant. palabras: ">
                                  <font>
@@ -124,7 +134,7 @@
                         </StackPane>
                         <StackPane prefHeight="100.0" prefWidth="63.0">
                            <children>
-                              <Label text="0">
+                              <Label fx:id="cantPalabrasLabel" text="0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -135,9 +145,6 @@
                   <VBox fx:id="palabrasEncontradas" prefHeight="470.0" prefWidth="132.0" />
                </children>
             </VBox>
-=======
-            <VBox fx:id="palabrasEncontradas" alignment="TOP_CENTER" prefHeight="484.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
->>>>>>> b05287eea0d0c8720902dbea3518517cde1c28ef
          </left>
       </BorderPane>
    </children>
