@@ -109,5 +109,13 @@
             <VBox alignment="TOP_CENTER" prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
          </left>
       </BorderPane>
+<<<<<<< HEAD
+   </center>
+   <left>
+      <VBox prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>
+=======
    </children>
 </Pane>
+>>>>>>> 08ffe4400bb197a3d4999acd3de8033a1cfc9ca0

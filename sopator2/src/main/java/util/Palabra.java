@@ -16,15 +16,19 @@ public class Palabra {
     private final String word;
     private final int size;
     private boolean encontrada;
+    private CircularLinkedList<Letra> listaLetras = new CircularLinkedList();
+    
     public Palabra(String word, boolean encontrada) {
         this.word = word;
         this.size = word.length();
         this.encontrada = encontrada;
+        fillListaLetras(word);
     }
     public Palabra(String word) {
         this.word = word;
         this.size = word.length();
         this.encontrada = false;
+        fillListaLetras(word);
     }
 
     public String getWord() {
@@ -34,11 +38,28 @@ public class Palabra {
     public int getSize() {
         return size;
     }
-
+    
+    private void fillListaLetras(String w) {
+        for(int i = 0; i<w.length(); i++) {
+            Letra l = new Letra(w.charAt(i));
+            listaLetras.addLast(l);
+        }
+    }
+    
+    public CircularLinkedList<Letra> getListaLetras() {
+        return listaLetras;
+    }
     public boolean isEncontrada() {
         return encontrada;
     }
+    
+    public Letra getLetra(int index) {
+        return listaLetras.get(index);        
+    }
 
+    public Character charAt(int index) {
+        return word.charAt(index);
+    }
     public void setEncontrada(boolean encontrada) {
         this.encontrada = encontrada;
     }
