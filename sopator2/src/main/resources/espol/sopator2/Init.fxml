@@ -13,15 +13,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane prefHeight="416.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.PrimaryController">
+<Pane prefHeight="416.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.InitController">
    <children>
       <ImageView fitHeight="434.0" fitWidth="697.0" layoutY="-18.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../Recursos/letras-espacio-medio_23-2147695535%20(1).jpg" />
          </image>
       </ImageView>
-      <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="-18.0" prefHeight="310.0" prefWidth="641.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="11.0" prefHeight="390.0" prefWidth="641.0" spacing="20.0">
          <children>
             <Text cache="true" mouseTransparent="true" stroke="#850505" strokeType="OUTSIDE" strokeWidth="0.0" text="Sopator!" textAlignment="CENTER">
                <font>
@@ -79,7 +78,7 @@
                   </RadioButton>
                </children>
             </HBox>
-            <Button fx:id="primaryButton" mnemonicParsing="false" onAction="#switchToSecondary" prefHeight="69.0" prefWidth="208.0" style="-fx-background-color: #2B59B9;" text="Generar sopa" textFill="#fffefe">
+            <Button fx:id="primaryButton" mnemonicParsing="false" onAction="#generarSopator" prefHeight="39.0" prefWidth="208.0" style="-fx-background-color: #2B59B9;" text="Generar sopa" textFill="#fffefe">
                <font>
                   <Font name="Cooper Black" size="18.0" />
                </font>

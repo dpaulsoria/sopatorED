@@ -43,44 +43,42 @@ import util.Letra;
  *
  * @author danny
  */
-public class SecondaryController {
+public class SopatorController implements Initializable {
 
     @FXML
     private AnchorPane matriz;
     @FXML
     private BorderPane root;
-    @FXML
-    private VBox left;
-    @FXML
-    private VBox right;
+//    @FXML
+//    private VBox left;
+//    @FXML
+//    private VBox right;
     @FXML
     private HBox top;
-    @FXML
-    private HBox bot;
-    @FXML
-    private GridPane grid;
-    @FXML
-    private RadioButton desplazar;
+//    @FXML
+//    private HBox bot;
+//    @FXML
+//    private RadioButton desplazar;
     @FXML
     private TextField points;
     @FXML
     private TextField changes;
     @FXML
     private Button revisar;
-    @FXML
-    private Button revolver;
-    @FXML
-    private ToggleButton agg;
-    @FXML
-    private ToggleButton del;
-    @FXML
-    private RadioButton col;
-    @FXML
-    private RadioButton fila;
+//    @FXML
+//    private Button revolver;
+//    @FXML
+//    private ToggleButton agg;
+//    @FXML
+//    private ToggleButton del;
+//    @FXML
+//    private RadioButton col;
+//    @FXML
+//    private RadioButton fila;
     @FXML
     private Button giveup;
     @FXML
-    private Label vidasT;
+    private TextField lifes;
     
     private Scene scene;
     private Sopator sopator;
@@ -98,6 +96,7 @@ public class SecondaryController {
     private Letra selec = null;
     private Character id = null;
     private String palabra="";
+    private GridPane grid;
 
     private ArrayList<Letra> seleccionadas=new ArrayList<>();
 
@@ -107,14 +106,12 @@ public class SecondaryController {
      * Initializes the controller class.
      */
     
-    public void SecondaryController(Stage stage) {
-        vidasT.setText(Integer.toString(vidas));
-        
-        generarSopa();
-        
-        
-        
+    
+    public void setBasics(Sopator sp) {
+        this.sopator = sp;
+        System.out.println(sp.toString());
     }
+    
     public void setSopator(Sopator s) {
         this.sopator = s;
         setData();
@@ -225,6 +222,11 @@ public class SecondaryController {
     
     public Scene getScene() {
         return scene;
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        grid = new GridPane();
     }
 
     
