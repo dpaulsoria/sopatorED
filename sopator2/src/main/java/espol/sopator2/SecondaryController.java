@@ -101,7 +101,7 @@ public class SecondaryController {
     private Character id = null;
     private String palabra="";
     private String selectedStyle = " -fx-background-color: #39ad77;";
-    private String UnselectedStyle = " -fx-background-color: #39ad77;";
+    private String UnselectedStyle = " -fx-background-color: white;";
     private String borderStyle = "-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;";
     private String labelStyle = "-fx-font-size: 14px;";
     
@@ -340,13 +340,17 @@ public class SecondaryController {
             // Ponemos los estilos necesarios en caso del evento
             if (!letraN.isSelected()) {
                 pane.setStyle(pane.getStyle() + selectedStyle);
+            } else {
+                pane.setStyle(UnselectedStyle + borderStyle);
             }
             
         });
         pane.setOnMouseExited(e -> {
             // Ponemos los estilos necesarios en caso del evento
             if (!letraN.isSelected()) {
-                pane.setStyle(borderStyle);
+                pane.setStyle(UnselectedStyle + borderStyle);
+            } else {
+                pane.setStyle(selectedStyle);
             }
             
         });
