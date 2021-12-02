@@ -114,6 +114,8 @@ public class SecondaryController {
     private BorderPane root_father;
     @FXML
     private VBox palabrasEncontradas;
+    @FXML
+    private Label cantPalabrasLabel;
     
     /**
      * Initializes the controller class.
@@ -131,6 +133,7 @@ public class SecondaryController {
         
     }
     
+    @FXML
     public void aleatorio() {
         this.sopator.reorganizar();
         generarSopa();
@@ -221,8 +224,9 @@ public class SecondaryController {
         }
     }
     
-    private void actualizarEncontradas() {
+    private void actualizarEncontradas() {        
         int size = encontradas.size();
+        cantPalabrasLabel.setText(String.valueOf(size));
         if (size < 1) {
             alerta("No hay palabras para mostrar");
         } else {

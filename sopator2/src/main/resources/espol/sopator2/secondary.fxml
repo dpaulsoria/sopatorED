@@ -9,13 +9,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
    <children>
       <ImageView fitHeight="587.0" fitWidth="748.0" pickOnBounds="true" preserveRatio="true" />
-      <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="600.0">
+      <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="739.0">
          <top>
             <AnchorPane prefHeight="58.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
@@ -91,9 +92,6 @@
                <top>
                   <HBox fx:id="top" prefHeight="30.0" prefWidth="505.0" BorderPane.alignment="CENTER" />
                </top>
-               <bottom>
-                  <HBox fx:id="bot" prefHeight="30.0" prefWidth="505.0" BorderPane.alignment="CENTER" />
-               </bottom>
                <left>
                   <VBox fx:id="left" prefHeight="428.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
                </left>
@@ -103,7 +101,32 @@
             </BorderPane>
          </center>
          <left>
-            <VBox fx:id="palabrasEncontradas" alignment="TOP_CENTER" prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
+            <VBox prefHeight="488.0" prefWidth="132.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox fx:id="bot" prefHeight="30.0" prefWidth="505.0">
+                     <children>
+                        <StackPane prefHeight="43.0" prefWidth="158.0">
+                           <children>
+                              <Label text="Cant. palabras: ">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="100.0" prefWidth="63.0">
+                           <children>
+                              <Label text="0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children></HBox>
+                  <VBox fx:id="palabrasEncontradas" prefHeight="470.0" prefWidth="132.0" />
+               </children>
+            </VBox>
          </left>
       </BorderPane>
    </children>
