@@ -97,6 +97,8 @@ public class SecondaryController {
     private Letra selec = null;
     private Character id = null;
     private String palabra="";
+    private boolean revisarMode = false;
+    
     /**
      * Initializes the controller class.
      */
@@ -151,7 +153,14 @@ public class SecondaryController {
         grid.setHgap(50*4);
         
     }
-     private StackPane crearTablero(double altura,double ancho,double letraT, Letra letraN) {
+    
+    public void setRevisarMode() {
+        if (!revisarMode)
+            this.revisarMode = false;
+        else this.revisarMode = true;
+    }
+    
+    private StackPane crearTablero(double altura,double ancho,double letraT, Letra letraN) {
         Character c = letraN.getLetra();
         StackPane pane = new StackPane();
         pane.setPrefSize(ancho, altura);
@@ -173,12 +182,15 @@ public class SecondaryController {
                 System.out.println("Letra: " + id);
                 palabra+=id;
             }
-            System.out.println(palabra);
+            if (revisarMode)
+                System.out.println(palabra);
         });
         pane.setOnMouseEntered(e -> {
+            // Ponemos los estilos necesarios en caso del evento
             pane.setStyle(pane.getStyle() + " -fx-background-color: #BFE1FF;");
         });
         pane.setOnMouseExited(e -> {
+            // Ponemos los estilos necesarios en caso del evento
             pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         });
         return pane;
