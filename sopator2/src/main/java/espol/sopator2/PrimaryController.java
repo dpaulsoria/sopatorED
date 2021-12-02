@@ -123,8 +123,5 @@ public class PrimaryController implements Initializable {
             }
         }
         
-        
-
-        
     }
 }
