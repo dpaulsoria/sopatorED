@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
    <children>
       <ImageView fitHeight="587.0" fitWidth="748.0" pickOnBounds="true" preserveRatio="true" />
       <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="600.0">
@@ -60,7 +60,7 @@
          <right>
             <AnchorPane prefHeight="342.0" prefWidth="95.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="revolver" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #2B59B9;" text="Revolver" textFill="WHITE">
+                  <Button fx:id="revolver" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#aleatorio" prefHeight="30.0" prefWidth="75.0" style="-fx-background-color: #2B59B9;" text="Revolver" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -82,15 +82,12 @@
                         <Font size="14.0" />
                      </font>
                   </ToggleButton>
-                  <RadioButton fx:id="desplazar" layoutX="14.0" layoutY="265.0" mnemonicParsing="false" text="Desplazar" />
+                  <RadioButton fx:id="desplazar" layoutX="11.0" layoutY="259.0" mnemonicParsing="false" text="Desplazar" />
                </children>
             </AnchorPane>
          </right>
          <center>
             <BorderPane fx:id="root" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <center>
-                  <AnchorPane fx:id="matriz" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-               </center>
                <top>
                   <HBox fx:id="top" prefHeight="30.0" prefWidth="505.0" BorderPane.alignment="CENTER" />
                </top>
@@ -106,16 +103,8 @@
             </BorderPane>
          </center>
          <left>
-            <VBox alignment="TOP_CENTER" prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
+            <VBox fx:id="palabrasEncontradas" alignment="TOP_CENTER" prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
          </left>
       </BorderPane>
-<<<<<<< HEAD
-   </center>
-   <left>
-      <VBox prefHeight="488.0" prefWidth="111.0" BorderPane.alignment="CENTER" />
-   </left>
-</BorderPane>
-=======
    </children>
 </Pane>
->>>>>>> 08ffe4400bb197a3d4999acd3de8033a1cfc9ca0

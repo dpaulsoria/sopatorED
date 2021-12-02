@@ -48,7 +48,7 @@ import util.Palabra;
  */
 public class SecondaryController {
 
-    @FXML
+    
     private AnchorPane matriz;
     @FXML
     private BorderPane root;
@@ -112,6 +112,8 @@ public class SecondaryController {
     private boolean revisarMode = false;
     @FXML
     private BorderPane root_father;
+    @FXML
+    private VBox palabrasEncontradas;
     
     /**
      * Initializes the controller class.
@@ -123,6 +125,17 @@ public class SecondaryController {
         changes.setText(Integer.toString(cambios));
     }
     
+    public void clean() {
+        root = new BorderPane();
+        root_father.setCenter(root);
+        
+    }
+    
+    public void aleatorio() {
+        this.sopator.reorganizar();
+        generarSopa();
+    }
+    
     private void pierdeVida() {
         vidas = Integer.valueOf(vidasLabel.getText());
         System.out.println(vidas);
@@ -132,11 +145,7 @@ public class SecondaryController {
     
     public void setSopator(Sopator s) {
         this.sopator = s;
-        setData();
-        grid = new GridPane();
         generarSopa();
-        showVidas();
-        grid.setStyle(borderStyle);
     
     }
     private void setData() {
@@ -145,7 +154,13 @@ public class SecondaryController {
     }
     
     public void generarSopa() {
-
+        this.matriz = new AnchorPane();
+        
+        setData();
+        grid = new GridPane();
+        matriz.getChildren().add(grid);
+        showVidas();
+        grid.setStyle(borderStyle);
         ancho = 400 / sopator.getFilas();
         alto = 400 / sopator.getColumnas();
         
@@ -167,6 +182,8 @@ public class SecondaryController {
         
         }    
         grid.setStyle(borderStyle); // Le da un doble borde
+        root.getChildren().add(matriz);
+        
         matriz.getChildren().addAll(grid);
         grid.getChildren().addAll(root);
        
@@ -197,9 +214,10 @@ public class SecondaryController {
             }
         }
     }
-    private void bloquearLetras(Palabra p) {
-        for (int i = 0; i<p.getSize(); i++) {
-            p.getLetra(i).setLocked(true);
+    
+    private void bloquearLetras(Palabra w) {
+        for (int i = 0; i<w.getSize(); i++) {
+            w.getLetra(i).noUnselect = true;
         }
     }
     
@@ -212,7 +230,7 @@ public class SecondaryController {
             int childSize = left.getChildren().size();
             System.out.println("ChildSize: " + childSize);
             System.out.println("p: " + p.toString());
-            left.getChildren().add(childSize, getLabelPalabra(p));
+            palabrasEncontradas.getChildren().add(childSize, getLabelPalabra(p));
         }
     }
     
@@ -233,7 +251,7 @@ public class SecondaryController {
         Character c = letraN.getLetra();
         StackPane pane = new StackPane();
         pane.setPrefSize(ancho, altura);
-        pane.setStyle(borderStyle);
+        pane.setStyle(borderStyle+"-fx-background-color: white;");
         Label letra = new Label(String.valueOf(c)); 
         letra.setStyle("-fx-font-family: 'Cooper Black'; -fx-font-size: " + letraT + "px;");;
         pane.getChildren().add(letra);
@@ -242,7 +260,7 @@ public class SecondaryController {
         
         pane.setOnMouseClicked(e -> {
             System.out.println("Clickeo " + letraN);
-            if (!letraN.isLocked()) {
+            if (!letraN.noUnselect) {
                 if (!letraN.isSelected()) {
                     System.out.println("Ahora está seleccionada " + letraN);
                     pane.setStyle(pane.getStyle() + selectedStyle);
@@ -257,12 +275,14 @@ public class SecondaryController {
                     System.out.println("index: " + i);
                     seleccionadas.remove(seleccionadas.indexOf(letraN));
                 }
-<<<<<<< HEAD
-                    System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
-=======
-                System.out.println("Seleccionadas actualmente " + seleccionadas.toString());
->>>>>>> 08ffe4400bb197a3d4999acd3de8033a1cfc9ca0
-            }            
+                System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+
+            } else {
+                System.out.println("Ahora está seleccionada " + letraN);
+                seleccionadas.addLast(letraN);
+                System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+                
+            }           
             
         });
         
@@ -333,23 +353,27 @@ public class SecondaryController {
         a.show();
     }
     private void añadirPuntos(Palabra p) {
-        
-        this.puntos = Integer.valueOf(points.getText());
-        alerta("Felicidades, ganó " + puntos + " puntos");
-        this.puntos += p.getSize();
+        int size = p.getSize();
+        this.puntos = Integer.valueOf(points.getText());        
+        this.puntos += size;
+        alerta("Felicidades, ganó " + size + " puntos");
         this.points.setText(this.puntos + "");
     }
     private void quitarPuntos(Palabra p) {
-        pierdeVida();
+        int size = p.getSize();
         this.puntos = Integer.valueOf(points.getText());
-        if(this.puntos!=0){
-            this.puntos -= p.getSize();
+        if (this.puntos <= 0) {
+            pierdeVida();
+        } else if (this.puntos>0) {
+            this.puntos -= size;
+            if (this.puntos < 0)
+                pierdeVida();
         }
         this.points.setText(this.puntos + "");
         if (this.vidas==0)
             gameOver();
         else{
-            alerta("Sorry, perdió " + puntos + " puntos");
+            alerta("Sorry, perdió " + size + " puntos");
         }
     }
     

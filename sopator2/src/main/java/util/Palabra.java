@@ -98,5 +98,9 @@ public class Palabra {
         }
         return new Palabra(tmp);
     }
-    
+
+    @Override
+    public String toString() {
+        return word;
+    }
 }

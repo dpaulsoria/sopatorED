@@ -69,6 +69,17 @@ public class Sopator {
         fila.set(x, new Letra(letra));
     }
     
+    public void reorganizar() {
+        for(int i = 0; i<sopa_letras.size(); i++) {
+            CircularLinkedList<Letra> fila = sopa_letras.get(i);
+            for(int j = 0; j<fila.size(); j++) {
+                Letra l = fila.get(j);
+                if (!l.noUnselect)
+                    fila.set(j, new Letra(getRandomChar()));
+            }
+        }
+    }
+    
     public boolean confirmarPalabraEnBase(Palabra p) {
         String word = p.getWord();
         ArrayList<String> palabras;

@@ -17,29 +17,22 @@ public class Letra {
     private Palabra palabra;
     private Pair ubi;
     private boolean selected;
-    private boolean locked;
+    public boolean noUnselect;
     public Letra(Character c, Palabra p) {
         this.letra = c; this.palabra = p;
         this.selected = false;
-        this.locked = false;
+        this.noUnselect = false;
     }
     public Letra(Character c) {
         this.letra = c; this.palabra = null;
         selected = false;
-        locked = false;
+        this.noUnselect = false;
     }
     public boolean isSelected() {
         return selected;
     }
     public void setSelected(boolean s) {
         this.selected = s;
-    }
-    
-    public boolean isLocked() {
-        return locked;
-    }
-    public void setLocked(boolean s) {
-        this.locked = s;
     }
     
     public Character getLetra() {
