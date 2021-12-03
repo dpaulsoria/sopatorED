@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
    <children>
       <ImageView fitHeight="587.0" fitWidth="748.0" pickOnBounds="true" preserveRatio="true" />
       <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="739.0">
@@ -62,11 +62,11 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Text fx:id="txtNum" layoutX="438.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="45.13671875">
+                  <Text fx:id="txtNum" layoutX="438.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" visible="false" wrappingWidth="45.13671875">
                      <font>
                         <Font size="14.0" />
                      </font></Text>
-                  <Label fx:id="tiempo" layoutX="388.0" layoutY="21.0" text="Tiempo:">
+                  <Label fx:id="tiempo" layoutX="388.0" layoutY="21.0" text="Tiempo:" visible="false">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -118,19 +118,6 @@
                </children>
             </AnchorPane>
          </right>
-         <center>
-            <BorderPane fx:id="root" prefHeight="492.0" prefWidth="384.0" BorderPane.alignment="CENTER">
-               <top>
-                  <HBox fx:id="top" prefHeight="30.0" prefWidth="505.0" BorderPane.alignment="CENTER" />
-               </top>
-               <left>
-                  <VBox fx:id="left" prefHeight="428.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
-               </left>
-               <right>
-                  <VBox fx:id="right" prefHeight="428.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
-               </right>
-            </BorderPane>
-         </center>
          <left>
             <VBox prefHeight="488.0" prefWidth="132.0" BorderPane.alignment="CENTER">
                <children>
@@ -159,6 +146,9 @@
                </children>
             </VBox>
          </left>
+         <center>
+            <BorderPane fx:id="root" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
    </children>
 </Pane>

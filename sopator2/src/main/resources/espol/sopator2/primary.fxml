@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="416.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.PrimaryController">
+<Pane prefHeight="416.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.PrimaryController">
    <children>
       <ImageView fitHeight="434.0" fitWidth="697.0" layoutY="-18.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -96,7 +96,7 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </VBox>
-      <Label layoutX="128.0" layoutY="373.0" prefHeight="33.0" prefWidth="131.0" text="EXTREME" textFill="#1d9e06">
+      <Label layoutX="128.0" layoutY="373.0" prefHeight="33.0" prefWidth="131.0" text="EXTREME" textFill="#1d9e06" visible="false">
          <font>
             <Font name="Cooper Black" size="23.0" />
          </font>
@@ -104,8 +104,8 @@
             <MotionBlur />
          </effect>
       </Label>
-      <Circle layoutX="102.0" layoutY="389.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
-      <RadioButton fx:id="ModoExtreme" layoutX="90.0" layoutY="374.0" mnemonicParsing="false" text="EXTREME" textFill="WHITE">
+      <Circle layoutX="102.0" layoutY="389.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" visible="false" />
+      <RadioButton fx:id="ModoExtreme" layoutX="90.0" layoutY="374.0" mnemonicParsing="false" text="EXTREME" textFill="WHITE" visible="false">
          <font>
             <Font name="Cooper Black" size="22.0" />
          </font>

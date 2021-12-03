@@ -95,4 +95,19 @@ public class Letra {
         return letra.toString();
     }
     
+    public boolean validarSelectLetra(Letra n) {
+        Pair n1 = n.getUbi();
+        if ((n1.X == ubi.X + 1 && n1.Y == ubi.Y    ) ||
+            (n1.X == ubi.X     && n1.Y == ubi.Y + 1) ||
+            (n1.X == ubi.X - 1 && n1.Y == ubi.Y    ) ||
+            (n1.X == ubi.X     && n1.Y == ubi.Y - 1) ||
+            (n1.X == ubi.X + 1 && n1.Y == ubi.Y + 1) ||
+            (n1.X == ubi.X - 1 && n1.Y == ubi.Y - 1) ||
+            (n1.X == ubi.X + 1 && n1.Y == ubi.Y - 1) ||
+            (n1.X == ubi.X - 1 && n1.Y == ubi.Y + 1)) {
+            return true;
+        }
+        return false;
+    }
+    
 }

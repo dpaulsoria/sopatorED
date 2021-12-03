@@ -41,7 +41,7 @@ import util.Palabra;
 public class SecondaryController {
 
     @FXML
-    Text txtNum;
+    private Text txtNum;
     private AnchorPane matriz;
     @FXML
     private BorderPane root;
@@ -108,6 +108,7 @@ public class SecondaryController {
     private String labelStyle = "-fx-font-size: 14px;";
     
     private Desplazamiento d;
+    private Letra currentLetter;
     
     private CircularLinkedList<Letra> seleccionadas = new CircularLinkedList();
     private ArrayList<Pair> coordenadas = new ArrayList<>();
@@ -186,24 +187,21 @@ public class SecondaryController {
     
     public void generarSopa() {
         //inicializa hilo que muestra el contador
-        
-        
-        
         this.matriz = new AnchorPane();
         
         setData();
         grid = new GridPane();
         matriz.getChildren().add(grid);
         showVidas();
-        tiempo.setVisible(false);
-        txtNum.setVisible(false);
-        if(sopator.getExtremo()){
-            tiempo.setVisible(true);
-            txtNum.setVisible(true);
-            Thread hiloCuenta = new Thread(new cronometro());
-            hiloCuenta.setDaemon(true);
-            hiloCuenta.start();
-        }
+//        tiempo.setVisible(false);
+//        txtNum.setVisible(false);
+//        if(sopator.getExtremo()){
+//            tiempo.setVisible(true);
+//            txtNum.setVisible(true);
+//            Thread hiloCuenta = new Thread(new cronometro());
+//            hiloCuenta.setDaemon(true);
+//            hiloCuenta.start();
+//        }
         grid.setStyle(borderStyle);
         ancho = 400 / sopator.getFilas();
         alto = 400 / sopator.getColumnas();
@@ -294,6 +292,12 @@ public class SecondaryController {
             Pane celdaPadre;
         }
     }
+    private void validarLetra() {
+        if (currentLetter.validarSelectLetra(seleccionadas.getLast().getContent())) {
+            return true;
+        }
+        return false;
+    }
     
     
     private StackPane crearTablero(double altura,double ancho,double letraT, Letra letraN) {
@@ -309,8 +313,10 @@ public class SecondaryController {
         
         pane.setOnMouseClicked(e -> {
             System.out.println("Clickeo " + letraN);
-            
-            
+            currentLetter  = letraN;
+            if (validarLetra()) {
+                
+            }
             if (!letraN.noUnselect) {
                 if (!letraN.isSelected()) {
                     System.out.println("Ahora está seleccionada " + letraN);
@@ -545,6 +551,7 @@ public class SecondaryController {
     public void accion() {
         // Mostrar cambios
         this.cambios = Integer.valueOf(changes.getText());
+        
         if (cambios > 0) {
             
             System.out.println("Cambios permitidos actualmente:" + cambios);
@@ -610,7 +617,8 @@ public class SecondaryController {
             
         }
         // Restar cabmios
-        
+        this.cambios--;
+        this.changes.setText(cambios + "");
         
         
         col.setVisible(false);
