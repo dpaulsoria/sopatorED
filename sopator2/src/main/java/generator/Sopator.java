@@ -150,6 +150,41 @@ public class Sopator {
         }
     }
     
+    private ArrayList<Letra> generarTmp(int c) {
+        ArrayList<Letra> tmp = new ArrayList<>();
+        for (int i=0; i<sopa_letras.size(); i++) {
+            CircularLinkedList<Letra> fila = sopa_letras.get(i);
+            for (int j = 0; j<fila.size(); j++) {
+                tmp.addLast(fila.get(j));
+            }
+        }
+        return tmp;
+    }
+        
+    public void desplazarColUp(int c) {
+        ArrayList<Letra> tmp = generarTmp(c);
+        Letra first = tmp.removeFirst();
+        tmp.addLast(first);
+        setDesplazamiento(tmp);
+    }
+    
+    public void desplazarColDown(int c) {
+        ArrayList<Letra> tmp = generarTmp(c);
+        Letra last = tmp.removeLast();
+        tmp.addFirst(last);
+        setDesplazamiento(tmp);
+    }
+    
+    private void setDesplazamiento(ArrayList<Letra> tmp) {
+        int k = 0;
+        for (int i=0; i<sopa_letras.size(); i++) {
+            CircularLinkedList<Letra> fila = sopa_letras.get(i);
+            for (int j = 0; j<fila.size(); j++) {
+                fila.set(j,tmp.get(k)); k++;
+            }
+        }
+    }
+    
     public void añadirFila() {
         FILAS++;
         CircularLinkedList<Letra> filaNueva = new CircularLinkedList<>();
