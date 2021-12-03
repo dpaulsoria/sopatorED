@@ -292,7 +292,7 @@ public class SecondaryController {
             Pane celdaPadre;
         }
     }
-    private void validarLetra() {
+    private boolean validarLetra() {
         if (currentLetter.validarSelectLetra(seleccionadas.getLast().getContent())) {
             return true;
         }
