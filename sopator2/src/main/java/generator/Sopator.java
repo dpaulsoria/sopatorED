@@ -20,6 +20,7 @@ import util.Palabra;
  */
 public class Sopator {
     private String ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private Boolean EXTREMO;
     private int FILAS;
     private int COLUMNAS;
     private final String TEMA;
@@ -27,10 +28,11 @@ public class Sopator {
     private ArrayList<String> palabras_validas;
     private ArrayList<CircularLinkedList<Letra>> sopa_letras = new ArrayList<>();
     
-    public Sopator(int fila, int columna, String tema) {
+    public Sopator(int fila, int columna, String tema, boolean extremo) {
         FILAS = fila;
         COLUMNAS = columna;
         TEMA = tema;
+        EXTREMO =extremo; 
         añadir_base_validas();
         generar();
     }
@@ -43,7 +45,9 @@ public class Sopator {
     public int getFilas() {
         return FILAS;
     }
-    
+    public boolean getExtremo(){
+        return EXTREMO;
+    }
     public int getColumnas() {
         return COLUMNAS;
     }

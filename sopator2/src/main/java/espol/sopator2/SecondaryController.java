@@ -37,6 +37,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import util.Letra;
 import util.Pair;
@@ -49,7 +50,8 @@ import util.Palabra;
  */
 public class SecondaryController {
 
-    
+    @FXML
+    Text txtNum;
     private AnchorPane matriz;
     @FXML
     private BorderPane root;
@@ -125,6 +127,8 @@ public class SecondaryController {
     private VBox palabrasEncontradas;
     @FXML
     private Label cantPalabrasLabel;
+    @FXML
+    private Label tiempo;
     
     /**
      * Initializes the controller class.
@@ -174,12 +178,25 @@ public class SecondaryController {
     }
     
     public void generarSopa() {
+        //inicializa hilo que muestra el contador
+        
+        
+        
         this.matriz = new AnchorPane();
         
         setData();
         grid = new GridPane();
         matriz.getChildren().add(grid);
         showVidas();
+        tiempo.setVisible(false);
+        txtNum.setVisible(false);
+        if(sopator.getExtremo()){
+            tiempo.setVisible(true);
+            txtNum.setVisible(true);
+            Thread hiloCuenta = new Thread(new cronometro());
+            hiloCuenta.setDaemon(true);
+            hiloCuenta.start();
+        }
         grid.setStyle(borderStyle);
         ancho = 400 / sopator.getFilas();
         alto = 400 / sopator.getColumnas();
@@ -424,6 +441,7 @@ public class SecondaryController {
     }
     @FXML
     public void salir() throws IOException{
+        
         App.setRoot("primary");
     }
 
@@ -441,18 +459,37 @@ public class SecondaryController {
     @FXML
     public void setColumna() {
         fila.setSelected(false);
-        comprobarRadioButton();
+        //comprobarRadioButton();
+        
+        if(col.isSelected()){
+            numAE.setVisible(true);
+            accionbutton.setVisible(true);       
+        }else{
+            numAE.setVisible(false);
+            accionbutton.setVisible(false);
+        }
     }
     
     @FXML
     public void setFila() {
         col.setSelected(false);
-        comprobarRadioButton();
+        //comprobarRadioButton();
+        if(fila.isSelected()){
+            numAE.setVisible(true);
+            accionbutton.setVisible(true);       
+        }else{
+            numAE.setVisible(false);
+            accionbutton.setVisible(false);
+        }
     }
     
-    public void setColumnaAdespl() {
+    public void setColumnaAdespl(ActionEvent event) {
         fila1.setSelected(false);
+        numAE.setVisible(false);
+        
         comprobarRadioButton();
+        
+        
     }
     
     public void setFilaAdespl() {
@@ -552,6 +589,38 @@ public class SecondaryController {
     
     public void desplazar() {
         
+    }
+    class cronometro implements Runnable {
+
+        private int count = 60;
+
+        private void incrementCount() {
+            count--;
+            txtNum.setText(Integer.toString(count));
+            System.out.println(count==0);
+            if(count==0){
+                try {
+                    salir();
+                    
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+;
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                }
+
+                incrementCount();
+            }
+        }
+
     }
     
     
