@@ -38,6 +38,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import util.Desplazamiento;
 import util.Letra;
 import util.Pair;
 import util.Palabra;
@@ -115,6 +116,8 @@ public class SecondaryController {
     private String borderStyle = "-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;";
     private String labelStyle = "-fx-font-size: 14px;";
     
+    private Desplazamiento d;
+    
     private CircularLinkedList<Letra> seleccionadas = new CircularLinkedList();
     private ArrayList<Pair> coordenadas = new ArrayList<>();
     private ArrayList<Palabra> encontradas = new ArrayList<>();
@@ -125,6 +128,12 @@ public class SecondaryController {
     private VBox palabrasEncontradas;
     @FXML
     private Label cantPalabrasLabel;
+    @FXML
+    private RadioButton col11;
+    @FXML
+    private RadioButton fila11;
+    @FXML
+    private TextField numAE1;
     
     /**
      * Initializes the controller class.
@@ -156,15 +165,23 @@ public class SecondaryController {
         puntos = 0;
         vidasLabel.setText(vidas + "");
     }
-    
-    public void setSopator(Sopator s) {
+    private void inicializar() {
         fila.setVisible(false);
         col.setVisible(false);
         numAE.setVisible(false);
         accionbutton.setVisible(false);
-        
+        fila1.setVisible(false);
+        col1.setVisible(false);
+        fila11.setVisible(false);
+        col11.setVisible(false);
+        ejecutarDesplazar.setVisible(false);
+        numAE1.setVisible(false);
         numAE.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[0-9]{0,2}")) ? condicion:null));
         
+    }
+    
+    public void setSopator(Sopator s) {
+        inicializar();
         this.sopator = s;
         generarSopa();
     
@@ -303,12 +320,12 @@ public class SecondaryController {
                     System.out.println("index: " + i);
                     seleccionadas.remove(i);
                 }
-                System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+                System.out.println("Seleccionadas actualmente " + seleccionadas.toString());
 
             } else {
                 System.out.println("Ahora está seleccionada " + letraN);
                 seleccionadas.addLast(letraN);
-                System.out.println("Seleccionadas actualmetne " + seleccionadas.toString());
+                System.out.println("Seleccionadas actualmente " + seleccionadas.toString());
                 
             }           
             
@@ -617,6 +634,128 @@ public class SecondaryController {
     public void desplazar() {
         
     }
+
+    @FXML
+    private void toggleDesp(ActionEvent event) {
+        if (desplazar.isSelected()) {
+            desplazar.setStyle("-fx-background-color: #278d91");
+            fila1.setVisible(true);
+            col1.setVisible(true);
+            
+            
+        } else {
+            del.setStyle("-fx-background-color: #30B5BA");
+            fila1.setVisible(false);
+            col1.setVisible(false);
+            fila11.setVisible(false);
+            col11.setVisible(false);
+            ejecutarDesplazar.setVisible(false);
+        }
+    }
     
+    @FXML
+    public void setFila1() {
+        if (fila1.isSelected()) {
+            col1.setSelected(false);
+            fila11.setVisible(true);
+            col11.setVisible(true);
+            col11.setText("Derecha");
+            fila11.setText("Izquierda");
+            ejecutarDesplazar.setVisible(false);
+            numAE1.setVisible(false);
+        } else {
+            fila11.setVisible(false);
+            col11.setVisible(false);
+            fila11.setSelected(false);
+            col11.setSelected(false);
+            ejecutarDesplazar.setVisible(false);
+            numAE1.setVisible(false);
+        }
+    } 
+    
+    @FXML
+    public void setCol1() {
+        if (col1.isSelected()) {
+            fila1.setSelected(false);
+            fila11.setVisible(true);
+            col11.setVisible(true);
+            col11.setText("Arriba");
+            fila11.setText("Abajo");
+            ejecutarDesplazar.setVisible(false);
+            numAE1.setVisible(false);
+        } else {
+            fila11.setVisible(false);
+            col11.setVisible(false);
+            fila11.setSelected(false);
+            col11.setSelected(false);
+            ejecutarDesplazar.setVisible(false);
+            numAE1.setVisible(false);
+        }
+    }
+    
+    @FXML
+    public void setDesplCol() {
+        if (col11.isSelected()) {
+            fila11.setSelected(false);
+            numAE1.setVisible(true);
+            ejecutarDesplazar.setVisible(true);
+            if (fila1.isSelected() && col11.isSelected()) {
+                setDesplazamiento(new Pair(1, 0), validarDes());
+            } else if (col1.isSelected() && fila11.isSelected()) {
+                setDesplazamiento(new Pair(0, 1), validarDes());
+            }
+        } else {
+            numAE1.setVisible(false);
+            ejecutarDesplazar.setVisible(false);
+        }
+    }
+    @FXML
+    public void setDesplFila() {
+        if (fila11.isSelected()) {
+            col11.setSelected(false);
+            numAE1.setVisible(true);
+            ejecutarDesplazar.setVisible(true);
+            if (fila1.isSelected() && fila11.isSelected()) {
+                setDesplazamiento(new Pair(-1, 0), validarDes());
+            } else if (col1.isSelected() && fila11.isSelected()) {
+                setDesplazamiento(new Pair(0, -1), validarDes());
+            }
+        } else {
+            numAE1.setVisible(false);
+            ejecutarDesplazar.setVisible(false);
+        }
+    }
+    
+    @FXML
+    public void ejecutarDespl() {
+        switch(d.toString()) {
+            case "Arriba":                
+                break;
+            case "Abajo":
+                break;
+            case "Izquierda":
+                sopator.desplazarFilaIzq(d.getFilaCol());
+                clean();
+                break;
+            case "Derecha":
+                sopator.desplazarFilaDer(d.getFilaCol());
+                clean();
+                break;
+        }
+        
+    }
+    private void setDesplazamiento(Pair p, int i) {
+        this.d = new Desplazamiento(p, i);
+        System.out.println(d.toString());
+        
+    }
+    
+    private int validarDes() {
+        int num = Integer.valueOf(numAE1.getText());
+        if (num > -1 && num < filas) {
+            return num;
+        }
+        return -1;
+    }
     
 }

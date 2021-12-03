@@ -17,7 +17,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
    <children>
       <ImageView fitHeight="587.0" fitWidth="748.0" pickOnBounds="true" preserveRatio="true" />
-      <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="739.0">
+      <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="739.0">
          <top>
             <AnchorPane prefHeight="62.0" prefWidth="644.0" BorderPane.alignment="CENTER">
                <children>
@@ -65,7 +65,7 @@
             </AnchorPane>
          </top>
          <right>
-            <AnchorPane prefHeight="469.0" prefWidth="130.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="505.0" prefWidth="130.0" BorderPane.alignment="CENTER">
                <children>
                   <Button fx:id="revolver" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#aleatorio" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #2B59B9;" text="Revolver" textFill="WHITE">
                      <font>
@@ -90,18 +90,21 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="ejecutarDesplazar" layoutX="9.0" layoutY="429.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #30ba79;" text="Ejecutar Acción" textFill="WHITE">
+                  <Button fx:id="ejecutarDesplazar" layoutX="8.0" layoutY="467.0" mnemonicParsing="false" onAction="#ejecutarDespl" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #2B59B9;" text="Ejecutar" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <RadioButton fx:id="col1" layoutX="26.0" layoutY="333.0" mnemonicParsing="false" onAction="#setColumna" text="Columna" />
-                  <RadioButton fx:id="fila1" layoutX="26.0" layoutY="359.0" mnemonicParsing="false" onAction="#setFila" text="Fila" />
-                  <ToggleButton fx:id="desplazar" layoutX="14.0" layoutY="289.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #30B5BA;" text="Desplazar" textFill="WHITE">
+                  <RadioButton fx:id="col1" layoutX="26.0" layoutY="333.0" mnemonicParsing="false" onAction="#setCol1" text="Columna" />
+                  <RadioButton fx:id="fila1" layoutX="26.0" layoutY="359.0" mnemonicParsing="false" onAction="#setFila1" text="Fila" />
+                  <ToggleButton fx:id="desplazar" layoutX="14.0" layoutY="289.0" mnemonicParsing="false" onAction="#toggleDesp" prefHeight="30.0" prefWidth="95.0" style="-fx-background-color: #30B5BA;" text="Desplazar" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </ToggleButton>
+                  <RadioButton fx:id="col11" layoutX="27.0" layoutY="383.0" mnemonicParsing="false" onAction="#setDesplCol" text="Columna" />
+                  <RadioButton fx:id="fila11" layoutX="27.0" layoutY="409.0" mnemonicParsing="false" onAction="#setDesplFila" text="Fila" />
+                  <TextField fx:id="numAE1" alignment="TOP_RIGHT" layoutX="15.0" layoutY="432.0" prefHeight="25.0" prefWidth="100.0" />
                </children>
             </AnchorPane>
          </right>
