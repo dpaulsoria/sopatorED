@@ -13,8 +13,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="espol.sopator2.SecondaryController">
    <children>
       <ImageView fitHeight="587.0" fitWidth="748.0" pickOnBounds="true" preserveRatio="true" />
       <BorderPane fx:id="root_father" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="573.0" prefWidth="739.0">
@@ -31,7 +32,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="452.0" layoutY="16.0" text="Cambios:">
+                  <Label layoutX="502.0" layoutY="19.0" text="Cambios:">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -51,7 +52,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="changes" layoutX="535.0" layoutY="17.0" text="0">
+                  <Label fx:id="changes" layoutX="583.0" layoutY="19.0" text="0">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -61,6 +62,15 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
+                  <Text fx:id="txtNum" layoutX="438.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="45.13671875">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Text>
+                  <Label fx:id="tiempo" layoutX="388.0" layoutY="21.0" text="Tiempo:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </top>

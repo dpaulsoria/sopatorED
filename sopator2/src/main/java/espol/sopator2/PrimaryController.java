@@ -39,7 +39,10 @@ public class PrimaryController implements Initializable {
     private Button primaryButton;
     private int f;
     private int c;
+    private boolean extremoM=false;
     private String t;
+    @FXML
+    private RadioButton ModoExtreme;
     
     private void formatosTextfield() {
         filas.setTextFormatter(new TextFormatter<>(condicion -> (condicion.getControlNewText().matches("[0-9]{0,2}")) ? condicion:null));
@@ -57,6 +60,7 @@ public class PrimaryController implements Initializable {
         return (random.isSelected() || animales.isSelected() || ciudades.isSelected() || colores.isSelected());
     }
     
+    @FXML
     public void temaAnimales() {
         ciudades.setSelected(false);
         colores.setSelected(false);
@@ -64,6 +68,7 @@ public class PrimaryController implements Initializable {
         t = "ANIMALES";
     }
     
+    @FXML
     public void temaCiudades() {
         animales.setSelected(false);
         colores.setSelected(false);
@@ -71,12 +76,14 @@ public class PrimaryController implements Initializable {
         t = "CIUDADES";
     }
         
+    @FXML
     public void temaColores() {
         ciudades.setSelected(false);
         animales.setSelected(false);
         random.setSelected(false);
         t = "COLORES";
     }
+    @FXML
     public void temaRandom() {
         ciudades.setSelected(false);
         animales.setSelected(false);
@@ -101,9 +108,13 @@ public class PrimaryController implements Initializable {
         setTema();
         f = Integer.valueOf(filas.getText());
         c = Integer.valueOf(columnas.getText());
+        
+        if(ModoExtreme.isSelected()){
+            extremoM=true;
+        }
         if ( !(t == null) && getData() ){
             try {
-                Sopator sp = new Sopator(f,c,t);
+                Sopator sp = new Sopator(f,c,t,extremoM);
                 FXMLLoader fxml = App.loadFXMLLoad("secondary");
                 App.setRoot(fxml);
                 SecondaryController sc = fxml.getController();

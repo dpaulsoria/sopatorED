@@ -9,18 +9,9 @@ import collection.ArrayList;
 import collection.CircularLinkedList;
 import generator.Sopator;
 import java.io.IOException;
-import java.net.URL;
-import java.time.Duration;
-import java.util.ResourceBundle;
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,8 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 import util.Desplazamiento;
 import util.Letra;
 import util.Pair;
@@ -50,7 +40,8 @@ import util.Palabra;
  */
 public class SecondaryController {
 
-    
+    @FXML
+    Text txtNum;
     private AnchorPane matriz;
     @FXML
     private BorderPane root;
@@ -134,6 +125,8 @@ public class SecondaryController {
     private RadioButton fila11;
     @FXML
     private TextField numAE1;
+
+    private Label tiempo;
     
     /**
      * Initializes the controller class.
@@ -192,12 +185,25 @@ public class SecondaryController {
     }
     
     public void generarSopa() {
+        //inicializa hilo que muestra el contador
+        
+        
+        
         this.matriz = new AnchorPane();
         
         setData();
         grid = new GridPane();
         matriz.getChildren().add(grid);
         showVidas();
+        tiempo.setVisible(false);
+        txtNum.setVisible(false);
+        if(sopator.getExtremo()){
+            tiempo.setVisible(true);
+            txtNum.setVisible(true);
+            Thread hiloCuenta = new Thread(new cronometro());
+            hiloCuenta.setDaemon(true);
+            hiloCuenta.start();
+        }
         grid.setStyle(borderStyle);
         ancho = 400 / sopator.getFilas();
         alto = 400 / sopator.getColumnas();
@@ -447,6 +453,7 @@ public class SecondaryController {
     }
     @FXML
     public void salir() throws IOException{
+        
         App.setRoot("primary");
     }
 
@@ -463,17 +470,20 @@ public class SecondaryController {
     
     @FXML
     public void setColumna() {
+
         if (!col.isSelected()) {
             numAE.setVisible(false);
             accionbutton.setVisible(false);            
         } else {
             fila.setSelected(false);
             comprobarRadioButton();
+
         }
     }
     
     @FXML
     public void setFila() {
+
         if (!fila.isSelected()) {
             numAE.setVisible(false);
             accionbutton.setVisible(false);            
@@ -482,11 +492,16 @@ public class SecondaryController {
             comprobarRadioButton();
         }
 
+
     }
     
-    public void setColumnaAdespl() {
+    public void setColumnaAdespl(ActionEvent event) {
         fila1.setSelected(false);
+        numAE.setVisible(false);
+        
         comprobarRadioButton();
+        
+        
     }
     
     public void setFilaAdespl() {
@@ -651,6 +666,38 @@ public class SecondaryController {
             col11.setVisible(false);
             ejecutarDesplazar.setVisible(false);
         }
+    }
+    class cronometro implements Runnable {
+
+        private int count = 60;
+
+        private void incrementCount() {
+            count--;
+            txtNum.setText(Integer.toString(count));
+            System.out.println(count==0);
+            if(count==0){
+                try {
+                    salir();
+                    
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+;
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                }
+
+                incrementCount();
+            }
+        }
+
     }
     
     @FXML
